@@ -16,39 +16,40 @@ class MainCalculator extends StatefulWidget {
 
 class _MainCalculator extends State<MainCalculator> {
   String _mode = 'Calculator';
+  // Display input entered
   String _input = '';
+  // Evaluate input entered
+  String _evaluate = '';
+  // Result when evaluated _evaluate
   String _result = '';
   bool _hasOperator = false;
-  bool _hasNumber = false;
 
-  void addNumber(String number) {
+  void addNumber(String number, String value) {
 
     setState(() {
       _input += number;
-      _hasNumber = true;
+      _evaluate += value;
       if (_hasOperator) {
-        var solver = new SolveMainCalculator(_input);
+        var solver = new SolveMainCalculator(_evaluate);
         String result = solver.solve_expretion();
         _result = result;
       }
     });
   }
 
-  void addOperator(String function) {
+  void addOperator(String operator, String value) {
     var solver = new SolveMainCalculator(_input);
+    String result = solver.solve_expretion();
     
     setState(() {
-      if (_hasNumber) {
-        String result = solver.solve_expretion();
-
-        _input += function;
-        _result = result;
-        _hasOperator = true;
-      }
+      _input += ' ' + operator + ' ';
+      _evaluate += value;
+      _result = result;
+      _hasOperator = true;
     });
   }
 
-  void addFunction(String function) {
+  void addFunction(String function, String value) {
     setState(() {
       _input += function + '(' + _input;
     });
@@ -68,7 +69,7 @@ class _MainCalculator extends State<MainCalculator> {
   }
 
   void enterExpretion() {
-    var solver = new SolveMainCalculator(_input);
+    var solver = new SolveMainCalculator(_evaluate);
     String result = solver.solve_expretion();
 
     setState(() {

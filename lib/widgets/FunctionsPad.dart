@@ -23,6 +23,7 @@ class FunctionsPad extends StatelessWidget {
           children: [
             FunctionButton(
               text: 'TIP',
+              value: 'TIP',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 16,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -30,6 +31,7 @@ class FunctionsPad extends StatelessWidget {
             ),
             FunctionButton(
               text: 'PROM',
+              value: 'PROM',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 14,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -37,6 +39,7 @@ class FunctionsPad extends StatelessWidget {
             ),
             FunctionButton(
               text: '!',
+              value: '!',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -44,6 +47,7 @@ class FunctionsPad extends StatelessWidget {
             ),
             FunctionButton(
               text: 'Sqrt',
+              value: 'sqrt',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 16,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -51,6 +55,7 @@ class FunctionsPad extends StatelessWidget {
             ),
             FunctionButton(
               text: '^',
+              value: '^',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -63,6 +68,7 @@ class FunctionsPad extends StatelessWidget {
           children: [
             FunctionButton(
               text: 'pi',
+              value: '3.14159265',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -70,6 +76,7 @@ class FunctionsPad extends StatelessWidget {
             ),
             FunctionButton(
               text: 'e',
+              value: '2.718281828',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -77,6 +84,7 @@ class FunctionsPad extends StatelessWidget {
             ),
             FunctionButton(
               text: '%',
+              value: '%',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -84,17 +92,19 @@ class FunctionsPad extends StatelessWidget {
             ),
             FunctionButton(
               text: '(',
+              value: '(',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addOperator
+              callback: addNumber
             ),
             FunctionButton(
               text: ')',
+              value: ')',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addOperator
+              callback: addNumber
             ),
           ],
         ),

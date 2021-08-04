@@ -8,6 +8,7 @@ class NumberButton extends StatelessWidget {
     required this.textSize,
     required this.buttonColor,
     required this.callback,
+    required this.value,
   }) : super(key: key);
 
   final String text;
@@ -15,6 +16,7 @@ class NumberButton extends StatelessWidget {
   final double textSize;
   final Color buttonColor;
   final Function callback;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class NumberButton extends StatelessWidget {
             )
           ),
           onPressed: () {
-            callback(text);
+            callback(text, value);
           },
           child: Text(
             text,
@@ -57,6 +59,7 @@ class FunctionButton extends StatelessWidget {
     required this.textSize,
     required this.buttonColor,
     required this.callback,
+    required this.value,
   }) : super(key: key);
 
   final String text;
@@ -64,6 +67,7 @@ class FunctionButton extends StatelessWidget {
   final double textSize;
   final Color buttonColor;
   final Function callback;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +84,7 @@ class FunctionButton extends StatelessWidget {
             )
           ),
           onPressed: () {
-            callback(text);
+            callback(text, value);
           },
           child: Text(
             text,
@@ -106,6 +110,7 @@ class LargeFunctionButton extends StatelessWidget {
     required this.textSize,
     required this.buttonColor,
     required this.callback,
+    required this.value,
   }) : super(key: key);
 
   final String text;
@@ -113,6 +118,7 @@ class LargeFunctionButton extends StatelessWidget {
   final double textSize;
   final Color buttonColor;
   final Function callback;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -129,10 +135,10 @@ class LargeFunctionButton extends StatelessWidget {
             )
           ),
           onPressed: () {
-            if (text == '=') {
+            if (text == 'enter') {
               callback();
             } else {
-              callback(text);
+              callback(text, value);
             }
           },
           child: Text(

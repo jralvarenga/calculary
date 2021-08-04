@@ -31,6 +31,7 @@ class NumberPad extends StatelessWidget {
           children: [
             NumberButton(
               text: '7',
+              value: '7',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -38,6 +39,7 @@ class NumberPad extends StatelessWidget {
             ),
             NumberButton(
               text: '8',
+              value: '8',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -45,6 +47,7 @@ class NumberPad extends StatelessWidget {
             ),
             NumberButton(
               text: '9',
+              value: '9',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -52,6 +55,7 @@ class NumberPad extends StatelessWidget {
             ),
             FunctionButton(
               text: '/',
+              value: '/',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -93,6 +97,7 @@ class NumberPad extends StatelessWidget {
           children: [
             NumberButton(
               text: '4',
+              value: '4',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -100,6 +105,7 @@ class NumberPad extends StatelessWidget {
             ),
             NumberButton(
               text: '5',
+              value: '5',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -107,6 +113,7 @@ class NumberPad extends StatelessWidget {
             ),
             NumberButton(
               text: '6',
+              value: '6',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -114,13 +121,15 @@ class NumberPad extends StatelessWidget {
             ),
             FunctionButton(
               text: '-',
+              value: '-',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
               callback: addOperator
             ),
             FunctionButton(
-              text: '*',
+              text: 'x',
+              value: '*',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -133,6 +142,7 @@ class NumberPad extends StatelessWidget {
           children: [
             NumberButton(
               text: '1',
+              value: '1',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -140,6 +150,7 @@ class NumberPad extends StatelessWidget {
             ),
             NumberButton(
               text: '2',
+              value: '2',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -147,6 +158,7 @@ class NumberPad extends StatelessWidget {
             ),
             NumberButton(
               text: '3',
+              value: '3',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -154,6 +166,7 @@ class NumberPad extends StatelessWidget {
             ),
             LargeFunctionButton(
               text: '+',
+              value: '+',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -166,6 +179,7 @@ class NumberPad extends StatelessWidget {
           children: [
             LargeFunctionButton(
               text: '0',
+              value: '0',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -173,6 +187,7 @@ class NumberPad extends StatelessWidget {
             ),
             NumberButton(
               text: '.',
+              value: '.',
               textColor: Color.fromRGBO(0, 0, 0, 1),
               textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
@@ -180,6 +195,7 @@ class NumberPad extends StatelessWidget {
             ),
             LargeFunctionButton(
               text: '=',
+              value: 'enter',
               textColor: Color.fromRGBO(255, 255, 255, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(210, 155, 253, 1),
