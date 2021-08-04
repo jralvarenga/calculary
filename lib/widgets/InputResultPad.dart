@@ -28,8 +28,8 @@ class InputResultPad extends StatelessWidget {
               child: Text(
                 input,
                 style: TextStyle(
-                  fontSize: 30,
-                  color: Color.fromRGBO(114, 114, 114, 1),
+                  fontSize: 45,
+                  color: Color.fromRGBO(0, 0, 0, 1),
                   fontWeight: FontWeight.bold
                 ),
               ),
@@ -43,8 +43,8 @@ class InputResultPad extends StatelessWidget {
               child: Text(
                 result,
                 style: TextStyle(
-                  fontSize: 50,
-                  color: Color.fromRGBO(0, 0, 0, 1),
+                  fontSize: 25,
+                  color: Color.fromRGBO(114, 114, 114, 1),
                   fontWeight: FontWeight.bold
                 ),
               ),

@@ -129,7 +129,11 @@ class LargeFunctionButton extends StatelessWidget {
             )
           ),
           onPressed: () {
-            callback(text);
+            if (text == '=') {
+              callback();
+            } else {
+              callback(text);
+            }
           },
           child: Text(
             text,

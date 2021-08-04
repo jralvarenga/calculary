@@ -5,9 +5,11 @@ class FunctionsPad extends StatelessWidget {
   FunctionsPad({
     Key? key,
     required this.addOperator,
+    required this.addNumber,
   }) : super(key: key);
 
   final Function addOperator;
+  final Function addNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +64,14 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addOperator
+              callback: addNumber
             ),
             FunctionButton(
               text: 'e',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addOperator
+              callback: addNumber
             ),
             FunctionButton(
               text: '%',

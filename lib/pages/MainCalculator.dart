@@ -3,6 +3,7 @@ import 'package:calculary/widgets/InputResultPad.dart';
 import 'package:calculary/widgets/NumberPad.dart';
 import 'package:calculary/widgets/TopBar.dart';
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class MainCalculator extends StatefulWidget {
   MainCalculator({Key? key, required this.title}) : super(key: key);
@@ -14,19 +15,32 @@ class MainCalculator extends StatefulWidget {
 }
 
 class _MainCalculator extends State<MainCalculator> {
+  Parser p = Parser();
   String _mode = 'Calculator';
   String _input = '';
-  String _result = '0';
+  String _result = '';
+  bool _hasOperator = false;
 
   void addNumber(String number) {
+
     setState(() {
       _input += number;
+      if (_hasOperator) {
+        Expression exp = p.parse(_input);
+        ContextModel cm = ContextModel();
+        _result = exp.evaluate(EvaluationType.REAL, cm).toString();
+      }
     });
   }
 
   void addOperator(String function) {
+    Expression exp = p.parse(_input);
+    ContextModel cm = ContextModel();
+    
     setState(() {
-      _input += ' ' + function + ' ';
+      _input += function;
+      _result = exp.evaluate(EvaluationType.REAL, cm).toString();
+      _hasOperator = true;
     });
   }
 
@@ -39,12 +53,18 @@ class _MainCalculator extends State<MainCalculator> {
   void deleteAllInput() {
     setState(() {
       _input = '';
-      _result = '0';
+      _result = '';
     });
   }
 
   void enterExpretion() {
-    print('enter');
+    Expression exp = p.parse(_input);
+    ContextModel cm = ContextModel();
+
+    setState(() {
+      _result = '';
+      _input = exp.evaluate(EvaluationType.REAL, cm).toString();
+    });
   }
   
   @override
@@ -77,6 +97,7 @@ class _MainCalculator extends State<MainCalculator> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FunctionsPad(
+                          addNumber: addNumber,
                           addOperator: addOperator
                         ),
                         NumberPad(
