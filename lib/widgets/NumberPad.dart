@@ -1,5 +1,5 @@
 import 'package:calculary/widgets/CalculatorButton.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class NumberPad extends StatelessWidget {
   NumberPad({
@@ -7,6 +7,7 @@ class NumberPad extends StatelessWidget {
     required this.addNumber,
     required this.addOperator,
     required this.deleteFromExpretion,
+    required this.deleteAllInput,
     required this.enterExpretion,
   }) : super(key: key);
 
@@ -14,6 +15,7 @@ class NumberPad extends StatelessWidget {
   final Function addOperator;
   final Function deleteFromExpretion;
   final Function enterExpretion;
+  final Function deleteAllInput;
 
   void addFunction(String function) {
     print(function);
@@ -30,21 +32,21 @@ class NumberPad extends StatelessWidget {
             NumberButton(
               text: '7',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
             NumberButton(
               text: '8',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
             NumberButton(
               text: '9',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
@@ -55,12 +57,34 @@ class NumberPad extends StatelessWidget {
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
               callback: addOperator
             ),
-            FunctionButton(
-              text: 'DEL',
-              textColor: Color.fromRGBO(255, 255, 255, 1),
-              textSize: 16,
-              buttonColor: Color.fromRGBO(210, 155, 253, 1),
-              callback: deleteFromExpretion
+            Container(
+              margin: EdgeInsets.all(5),
+              child: SizedBox(
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color.fromRGBO(210, 155, 253, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    )
+                  ),
+                  onLongPress: () {
+                    deleteAllInput();
+                  },
+                  onPressed: () {
+                    deleteFromExpretion();
+                  },
+                  child: Text(
+                    'DEL',
+                    style: TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 1),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
+              ),
             )
           ],
         ),
@@ -70,21 +94,21 @@ class NumberPad extends StatelessWidget {
             NumberButton(
               text: '4',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
             NumberButton(
               text: '5',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
             NumberButton(
               text: '6',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
@@ -110,21 +134,21 @@ class NumberPad extends StatelessWidget {
             NumberButton(
               text: '1',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
             NumberButton(
               text: '2',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
             NumberButton(
               text: '3',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
@@ -143,14 +167,14 @@ class NumberPad extends StatelessWidget {
             LargeFunctionButton(
               text: '0',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),
             NumberButton(
               text: '.',
               textColor: Color.fromRGBO(0, 0, 0, 1),
-              textSize: 18,
+              textSize: 20,
               buttonColor: Color.fromRGBO(227, 227, 227, 1),
               callback: addNumber
             ),

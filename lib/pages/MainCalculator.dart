@@ -15,19 +15,32 @@ class MainCalculator extends StatefulWidget {
 
 class _MainCalculator extends State<MainCalculator> {
   String _mode = 'Calculator';
-  String _input = '2+10+45';
-  String _result = '57.84';
+  String _input = '';
+  String _result = '0';
 
   void addNumber(String number) {
-    print(number);
+    setState(() {
+      _input += number;
+    });
   }
 
   void addOperator(String function) {
-    print(function);
+    setState(() {
+      _input += ' ' + function + ' ';
+    });
   }
 
   void deleteFromExpretion() {
-    print('delete');
+    setState(() {
+      _input = _input.substring(0, _input.length - 1);
+    });
+  }
+
+  void deleteAllInput() {
+    setState(() {
+      _input = '';
+      _result = '0';
+    });
   }
 
   void enterExpretion() {
@@ -70,6 +83,7 @@ class _MainCalculator extends State<MainCalculator> {
                           addNumber: addNumber,
                           addOperator: addOperator,
                           deleteFromExpretion: deleteFromExpretion,
+                          deleteAllInput: deleteAllInput,
                           enterExpretion: enterExpretion
                         )
                       ],
