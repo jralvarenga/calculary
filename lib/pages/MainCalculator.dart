@@ -1,9 +1,9 @@
+import 'package:calculary/functions/solve_calculator.dart';
 import 'package:calculary/widgets/FunctionsPad.dart';
 import 'package:calculary/widgets/InputResultPad.dart';
 import 'package:calculary/widgets/NumberPad.dart';
 import 'package:calculary/widgets/TopBar.dart';
 import 'package:flutter/material.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 class MainCalculator extends StatefulWidget {
   MainCalculator({Key? key, required this.title}) : super(key: key);
@@ -15,32 +15,42 @@ class MainCalculator extends StatefulWidget {
 }
 
 class _MainCalculator extends State<MainCalculator> {
-  Parser p = Parser();
   String _mode = 'Calculator';
   String _input = '';
   String _result = '';
   bool _hasOperator = false;
+  bool _hasNumber = false;
 
   void addNumber(String number) {
 
     setState(() {
       _input += number;
+      _hasNumber = true;
       if (_hasOperator) {
-        Expression exp = p.parse(_input);
-        ContextModel cm = ContextModel();
-        _result = exp.evaluate(EvaluationType.REAL, cm).toString();
+        var solver = new SolveMainCalculator(_input);
+        String result = solver.solve_expretion();
+        _result = result;
       }
     });
   }
 
   void addOperator(String function) {
-    Expression exp = p.parse(_input);
-    ContextModel cm = ContextModel();
+    var solver = new SolveMainCalculator(_input);
     
     setState(() {
-      _input += function;
-      _result = exp.evaluate(EvaluationType.REAL, cm).toString();
-      _hasOperator = true;
+      if (_hasNumber) {
+        String result = solver.solve_expretion();
+
+        _input += function;
+        _result = result;
+        _hasOperator = true;
+      }
+    });
+  }
+
+  void addFunction(String function) {
+    setState(() {
+      _input += function + '(' + _input;
     });
   }
 
@@ -58,12 +68,12 @@ class _MainCalculator extends State<MainCalculator> {
   }
 
   void enterExpretion() {
-    Expression exp = p.parse(_input);
-    ContextModel cm = ContextModel();
+    var solver = new SolveMainCalculator(_input);
+    String result = solver.solve_expretion();
 
     setState(() {
       _result = '';
-      _input = exp.evaluate(EvaluationType.REAL, cm).toString();
+      _input = result;
     });
   }
   
@@ -98,7 +108,8 @@ class _MainCalculator extends State<MainCalculator> {
                       children: [
                         FunctionsPad(
                           addNumber: addNumber,
-                          addOperator: addOperator
+                          addOperator: addOperator,
+                          addFunction: addFunction,
                         ),
                         NumberPad(
                           addNumber: addNumber,
