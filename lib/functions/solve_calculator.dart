@@ -19,7 +19,7 @@ class SolveMainCalculator {
   }
 
   // ignore: non_constant_identifier_names
-  String solve_expretion() {
+  String solve_expretion(String function) {
     String _input = create_operators(this.input);
     Expression exp = p.parse(_input);
     ContextModel cm = ContextModel();

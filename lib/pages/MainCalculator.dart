@@ -22,6 +22,7 @@ class _MainCalculator extends State<MainCalculator> {
   String _evaluate = '';
   // Result when evaluated _evaluate
   String _result = '';
+  String _currentFunction = '';
   bool _hasOperator = false;
 
   void addNumber(String number, String value) {
@@ -31,15 +32,15 @@ class _MainCalculator extends State<MainCalculator> {
       _evaluate += value;
       if (_hasOperator) {
         var solver = new SolveMainCalculator(_evaluate);
-        String result = solver.solve_expretion();
+        String result = solver.solve_expretion(_currentFunction);
         _result = result;
       }
     });
   }
 
   void addOperator(String operator, String value) {
-    var solver = new SolveMainCalculator(_input);
-    String result = solver.solve_expretion();
+    var solver = new SolveMainCalculator(_evaluate);
+    String result = solver.solve_expretion(_currentFunction);
     
     setState(() {
       _input += ' ' + operator + ' ';
@@ -52,25 +53,34 @@ class _MainCalculator extends State<MainCalculator> {
   void addFunction(String function, String value) {
     setState(() {
       _input += function + '(' + _input;
+      _currentFunction = function;
     });
   }
 
   void deleteFromExpretion() {
     setState(() {
-      _input = _input.substring(0, _input.length - 1);
+      if (_input.length == 1) {
+        _input = '';
+        _evaluate = '';
+      } else {
+        _input = _input.substring(0, _input.length - 1);
+        _evaluate = _input.substring(0, _input.length - 1);
+      }
+      _result = '';
     });
   }
 
   void deleteAllInput() {
     setState(() {
       _input = '';
+      _evaluate = '';
       _result = '';
     });
   }
 
   void enterExpretion() {
     var solver = new SolveMainCalculator(_evaluate);
-    String result = solver.solve_expretion();
+    String result = solver.solve_expretion(_currentFunction);
 
     setState(() {
       _result = '';
