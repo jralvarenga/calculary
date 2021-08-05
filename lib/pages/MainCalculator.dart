@@ -24,9 +24,13 @@ class _MainCalculator extends State<MainCalculator> {
   String _result = '';
   //String _currentFunction = '';
   bool _hasOperator = false;
+  // Handle input/result enter fade
+  bool _visibleInput = false;
+  bool _visibleResult = false;
 
   void addNumber(String number, String value) {
     setState(() {
+      _visibleInput = true;
       if (number == '(' || number == ')') {
         _input += number;
       } else if (number == 'pi' || number == 'e') {
@@ -38,6 +42,7 @@ class _MainCalculator extends State<MainCalculator> {
         _evaluate += value;
       }
       if (_hasOperator) {
+        _visibleResult = true;
         var solver = new SolveMainCalculator(_evaluate);
         String result = solver.solve_expretion();
         _result = result;
@@ -48,9 +53,9 @@ class _MainCalculator extends State<MainCalculator> {
   void addOperator(String operator, String value) {
     var solver = new SolveMainCalculator(_evaluate);
     String result = solver.solve_expretion();
-    print(_evaluate);
     
     setState(() {
+      _visibleResult = true;
       if (operator == 'x' || operator == '/') {
         _input += operator;        
       } else {
@@ -63,8 +68,8 @@ class _MainCalculator extends State<MainCalculator> {
   }
 
   void addFunction(String function, String value) {
-    print(_evaluate);
     setState(() {
+      _visibleResult = true;
       _input += function + '(' + _input;
       //_currentFunction = function;
     });
@@ -76,9 +81,12 @@ class _MainCalculator extends State<MainCalculator> {
         _input = '';
         _evaluate = '';
         _hasOperator = false;
+        _visibleInput = false;
+      _visibleResult = false;
       } else {
         _input = _input.substring(0, _input.length - 1);
         _evaluate = _evaluate.substring(0, _evaluate.length - 1);
+        _visibleResult = false;
         _hasOperator = false;
       }
       _result = '';
@@ -91,17 +99,19 @@ class _MainCalculator extends State<MainCalculator> {
       _evaluate = '';
       _result = '';
       _hasOperator = false;
+      _visibleInput = false;
+      _visibleResult = false;
     });
   }
 
   void enterExpretion() {
-    var solver = new SolveMainCalculator(_evaluate);
-    String result = solver.solve_expretion();
-
     setState(() {
+      var solver = new SolveMainCalculator(_evaluate);
+      String result = solver.solve_expretion();
       _result = '';
       _input = result;
       _hasOperator = false;
+      _visibleResult = false;
     });
   }
   
@@ -123,7 +133,12 @@ class _MainCalculator extends State<MainCalculator> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TopBar(mode: _mode),
-                        InputResultPad(input: _input, result: _result),
+                        InputResultPad(
+                          input: _input,
+                          result: _result,
+                          visibleInput: _visibleInput,
+                          visibleResult: _visibleResult,
+                        ),
                       ],
                     ),
                   ),
