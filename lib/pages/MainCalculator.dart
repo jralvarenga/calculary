@@ -22,17 +22,24 @@ class _MainCalculator extends State<MainCalculator> {
   String _evaluate = '';
   // Result when evaluated _evaluate
   String _result = '';
-  String _currentFunction = '';
+  //String _currentFunction = '';
   bool _hasOperator = false;
 
   void addNumber(String number, String value) {
-
     setState(() {
-      _input += number;
-      _evaluate += value;
+      if (number == '(' || number == ')') {
+        _input += number;
+      } else if (number == 'pi' || number == 'e') {
+        _input += number;
+        _evaluate += value;
+        _result = value;
+      } else {
+        _input += number;
+        _evaluate += value;
+      }
       if (_hasOperator) {
         var solver = new SolveMainCalculator(_evaluate);
-        String result = solver.solve_expretion(_currentFunction);
+        String result = solver.solve_expretion();
         _result = result;
       }
     });
@@ -40,10 +47,15 @@ class _MainCalculator extends State<MainCalculator> {
 
   void addOperator(String operator, String value) {
     var solver = new SolveMainCalculator(_evaluate);
-    String result = solver.solve_expretion(_currentFunction);
+    String result = solver.solve_expretion();
+    print(_evaluate);
     
     setState(() {
-      _input += ' ' + operator + ' ';
+      if (operator == 'x' || operator == '/') {
+        _input += operator;        
+      } else {
+        _input += ' ' + operator + ' ';
+      }
       _evaluate += value;
       _result = result;
       _hasOperator = true;
@@ -51,9 +63,10 @@ class _MainCalculator extends State<MainCalculator> {
   }
 
   void addFunction(String function, String value) {
+    print(_evaluate);
     setState(() {
       _input += function + '(' + _input;
-      _currentFunction = function;
+      //_currentFunction = function;
     });
   }
 
@@ -62,9 +75,11 @@ class _MainCalculator extends State<MainCalculator> {
       if (_input.length == 1) {
         _input = '';
         _evaluate = '';
+        _hasOperator = false;
       } else {
         _input = _input.substring(0, _input.length - 1);
-        _evaluate = _input.substring(0, _input.length - 1);
+        _evaluate = _evaluate.substring(0, _evaluate.length - 1);
+        _hasOperator = false;
       }
       _result = '';
     });
@@ -75,16 +90,18 @@ class _MainCalculator extends State<MainCalculator> {
       _input = '';
       _evaluate = '';
       _result = '';
+      _hasOperator = false;
     });
   }
 
   void enterExpretion() {
     var solver = new SolveMainCalculator(_evaluate);
-    String result = solver.solve_expretion(_currentFunction);
+    String result = solver.solve_expretion();
 
     setState(() {
       _result = '';
       _input = result;
+      _hasOperator = false;
     });
   }
   

@@ -135,7 +135,7 @@ class LargeFunctionButton extends StatelessWidget {
             )
           ),
           onPressed: () {
-            if (text == 'enter') {
+            if (value == 'enter') {
               callback();
             } else {
               callback(text, value);
