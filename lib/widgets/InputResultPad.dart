@@ -7,14 +7,12 @@ class InputResultPad extends StatelessWidget {
     required this.result,
     required this.inputAnimation,
     required this.resultAnimation,
-    required this.clearAnimationController,
   }) : super(key: key);
 
   final String input;
   final String result;
   final inputAnimation;
   final resultAnimation;
-  final clearAnimationController;  
   
   @override
   Widget build(BuildContext context) {

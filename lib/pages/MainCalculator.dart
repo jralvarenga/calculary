@@ -24,10 +24,8 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
   String _evaluate = '';
   // Result when evaluated _evaluate
   String _result = '';
-  //String _currentFunction = '';
+  String _currentFunction = '';
   bool _hasOperator = false;
-  // Handle input/result enter fade
-  bool _clearAnimation = false;
 
   late AnimationController _inputAnimationController;
   late AnimationController _resultAnimationController;
@@ -107,9 +105,10 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
 
   void addFunction(String function, String value) {
     setState(() {
+      _inputAnimationController.forward();
       _resultAnimationController.forward();
       _input += function + '(' + _input;
-      //_currentFunction = function;
+      _currentFunction = function;
     });
   }
 
@@ -189,7 +188,6 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
                           result: _result,
                           inputAnimation: _inputAnimation,
                           resultAnimation: _resultAnimation,
-                          clearAnimationController: _clearAnimation,
                         ),
                       ],
                     ),
