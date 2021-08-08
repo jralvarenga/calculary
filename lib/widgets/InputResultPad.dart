@@ -5,14 +5,16 @@ class InputResultPad extends StatelessWidget {
     Key? key,
     required this.input,
     required this.result,
-    required this.visibleInput,
-    required this.visibleResult,
+    required this.inputAnimation,
+    required this.resultAnimation,
+    required this.clearAnimationController,
   }) : super(key: key);
 
   final String input;
   final String result;
-  final bool visibleInput;
-  final bool visibleResult;
+  final inputAnimation;
+  final resultAnimation;
+  final clearAnimationController;  
   
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,8 @@ class InputResultPad extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100)
             ),
-            child: AnimatedOpacity(
-              opacity: visibleInput ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 200),
+            child: FadeTransition(
+              opacity: inputAnimation,
               child: Padding(
                 padding: const EdgeInsets.only(right: 10, bottom: 15),
                 child: Text(
@@ -41,14 +42,13 @@ class InputResultPad extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            )
           ),
           // Result container
           Container(
             alignment: Alignment(1, 1),
-            child: AnimatedOpacity(
-              opacity: visibleResult ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 200),
+            child: FadeTransition(
+              opacity: resultAnimation,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
@@ -60,7 +60,7 @@ class InputResultPad extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
           )
         ],
       )
