@@ -5,12 +5,14 @@ class InputResultPad extends StatelessWidget {
     Key? key,
     required this.input,
     required this.result,
+    this.function = '',
     required this.inputAnimation,
     required this.resultAnimation,
   }) : super(key: key);
 
   final String input;
   final String result;
+  final String function;
   final inputAnimation;
   final resultAnimation;
   
@@ -32,7 +34,7 @@ class InputResultPad extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(right: 10, bottom: 15),
                 child: Text(
-                  input,
+                  function + input,
                   style: TextStyle(
                     fontSize: 45,
                     color: Color.fromRGBO(0, 0, 0, 1),

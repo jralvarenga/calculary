@@ -46,7 +46,7 @@ class FunctionsPad extends StatelessWidget {
               callback: addFunction
             ),
             FunctionButton(
-              text: 'Sqrt',
+              text: 'sqrt',
               value: 'sqrt',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 16,

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:math_expressions/math_expressions.dart';
 // ignore: unused_import
 import "dart:math" as math;
@@ -34,15 +36,29 @@ class SolveMainCalculator {
   }
 
   // ignore: non_constant_identifier_names
-  String solve_expretion() {
-    String _input = create_operators(this.input);
-    Expression exp = p.parse(_input);
+  String evaluate_every_instance() {
     ContextModel cm = ContextModel();
+    var splitted = this.input.split(' ');
+    var values = [];
+    for (var i = 0; i < splitted.length; i++) {
+      String _input = splitted[i];
+      Expression exp = p.parse(_input);
 
-    //String result = exp.evaluate(EvaluationType.REAL, cm);//.toStringAsFixed(6);
+      String evValue = exp.evaluate(EvaluationType.REAL, cm).toString();
+      values.add(evValue);
+    }
+    print(values);
+    String newInput = values.join();
+    Expression exp = p.parse(newInput);
+    
     String evaluatedResult = exp.evaluate(EvaluationType.REAL, cm).toString();
-    String result = format_string_result(evaluatedResult);
+    return evaluatedResult;
+  }
 
+  // ignore: non_constant_identifier_names
+  String solve_expretion() {
+    String evaluatedResult = evaluate_every_instance();
+    String result = format_string_result(evaluatedResult);
     return result;
   }
 
