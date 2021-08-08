@@ -1,8 +1,4 @@
-import 'dart:ffi';
-
 import 'package:math_expressions/math_expressions.dart';
-// ignore: unused_import
-import "dart:math" as math;
 
 class SolveMainCalculator {
   Parser p = Parser();
@@ -11,14 +7,6 @@ class SolveMainCalculator {
   SolveMainCalculator(
     this.input,
   );
-
-  // ignore: non_constant_identifier_names
-  String create_operators(String input) {
-    var value = input.replaceAll('x', '*');
-    value = input.replaceAll('pi', 'math.pi');
-
-    return value;
-  }
 
   // ignore: non_constant_identifier_names
   String format_string_result(String result) {
