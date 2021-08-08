@@ -1,4 +1,6 @@
+import 'package:calculary/services/CustomTheme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TopBar extends StatelessWidget {
   TopBar({
@@ -14,6 +16,8 @@ class TopBar extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    CustomTheme theme = Provider.of(context);
+    var themeData = theme.themeData;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -24,7 +28,7 @@ class TopBar extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20, right: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
-              color: Color.fromRGBO(227, 227, 227, 1),
+              color: themeData.dialogBackgroundColor,
             ),
             child: Icon(
               Icons.more_horiz,
@@ -38,7 +42,7 @@ class TopBar extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20, right: 20, top: 7, bottom: 7),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100),
-              color: Color.fromRGBO(227, 227, 227, 1),
+              color: themeData.dialogBackgroundColor,
             ),
             child: Text(
               mode,

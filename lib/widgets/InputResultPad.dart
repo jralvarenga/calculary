@@ -1,4 +1,6 @@
+import 'package:calculary/services/CustomTheme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InputResultPad extends StatelessWidget {
   InputResultPad({
@@ -18,6 +20,8 @@ class InputResultPad extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    CustomTheme theme = Provider.of(context);
+    var themeData = theme.themeData;
 
     return Container(
       alignment: Alignment(1.0, 1.0),
@@ -33,14 +37,24 @@ class InputResultPad extends StatelessWidget {
               opacity: inputAnimation,
               child: Padding(
                 padding: const EdgeInsets.only(right: 10, bottom: 15),
-                child: Text(
-                  function + input,
-                  style: TextStyle(
-                    fontSize: 45,
-                    color: Color.fromRGBO(0, 0, 0, 1),
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
+                child: Expanded(
+                  child: SingleChildScrollView(
+                    reverse: true,
+                    scrollDirection: Axis.horizontal,
+                    child: SelectableText(
+                      function + input,
+                      showCursor: false,
+                      cursorWidth: 3,
+                      cursorColor: themeData.primaryColor,
+                      cursorRadius: Radius.circular(100),
+                      style: TextStyle(
+                        fontSize: 45,
+                        color: theme.textColor,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  )
+                ), 
               ),
             )
           ),
@@ -55,7 +69,7 @@ class InputResultPad extends StatelessWidget {
                   result,
                   style: TextStyle(
                     fontSize: 25,
-                    color: Color.fromRGBO(114, 114, 114, 1),
+                    color: theme.paperTextColor,
                     fontWeight: FontWeight.bold
                   ),
                 ),

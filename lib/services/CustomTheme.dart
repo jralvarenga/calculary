@@ -7,29 +7,23 @@ class CustomTheme {
 
   final bool isDark;
 
+  Color get textColor {
+    return isDark ? Color.fromRGBO(255, 255, 255, 1) : Color.fromRGBO(0, 0, 0, 1);
+  }
+
+  Color get paperTextColor {
+    return isDark ? Color.fromRGBO(114, 114, 114, 1) : Color.fromRGBO(114, 114, 114, 1);
+  }
+
   ThemeData get themeData {
-
-    TextTheme textTheme = (isDark ? ThemeData.dark() : ThemeData.light()).textTheme;
-    Color txtColor = isDark ? Color.fromRGBO(255, 255, 255, 1) : Color.fromRGBO(0, 0, 0, 1);
-    ColorScheme colorScheme = ColorScheme(
-      primary: Color.fromRGBO(249, 220, 197, 1),
-      primaryVariant: Color.fromRGBO(249, 220, 197, 1),
-      secondary: Color.fromRGBO(210, 155, 253, 1),
-      secondaryVariant: Color.fromRGBO(210, 155, 253, 1),
-      surface: Color.fromRGBO(227, 227, 227, 1),
-      background: isDark ? Colors.black : Colors.white,
-      onBackground: txtColor,
-      onSurface: txtColor,
-      onError: Colors.white,
-      onPrimary: Colors.white,
-      onSecondary: Colors.white,
-      error: Colors.red.shade400,
-      brightness: isDark ? Brightness.dark : Brightness.light,
-    );
-
+  
     var theme = ThemeData(
-      colorScheme: colorScheme,
-      textTheme: textTheme,
+      primaryColor: Color.fromRGBO(210, 155, 253, 1),
+      accentColor: Color.fromRGBO(249, 220, 197, 1),
+      backgroundColor: isDark ? Colors.black : Colors.white,
+      dialogBackgroundColor: isDark ? Color.fromRGBO(60, 60, 60, 1) : Color.fromRGBO(227, 227, 227, 1),
+      brightness: isDark ? Brightness.dark : Brightness.light,
+      errorColor: Colors.red.shade400,
 
       fontFamily: 'SanFrancisco',
     );
