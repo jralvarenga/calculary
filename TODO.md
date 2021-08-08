@@ -1,6 +1,7 @@
 # Calculary TODO List
 
 [] Add reset/clear animation
+[] Improve main calculator solver
 [] Fix divition between float
 [] Use Custom theme in main calculator
 [] Add function keys in main calculator

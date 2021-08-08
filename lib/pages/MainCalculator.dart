@@ -74,6 +74,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         _input += number;
         _evaluate += value;
         _result = value;
+        _resultAnimationController.forward();
       } else {
         _input += number;
         _evaluate += value;
