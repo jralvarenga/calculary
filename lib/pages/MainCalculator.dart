@@ -155,9 +155,13 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
       var solver = new SolveMainCalculator(_evaluate);
       String result = solver.solve_expretion();
       _resultAnimationController.reverse();
-      _result = '';
       _input = result;
+      _evaluate = result;
       _hasOperator = false;
+
+      Timer(Duration(milliseconds: 200), () {
+        _result = '';
+      });
     });
   }
   
