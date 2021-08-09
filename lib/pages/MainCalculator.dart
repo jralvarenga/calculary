@@ -67,13 +67,24 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
     setState(() {
       _inputAnimationController.forward();
       if (number == '(' || number == ')') {
+        // Parentesis handler
         _input += number;
       } else if (number == 'pi' || number == 'e') {
+        // Constants handler
         _input += number;
         _evaluate += value;
         _result = value;
         _resultAnimationController.forward();
+      } else if (number == '!') {
+        // Factorial handler
+        _input += number;
+        _evaluate += value;
+        var solver = new SolveMainCalculator(_evaluate);
+        String result = solver.solve_expretion();
+        _result = result;
+        _resultAnimationController.forward();        
       } else {
+        // Default handler
         _input += number;
         _evaluate += value;
       }
@@ -92,11 +103,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
     
     setState(() {
       _resultAnimationController.forward();
-      if (operator == 'x' || operator == '/') {
-        _input += operator;        
-      } else {
-        _input += ' ' + operator + ' ';
-      }
+      _input += operator;
       _evaluate += value;
       _result = result;
       _hasOperator = true;

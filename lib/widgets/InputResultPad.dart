@@ -35,10 +35,12 @@ class InputResultPad extends StatelessWidget {
             ),
             child: FadeTransition(
               opacity: inputAnimation,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10, bottom: 15),
-                child: Expanded(
+              child: Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
                   child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(right: 10, bottom: 15),
                     reverse: true,
                     scrollDirection: Axis.horizontal,
                     child: SelectableText(
@@ -54,7 +56,8 @@ class InputResultPad extends StatelessWidget {
                       ),
                     ),
                   )
-                ), 
+                ),
+                ]
               ),
             )
           ),
