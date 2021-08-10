@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:calculary/functions/solve_calculator.dart';
 import 'package:calculary/widgets/FunctionsPad.dart';
@@ -71,6 +70,9 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
   void addNumberExpression(String expression, String value) {
     setState(() {
       _inputAnimationController.forward();
+      if (_mode == 'Tip') {
+        _mode = 'Calculator';
+      }
 
       switch (expression) {
         case 'pi':
@@ -99,6 +101,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         break;
         case '(':
         case '^':
+        case 'sqrt':
           _openedParenthesis = true;
           _canSolve = false;
           
@@ -111,7 +114,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
           
           _expression.add(value);
           _expressionDisplayer.add(expression);
-          
+
           var solver = new SolveMainCalculator(_expression, _globalFunction);
           String result = solver.solveExpression();
           _result = result;
@@ -134,8 +137,20 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
 
   void addOperator(String operator, String value) {
     setState(() {
-      _expressionDisplayer.add(operator);
-      _expression.add(value);
+      if (_mode == 'Tip') {
+        _mode = 'Calculator';
+      }
+      // Verifies AVG mode
+      if (_globalFunction == 'AVG' && (operator == 'x' || operator == '/')) {
+        final snackBar = SnackBar(
+          content: const Text('Only + & - operators allowed in average mode')
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else {
+        _expressionDisplayer.add(operator);
+        _expression.add(value);
+      }
 
       _hasOperator = true;
     });
@@ -143,10 +158,25 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
 
   void addGlobalFunction(String function, String value) {
     setState(() {
-      _mode = value;
-      _globalFunction = function;
+      switch (function) {
+        case 'AVG':
+          _mode = value;
+          _globalFunction = function;
 
-      _expressionDisplayer.insert(0, function + '(');
+          _expressionDisplayer.insert(0, function + '(');
+        break;
+        case 'TIP':
+          _mode = value;
+          var solver = new SolveMainCalculator(_expression, _globalFunction);
+          String result = solver.solveExpression();
+          double onlyTip = double.parse(result) * 0.1;
+          print(onlyTip);
+
+          _expression = onlyTip.toString().split('');
+          _expressionDisplayer = onlyTip.toString().split('');
+          _result = '';
+        break;
+      }
     });
   }
 
