@@ -11,7 +11,6 @@ class SolveMainCalculator {
   );
 
   String formatResult(String result) {
-    print(result);
     var number = double.parse(result);
 
     if (number % 1 != 0) {
@@ -28,7 +27,6 @@ class SolveMainCalculator {
   String factorialSolver(String number) {
     var factorial = 1;
     var num = double.parse(number);
-    print(num is int);
 
     if (num is int) {
       for (var i = 1; i <= num; i++) {
@@ -93,7 +91,6 @@ class SolveMainCalculator {
     if (this.globalFunction == 'AVG') {
       evaluatedResult = getExpressionAvg();
     } else {
-      print(this.expression);
       evaluatedResult = evaluateAllInstances();
     }
     if (evaluatedResult == 'ERROR') {
