@@ -98,11 +98,12 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
           _resultAnimationController.forward();
         break;
         case '(':
+        case '^':
           _openedParenthesis = true;
           _canSolve = false;
           
           _expression.add(value);
-          _expressionDisplayer.add(expression);
+          _expressionDisplayer.add(value);
         break;
         case ')':
           _openedParenthesis = false;
@@ -110,6 +111,11 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
           
           _expression.add(value);
           _expressionDisplayer.add(expression);
+          
+          var solver = new SolveMainCalculator(_expression, _globalFunction);
+          String result = solver.solveExpression();
+          _result = result;
+          _resultAnimationController.forward();
         break;
         default:
           _expression.add(value);
@@ -206,8 +212,8 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         var solver = new SolveMainCalculator(_expression, _globalFunction);
         String result = solver.solveExpression();
         _resultAnimationController.reverse();
-        _expression = [result];
-        _expressionDisplayer = [result];
+        _expression = result.split('');
+        _expressionDisplayer = result.split('');
         _globalFunction = '';
         _mode = 'Calculator';
 
