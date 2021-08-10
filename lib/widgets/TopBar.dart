@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 class TopBar extends StatelessWidget {
   TopBar({
     Key? key,
-    required this.mode
+    required this.mode,
+    required this.rightButtonFunction
   }) : super(key: key);
 
   final String mode;
+  final rightButtonFunction;
 
   void pressed() {
     print('hi');
@@ -37,7 +39,7 @@ class TopBar extends StatelessWidget {
           )
         ),
         GestureDetector(
-          onTap: pressed,
+          onTap: rightButtonFunction,
           child: Container(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 7, bottom: 7),
             decoration: BoxDecoration(

@@ -1,27 +1,16 @@
 import 'package:math_expressions/math_expressions.dart';
 
-class FactorialRes {
-  final factorial ;
-
-  FactorialRes({required this.factorial});
-
-  factory FactorialRes.fromJson(Map<String, dynamic> json) {
-    return FactorialRes(
-      factorial: json['id'],
-    );
-  }
-}
-
 class SolveMainCalculator {
   Parser p = Parser();
   String input;
+  String globalFunction;
 
   SolveMainCalculator(
     this.input,
+    this.globalFunction
   );
 
-  // ignore: non_constant_identifier_names
-  String format_string_result(String result) {
+  String formatResult(String result) {
     print(result);
     var number = double.parse(result);
 
@@ -36,8 +25,7 @@ class SolveMainCalculator {
     }
   }
 
-  // ignore: non_constant_identifier_names
-  String factorial_solver(String number) {
+  String factorialSolver(String number) {
     var factorial = 1;
     var num = double.parse(number);
     print(num is int);
@@ -52,8 +40,7 @@ class SolveMainCalculator {
     }
   }
 
-  // ignore: non_constant_identifier_names
-  String evaluate_every_instance() {
+  String evaluateAllInstances() {
     ContextModel cm = ContextModel();
     var splitted = this.input.split(' ');
     var values = [];
@@ -65,7 +52,7 @@ class SolveMainCalculator {
 
       if (_input.contains('!') == true) {
         // Is factorial case
-        String value = factorial_solver(_input.replaceAll('!', ''));
+        String value = factorialSolver(_input.replaceAll('!', ''));
         if (value == 'error') {
           error = true;
           break; 
@@ -76,7 +63,6 @@ class SolveMainCalculator {
         Expression exp = p.parse(_input);
         expValue = exp.evaluate(EvaluationType.REAL, cm).toString();
       }
-
       values.add(expValue);
     }
 
@@ -91,13 +77,29 @@ class SolveMainCalculator {
     }
   }
 
-  // ignore: non_constant_identifier_names
-  String solve_expretion() {
-    String evaluatedResult = evaluate_every_instance();
+  String getExpretionAvg() {
+    ContextModel cm = ContextModel();
+    Expression exp = p.parse(this.input);
+    var splitted = this.input.split(new RegExp(r'[+-]'));
+    int total = splitted.length;
+
+    String expValue = exp.evaluate(EvaluationType.REAL, cm).toString();
+    var result = (double.parse(expValue) / total);
+    return result.toString();
+  }
+
+  String solveExpretion() {
+    String evaluatedResult = '';
+
+    if (this.globalFunction == 'AVG') {
+      evaluatedResult = getExpretionAvg();
+    } else {
+      evaluatedResult = evaluateAllInstances();
+    }
     if (evaluatedResult == 'ERROR') {
       return 'ERROR';
     } else {
-      String result = format_string_result(evaluatedResult);
+      String result = formatResult(evaluatedResult);
       return result;
     }
   }

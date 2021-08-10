@@ -24,7 +24,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
   String _evaluate = '';
   // Result when evaluated _evaluate
   String _result = '';
-  String _currentFunction = '';
+  String _globalFunction = '';
   bool _hasOperator = false;
 
   late AnimationController _inputAnimationController;
@@ -79,10 +79,10 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         // Factorial handler
         _input += number;
         _evaluate += value;
-        var solver = new SolveMainCalculator(_evaluate);
-        String result = solver.solve_expretion();
+        var solver = new SolveMainCalculator(_evaluate, _globalFunction);
+        String result = solver.solveExpretion();
         _result = result;
-        _resultAnimationController.forward();        
+        _resultAnimationController.forward();
       } else {
         // Default handler
         _input += number;
@@ -90,16 +90,16 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
       }
       if (_hasOperator) {
         _resultAnimationController.forward();
-        var solver = new SolveMainCalculator(_evaluate);
-        String result = solver.solve_expretion();
+        var solver = new SolveMainCalculator(_evaluate, _globalFunction);
+        String result = solver.solveExpretion();
         _result = result;
       }
     });
   }
 
   void addOperator(String operator, String value) {
-    var solver = new SolveMainCalculator(_evaluate);
-    String result = solver.solve_expretion();
+    var solver = new SolveMainCalculator(_evaluate, _globalFunction);
+    String result = solver.solveExpretion();
     
     setState(() {
       _resultAnimationController.forward();
@@ -114,8 +114,21 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
     setState(() {
       _inputAnimationController.forward();
       _resultAnimationController.forward();
-      _input += function + '(' + _input;
-      _currentFunction = function;
+      if (function == 'AVG' || function == 'TIP') {
+        _input = function + '( ' + _input;
+        _mode = value;
+        _globalFunction = function;
+      } else {
+        _input += function + '(' + _input;
+        _globalFunction = function;
+      }
+    });
+  }
+
+  void resetGlobalFunction() {
+    setState(() {
+      _mode = 'Calculator';
+      _globalFunction = '';
     });
   }
 
@@ -159,12 +172,14 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
 
   void enterExpretion() {
     setState(() {
-      var solver = new SolveMainCalculator(_evaluate);
-      String result = solver.solve_expretion();
+      var solver = new SolveMainCalculator(_evaluate, _globalFunction);
+      String result = solver.solveExpretion();
       _resultAnimationController.reverse();
       _input = result;
       _evaluate = result;
       _hasOperator = false;
+      _globalFunction = '';
+      _mode = 'Calculator';
 
       Timer(Duration(milliseconds: 200), () {
         _result = '';
@@ -189,7 +204,10 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TopBar(mode: _mode),
+                        TopBar(
+                          mode: _mode,
+                          rightButtonFunction: resetGlobalFunction,
+                        ),
                         InputResultPad(
                           input: _input,
                           result: _result,

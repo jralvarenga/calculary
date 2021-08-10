@@ -23,15 +23,15 @@ class FunctionsPad extends StatelessWidget {
           children: [
             FunctionButton(
               text: 'TIP',
-              value: 'TIP',
+              value: 'Tip',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 16,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
               callback: addFunction
             ),
             FunctionButton(
-              text: 'PROM',
-              value: 'PROM',
+              text: 'AVG',
+              value: 'Average',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 14,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
