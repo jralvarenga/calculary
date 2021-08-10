@@ -82,8 +82,17 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
           _resultAnimationController.forward();
         break;
         case '!':
-          var solver = new SolveMainCalculator(_expression, _globalFunction);
+          String lastNumberInExpression = _expression.last;
+          String lastNumberInDisplay = _expressionDisplayer.last;
+          String addedFactorial = lastNumberInExpression + value;
+          String addedFactorialInDisplayer = lastNumberInDisplay + expression;
+          _expression.removeLast();
+          _expressionDisplayer.removeLast();
 
+          _expression.add(addedFactorial);
+          _expressionDisplayer.add(addedFactorialInDisplayer);
+          
+          var solver = new SolveMainCalculator(_expression, _globalFunction);
           String result = solver.solveExpression();
           _result = result;
           _resultAnimationController.forward();

@@ -26,9 +26,9 @@ class SolveMainCalculator {
 
   String factorialSolver(String number) {
     var factorial = 1;
-    var num = double.parse(number);
 
-    if (num is int) {
+    if (!number.contains('.')) {
+      int num = int.parse(number);
       for (var i = 1; i <= num; i++) {
         factorial = factorial*i;
       }
