@@ -23,8 +23,8 @@ class NumberButton extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(5),
       child: SizedBox(
-        width: 60,
-        height: 60,
+        width: MediaQuery.of(context).size.width * 0.15,
+        height: MediaQuery.of(context).size.width * 0.15,
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: buttonColor,
@@ -71,11 +71,12 @@ class FunctionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.all(5),
       child: SizedBox(
-        width: 60,
-        height: 60,
+        width: MediaQuery.of(context).size.width * 0.15,
+        height: MediaQuery.of(context).size.width * 0.15,
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: buttonColor,
@@ -125,8 +126,8 @@ class LargeFunctionButton extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(5),
       child: SizedBox(
-        width: 130,
-        height: 60,
+        width: MediaQuery.of(context).size.width * 0.34,
+        height: MediaQuery.of(context).size.width * 0.15,
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: buttonColor,
