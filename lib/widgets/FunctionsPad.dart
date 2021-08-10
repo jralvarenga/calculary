@@ -5,15 +5,13 @@ class FunctionsPad extends StatelessWidget {
   FunctionsPad({
     Key? key,
     required this.addOperator,
-    required this.addNumber,
-    required this.addFunction,
+    required this.addNumberExpression,
     required this.addGlobalFunction,
   }) : super(key: key);
 
   final Function addOperator;
-  final Function addNumber;
+  final Function addNumberExpression;
   final Function addGlobalFunction;
-  final Function addFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addNumber
+              callback: addNumberExpression
             ),
             FunctionButton(
               text: 'sqrt',
@@ -53,7 +51,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 16,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addFunction
+              callback: addNumberExpression
             ),
             FunctionButton(
               text: '^',
@@ -61,7 +59,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addFunction
+              callback: addNumberExpression
             ),
           ],
         ),
@@ -74,7 +72,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addNumber
+              callback: addNumberExpression
             ),
             FunctionButton(
               text: 'e',
@@ -82,7 +80,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addNumber
+              callback: addNumberExpression
             ),
             FunctionButton(
               text: '%',
@@ -90,7 +88,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addFunction
+              callback: addNumberExpression
             ),
             FunctionButton(
               text: '(',
@@ -98,7 +96,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addNumber
+              callback: addNumberExpression
             ),
             FunctionButton(
               text: ')',
@@ -106,7 +104,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 22,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addNumber
+              callback: addNumberExpression
             ),
           ],
         ),

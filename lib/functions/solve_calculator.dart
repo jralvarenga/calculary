@@ -2,11 +2,11 @@ import 'package:math_expressions/math_expressions.dart';
 
 class SolveMainCalculator {
   Parser p = Parser();
-  String input;
+  List<String> expression;
   String globalFunction;
 
   SolveMainCalculator(
-    this.input,
+    this.expression,
     this.globalFunction
   );
 
@@ -42,7 +42,7 @@ class SolveMainCalculator {
 
   String evaluateAllInstances() {
     ContextModel cm = ContextModel();
-    var splitted = this.input.split(' ');
+    var splitted = this.expression.join().split(' ');
     var values = [];
     bool error = false;
 
@@ -77,23 +77,23 @@ class SolveMainCalculator {
     }
   }
 
-  String getExpretionAvg() {
+  String getExpressionAvg() {
     ContextModel cm = ContextModel();
-    Expression exp = p.parse(this.input);
-    var splitted = this.input.split(new RegExp(r'[+-]'));
-    int total = splitted.length;
+    Expression exp = p.parse(this.expression.join());
+    int total = this.expression.length;
 
     String expValue = exp.evaluate(EvaluationType.REAL, cm).toString();
     var result = (double.parse(expValue) / total);
     return result.toString();
   }
 
-  String solveExpretion() {
+  String solveExpression() {
     String evaluatedResult = '';
 
     if (this.globalFunction == 'AVG') {
-      evaluatedResult = getExpretionAvg();
+      evaluatedResult = getExpressionAvg();
     } else {
+      print(this.expression);
       evaluatedResult = evaluateAllInstances();
     }
     if (evaluatedResult == 'ERROR') {
@@ -106,7 +106,7 @@ class SolveMainCalculator {
 
   // ignore: non_constant_identifier_names
   bool has_number() {
-    bool found = this.input.contains(new RegExp(r'[0-9]'));
+    bool found = this.expression.contains(new RegExp(r'[0-9]'));
 
     return found;
   }

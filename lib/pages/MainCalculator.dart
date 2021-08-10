@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:calculary/functions/solve_calculator.dart';
 import 'package:calculary/widgets/FunctionsPad.dart';
@@ -18,15 +19,18 @@ class MainCalculator extends StatefulWidget {
 
 class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixin {
   String _mode = 'Calculator';
-  // Display input entered
-  String _input = '';
-  // Evaluate input entered
-  String _evaluate = '';
-  // Result when evaluated _evaluate
-  String _result = '';
+  List<String> _expression = [];
+  List<String> _expressionDisplayer = [];
+  int characterNumber = 0;
   String _globalFunction = '';
-  bool _hasOperator = false;
+  var _result = '';
 
+  // Solver conditions
+  bool _openedParenthesis = false;
+  bool _hasOperator = false;
+  bool _canSolve = true;
+
+  // Input/Result animation controllers
   late AnimationController _inputAnimationController;
   late AnimationController _resultAnimationController;
   late Animation _inputAnimation;
@@ -62,75 +66,72 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
     _resultAnimationController.dispose();
     super.dispose();
   }
+  /////////////////////////
 
-  void addNumber(String number, String value) {
+  void addNumberExpression(String expression, String value) {
     setState(() {
       _inputAnimationController.forward();
-      if (number == '(' || number == ')') {
-        // Parentesis handler
-        _input += number;
-      } else if (number == 'pi' || number == 'e') {
-        // Constants handler
-        _input += number;
-        _evaluate += value;
-        _result = value;
-        _resultAnimationController.forward();
-      } else if (number == '!') {
-        // Factorial handler
-        _input += number;
-        _evaluate += value;
-        var solver = new SolveMainCalculator(_evaluate, _globalFunction);
-        String result = solver.solveExpretion();
-        _result = result;
-        _resultAnimationController.forward();
-      } else {
-        // Default handler
-        _input += number;
-        _evaluate += value;
+
+      switch (expression) {
+        case 'pi':
+        case 'e':
+          _expression.add(value);
+          _expressionDisplayer.add(expression);
+          _result = value;
+
+          _resultAnimationController.forward();
+        break;
+        case '!':
+          var solver = new SolveMainCalculator(_expression, _globalFunction);
+
+          String result = solver.solveExpression();
+          _result = result;
+          _resultAnimationController.forward();
+        break;
+        case '(':
+          _openedParenthesis = true;
+          _canSolve = false;
+          
+          _expression.add(value);
+          _expressionDisplayer.add(expression);
+        break;
+        case ')':
+          _openedParenthesis = false;
+          _canSolve = true;
+          
+          _expression.add(value);
+          _expressionDisplayer.add(expression);
+        break;
+        default:
+          _expression.add(value);
+          _expressionDisplayer.add(expression);
+        break;
       }
-      if (_hasOperator) {
+
+      if (_canSolve && !_openedParenthesis && _hasOperator) {
         _resultAnimationController.forward();
-        var solver = new SolveMainCalculator(_evaluate, _globalFunction);
-        String result = solver.solveExpretion();
+        var solver = new SolveMainCalculator(_expression, _globalFunction);
+        String result = solver.solveExpression();
         _result = result;
       }
     });
   }
 
   void addOperator(String operator, String value) {
-    var solver = new SolveMainCalculator(_evaluate, _globalFunction);
-    String result = solver.solveExpretion();
-    
     setState(() {
-      _resultAnimationController.forward();
-      _input += operator;
-      _evaluate += value;
-      _result = result;
+      _expressionDisplayer.add(operator);
+      _expression.add(value);
+
       _hasOperator = true;
     });
   }
 
   void addGlobalFunction(String function, String value) {
     setState(() {
-      _inputAnimationController.forward();
-      _resultAnimationController.forward();
-      if (function == 'AVG' || function == 'TIP') {
-        _input = function + '( ' + _input;
-        _mode = value;
-        _globalFunction = function;
-      } else {
-        _input += function + '(' + _input;
-        _globalFunction = function;
-      }
-    });
-  }
+      _mode = function;
+      _globalFunction = value;
 
-  void addFunction(String function, String value) {
-    setState(() {
-      _inputAnimationController.forward();
-      _resultAnimationController.forward();
-      _input += value;
-      _evaluate += value;
+      _expressionDisplayer.insert(0, function);
     });
   }
 
@@ -141,24 +142,26 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
     });
   }
 
-  void deleteFromExpretion() {
+  void deleteFromExpression() {
     setState(() {
-      if (_input.length == 1) {
-        _hasOperator = false;
+      _openedParenthesis = false;
+      _hasOperator = false;
+      _canSolve = true;
+
+      if (_expressionDisplayer.length == 1) {
         _inputAnimationController.reverse();
         _resultAnimationController.reverse();
 
         Timer(Duration(milliseconds: 200), () {
-          _input = '';
-          _evaluate = '';
+          _expression = [];
+          _expressionDisplayer = [];
         });
       } else {
-        _input = _input.substring(0, _input.length - 1);
-        _evaluate = _evaluate.substring(0, _evaluate.length - 1);
+        _expressionDisplayer.removeLast();
+        _expression.removeLast();
+
         _resultAnimationController.reverse();
-        _hasOperator = false;
       }
-      
       Timer(Duration(milliseconds: 200), () {
         _result = '';
       });
@@ -169,30 +172,40 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
     setState(() {
       _inputAnimationController.reverse();
       _resultAnimationController.reverse();
+
+      _openedParenthesis = false;
       _hasOperator = false;
+      _canSolve = true;
 
       Timer(Duration(milliseconds: 200), () {
-        _input = '';
-        _evaluate = '';
+        _expression = [''];
+        _expressionDisplayer = [''];
         _result = '';
       });
     });
   }
 
-  void enterExpretion() {
+  void enterExpression() {
     setState(() {
-      var solver = new SolveMainCalculator(_evaluate, _globalFunction);
-      String result = solver.solveExpretion();
-      _resultAnimationController.reverse();
-      _input = result;
-      _evaluate = result;
-      _hasOperator = false;
-      _globalFunction = '';
-      _mode = 'Calculator';
+      if (_openedParenthesis) {
+        final snackBar = SnackBar(
+          content: const Text('Close all parenthesis')
+        );
 
-      Timer(Duration(milliseconds: 200), () {
-        _result = '';
-      });
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else {
+        var solver = new SolveMainCalculator(_expression, _globalFunction);
+        String result = solver.solveExpression();
+        _resultAnimationController.reverse();
+        _expression = [result];
+        _expressionDisplayer = [result];
+        _globalFunction = '';
+        _mode = 'Calculator';
+
+        Timer(Duration(milliseconds: 200), () {
+          _result = '';
+        });
+      }
     });
   }
   
@@ -218,7 +231,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
                           rightButtonFunction: resetGlobalFunction,
                         ),
                         InputResultPad(
-                          input: _input,
+                          expression: _expressionDisplayer,
                           result: _result,
                           inputAnimation: _inputAnimation,
                           resultAnimation: _resultAnimation,
@@ -234,17 +247,16 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         FunctionsPad(
-                          addNumber: addNumber,
+                          addNumberExpression: addNumberExpression,
                           addOperator: addOperator,
-                          addFunction: addFunction,
                           addGlobalFunction: addGlobalFunction,
                         ),
                         NumberPad(
-                          addNumber: addNumber,
+                          addNumberExpression: addNumberExpression,
                           addOperator: addOperator,
-                          deleteFromExpretion: deleteFromExpretion,
+                          deleteFromExpression: deleteFromExpression,
                           deleteAllInput: deleteAllInput,
-                          enterExpretion: enterExpretion
+                          enterExpression: enterExpression
                         )
                       ],
                     ),

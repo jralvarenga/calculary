@@ -5,14 +5,14 @@ import 'package:provider/provider.dart';
 class InputResultPad extends StatelessWidget {
   InputResultPad({
     Key? key,
-    required this.input,
+    required this.expression,
     required this.result,
     this.function = '',
     required this.inputAnimation,
     required this.resultAnimation,
   }) : super(key: key);
 
-  final String input;
+  final List<String> expression;
   final String result;
   final String function;
   final inputAnimation;
@@ -44,7 +44,7 @@ class InputResultPad extends StatelessWidget {
                     reverse: true,
                     scrollDirection: Axis.horizontal,
                     child: SelectableText(
-                      function + input,
+                      expression.join(),
                       showCursor: false,
                       cursorWidth: 3,
                       cursorColor: themeData.primaryColor,

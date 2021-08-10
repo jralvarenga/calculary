@@ -6,17 +6,17 @@ import 'package:provider/provider.dart';
 class NumberPad extends StatelessWidget {
   NumberPad({
     Key? key,
-    required this.addNumber,
+    required this.addNumberExpression,
     required this.addOperator,
-    required this.deleteFromExpretion,
+    required this.deleteFromExpression,
     required this.deleteAllInput,
-    required this.enterExpretion,
+    required this.enterExpression,
   }) : super(key: key);
 
-  final Function addNumber;
+  final Function addNumberExpression;
   final Function addOperator;
-  final Function deleteFromExpretion;
-  final Function enterExpretion;
+  final Function deleteFromExpression;
+  final Function enterExpression;
   final Function deleteAllInput;
 
   void addFunction(String function) {
@@ -39,7 +39,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             NumberButton(
               text: '8',
@@ -47,7 +47,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             NumberButton(
               text: '9',
@@ -55,7 +55,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             FunctionButton(
               text: '/',
@@ -81,7 +81,7 @@ class NumberPad extends StatelessWidget {
                     deleteAllInput();
                   },
                   onPressed: () {
-                    deleteFromExpretion();
+                    deleteFromExpression();
                   },
                   child: Text(
                     'DEL',
@@ -105,7 +105,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             NumberButton(
               text: '5',
@@ -113,7 +113,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             NumberButton(
               text: '6',
@@ -121,7 +121,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             FunctionButton(
               text: '-',
@@ -150,7 +150,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             NumberButton(
               text: '2',
@@ -158,7 +158,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             NumberButton(
               text: '3',
@@ -166,7 +166,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             LargeFunctionButton(
               text: '+',
@@ -187,7 +187,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             NumberButton(
               text: '.',
@@ -195,7 +195,7 @@ class NumberPad extends StatelessWidget {
               textColor: theme.textColor,
               textSize: 20,
               buttonColor: themeData.dialogBackgroundColor,
-              callback: addNumber
+              callback: addNumberExpression
             ),
             LargeFunctionButton(
               text: '=',
@@ -203,7 +203,7 @@ class NumberPad extends StatelessWidget {
               textColor: Color.fromRGBO(255, 255, 255, 1),
               textSize: 22,
               buttonColor: themeData.primaryColor,
-              callback: enterExpretion
+              callback: enterExpression
             ),
           ],
         ),
