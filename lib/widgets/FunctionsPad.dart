@@ -7,10 +7,12 @@ class FunctionsPad extends StatelessWidget {
     required this.addOperator,
     required this.addNumber,
     required this.addFunction,
+    required this.addGlobalFunction,
   }) : super(key: key);
 
   final Function addOperator;
   final Function addNumber;
+  final Function addGlobalFunction;
   final Function addFunction;
 
   @override
@@ -27,7 +29,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 16,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addFunction
+              callback: addGlobalFunction
             ),
             FunctionButton(
               text: 'AVG',
@@ -35,7 +37,7 @@ class FunctionsPad extends StatelessWidget {
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 14,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),
-              callback: addFunction
+              callback: addGlobalFunction
             ),
             FunctionButton(
               text: '!',
@@ -47,7 +49,7 @@ class FunctionsPad extends StatelessWidget {
             ),
             FunctionButton(
               text: 'sqrt',
-              value: 'sqrt',
+              value: 'sqrt(',
               textColor: Color.fromRGBO(114, 114, 114, 1),
               textSize: 16,
               buttonColor: Color.fromRGBO(249, 220, 197, 1),

@@ -110,7 +110,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
     });
   }
 
-  void addFunction(String function, String value) {
+  void addGlobalFunction(String function, String value) {
     setState(() {
       _inputAnimationController.forward();
       _resultAnimationController.forward();
@@ -122,6 +122,15 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         _input += function + '(' + _input;
         _globalFunction = function;
       }
+    });
+  }
+
+  void addFunction(String function, String value) {
+    setState(() {
+      _inputAnimationController.forward();
+      _resultAnimationController.forward();
+      _input += value;
+      _evaluate += value;
     });
   }
 
@@ -228,6 +237,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
                           addNumber: addNumber,
                           addOperator: addOperator,
                           addFunction: addFunction,
+                          addGlobalFunction: addGlobalFunction,
                         ),
                         NumberPad(
                           addNumber: addNumber,
