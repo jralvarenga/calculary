@@ -21,10 +21,10 @@ class NumberButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.all(2),
       child: SizedBox(
-        width: 62,
-        height: 62,
+        width: 68,
+        height: 68,
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: buttonColor,
@@ -73,10 +73,10 @@ class FunctionButton extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.all(2),
       child: SizedBox(
-        width: 62,
-        height: 62,
+        width: 68,
+        height: 68,
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: buttonColor,
@@ -124,10 +124,10 @@ class LargeFunctionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(5),
+      margin: EdgeInsets.all(2),
       child: SizedBox(
-        width: 132,
-        height: 62,
+        width: 140,
+        height: 68,
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: buttonColor,
