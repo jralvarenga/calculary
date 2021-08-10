@@ -1,9 +1,22 @@
 import 'package:calculary/pages/MainCalculator.dart';
 import 'package:calculary/services/CustomTheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  CustomTheme appTheme = CustomTheme(isDark: false);
+  var themeData = appTheme.themeData;
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    systemNavigationBarColor: themeData.backgroundColor,
+    statusBarColor: Colors.transparent,
+    statusBarBrightness: appTheme.isDark ? Brightness.light : Brightness.dark,
+    statusBarIconBrightness: appTheme.isDark ? Brightness.light : Brightness.dark,
+    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness: appTheme.isDark ? Brightness.light : Brightness.dark, //navigation bar icon 
+  ));
+
   runApp(MyApp());
 }
 

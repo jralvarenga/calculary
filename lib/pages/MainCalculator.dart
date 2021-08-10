@@ -189,9 +189,14 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
 
   void deleteFromExpression() {
     setState(() {
-      _openedParenthesis = false;
       _hasOperator = false;
       _canSolve = true;
+
+      if (_expression.last == ')' && _expressionDisplayer.last == ')') {
+        _openedParenthesis = true;
+      } else {
+        _openedParenthesis = false;
+      }
 
       if (_expressionDisplayer.length == 1) {
         _inputAnimationController.reverse();

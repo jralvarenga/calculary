@@ -11,17 +11,19 @@ class SolveMainCalculator {
   );
 
   String formatResult(String result) {
-    var number = double.parse(result);
+    List<String> decimals = result.split('.');
 
-    if (number % 1 != 0) {
-      return number.toString();
-    } else {
-      if (result.length > 9) {
-        return number.toStringAsFixed(9).toString();
-      } else {
-        return number.round().toString();
-      }
+    if (decimals[1] == '0') {
+      return decimals[0];
     }
+
+    if (decimals[1].length >= 8) {
+      var number = double.parse(result);
+      var reduced = number.toStringAsFixed(8);
+      return reduced.toString();
+    }
+
+    return result;
   }
 
   String factorialSolver(String number) {
