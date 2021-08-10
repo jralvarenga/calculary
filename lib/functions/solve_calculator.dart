@@ -88,11 +88,15 @@ class SolveMainCalculator {
   String solveExpression() {
     String evaluatedResult = '';
 
-    if (this.globalFunction == 'AVG') {
-      evaluatedResult = getExpressionAvg();
-    } else {
-      evaluatedResult = evaluateAllInstances();
+    switch (this.globalFunction) {
+      case 'AVG':
+        evaluatedResult = getExpressionAvg();
+      break;
+      default:
+        evaluatedResult = evaluateAllInstances();
+      break;
     }
+    
     if (evaluatedResult == 'ERROR') {
       return 'ERROR';
     } else {

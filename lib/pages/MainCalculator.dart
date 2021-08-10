@@ -128,10 +128,10 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
 
   void addGlobalFunction(String function, String value) {
     setState(() {
-      _mode = function;
-      _globalFunction = value;
+      _mode = value;
+      _globalFunction = function;
 
-      _expressionDisplayer.insert(0, function);
+      _expressionDisplayer.insert(0, function + '(');
     });
   }
 
