@@ -18,6 +18,7 @@ class CustomTheme {
   ThemeData get themeData {
   
     var theme = ThemeData(
+      primarySwatch: Colors.pink,
       primaryColor: Color.fromRGBO(210, 155, 253, 1),
       accentColor: Color.fromRGBO(249, 220, 197, 1),
       backgroundColor: isDark ? Colors.black : Colors.white,

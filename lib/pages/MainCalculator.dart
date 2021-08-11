@@ -119,7 +119,11 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
           _canSolve = false;
           
           _expression.add(value);
-          _expressionDisplayer.add(value);
+          if (expression == '(') {
+            _expressionDisplayer.add(expression); 
+          } else {
+            _expressionDisplayer.add(expression + '(');
+          }
         break;
         case ')':
           _openedParenthesis = false;
@@ -146,6 +150,8 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         _result = result;
       }
     });
+    print(_expression);
+    print(_expressionDisplayer);
   }
 
   void addOperator(String operator, String value) {

@@ -80,7 +80,7 @@ class FunctionsPad extends StatelessWidget {
                       ),
                       FunctionButton(
                         text: 'exp',
-                        value: 'exp(',
+                        value: 'e^(',
                         textColor: Color.fromRGBO(114, 114, 114, 1),
                         textSize: 20,
                         buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -159,7 +159,7 @@ class FunctionsPad extends StatelessWidget {
                       // Other functions
                       FunctionButton(
                         text: 'log',
-                        value: 'log(',
+                        value: 'log10(',
                         textColor: Color.fromRGBO(114, 114, 114, 1),
                         textSize: 20,
                         buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -175,7 +175,7 @@ class FunctionsPad extends StatelessWidget {
                       ),
                       FunctionButton(
                         text: 'asin',
-                        value: 'asin(',
+                        value: 'arcsin(',
                         textColor: Color.fromRGBO(114, 114, 114, 1),
                         textSize: 20,
                         buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -183,7 +183,7 @@ class FunctionsPad extends StatelessWidget {
                       ),
                       FunctionButton(
                         text: 'acos',
-                        value: 'acos(',
+                        value: 'arccos(',
                         textColor: Color.fromRGBO(114, 114, 114, 1),
                         textSize: 20,
                         buttonColor: Color.fromRGBO(249, 220, 197, 1),
@@ -191,7 +191,7 @@ class FunctionsPad extends StatelessWidget {
                       ),
                       FunctionButton(
                         text: 'atan',
-                        value: 'atan(',
+                        value: 'arctan(',
                         textColor: Color.fromRGBO(114, 114, 114, 1),
                         textSize: 20,
                         buttonColor: Color.fromRGBO(249, 220, 197, 1),
