@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class NumberButton extends StatelessWidget {
   NumberButton({
@@ -33,6 +34,7 @@ class NumberButton extends StatelessWidget {
             )
           ),
           onPressed: () {
+            HapticFeedback.lightImpact();
             callback(text, value);
           },
           child: Text(
@@ -85,6 +87,7 @@ class FunctionButton extends StatelessWidget {
             )
           ),
           onPressed: () {
+            HapticFeedback.lightImpact();
             callback(text, value);
           },
           child: Text(
@@ -136,6 +139,7 @@ class LargeFunctionButton extends StatelessWidget {
             )
           ),
           onPressed: () {
+            HapticFeedback.lightImpact();
             if (value == 'enter') {
               callback();
             } else {
