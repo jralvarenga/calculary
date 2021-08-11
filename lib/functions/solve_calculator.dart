@@ -34,6 +34,7 @@ class SolveMainCalculator {
       for (var i = 1; i <= num; i++) {
         factorial = factorial*i;
       }
+
       return factorial.toString();
     } else {
       return 'error';
@@ -87,12 +88,53 @@ class SolveMainCalculator {
     return result.toString();
   }
 
+  String solveWithPercentage() {
+    List<String> reversedExpression = this.expression.reversed.toList();
+    int lastOperatorPosition = 0;
+    String numberValuesAfterOperator = '';
+    String percentageSign = '';
+
+    for (var i = 0; i < reversedExpression.length; i++) {
+      String item = reversedExpression[i];
+      if (item == '+' || item == '-' || item == '*' || item == '/') {
+        percentageSign = reversedExpression[i];
+        lastOperatorPosition = i;
+        break;
+      }
+    }
+    
+    for (var i = 0; i < lastOperatorPosition; i++) {
+      numberValuesAfterOperator += reversedExpression[i];
+    }
+    for (var i = 0; i < lastOperatorPosition; i++) {
+      reversedExpression.removeAt(i);
+    }
+
+    String percentageNumberString = numberValuesAfterOperator.split('').reversed.toList().join();
+    double percentage = double.parse(percentageNumberString)/100;
+    
+    List<String> newExpression = reversedExpression.reversed.toList();
+    newExpression.removeLast();
+    this.expression = newExpression;
+    var expressionResult = evaluateAllInstances();
+    print(expressionResult);
+    double expressionWithPercentage = percentage * double.parse(expressionResult);
+    List<String> expressionEvaluator = [expressionResult, percentageSign, expressionWithPercentage.toString()];
+    this.expression = expressionEvaluator;
+    String result = evaluateAllInstances();
+
+    return result;
+  }
+
   String solveExpression() {
     String evaluatedResult = '';
 
     switch (this.globalFunction) {
       case 'AVG':
         evaluatedResult = getExpressionAvg();
+      break;
+      case 'PEG':
+        evaluatedResult = solveWithPercentage();
       break;
       default:
         evaluatedResult = evaluateAllInstances();

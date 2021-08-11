@@ -73,6 +73,9 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
       if (_mode == 'Tip') {
         _mode = 'Calculator';
       }
+      if (value == '0' && _expression.last == '/') {
+        _canSolve = false;
+      }
 
       switch (expression) {
         case 'pi':
@@ -147,6 +150,12 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         );
 
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else if (_globalFunction == 'PEG') {
+        final snackBar = SnackBar(
+          content: const Text('Only can introduce 1 percentage at a time')
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
         _expressionDisplayer.add(operator);
         _expression.add(value);
@@ -170,11 +179,20 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
           var solver = new SolveMainCalculator(_expression, _globalFunction);
           String result = solver.solveExpression();
           double onlyTip = double.parse(result) * 0.1;
-          print(onlyTip);
 
           _expression = onlyTip.toString().split('');
           _expressionDisplayer = onlyTip.toString().split('');
           _result = '';
+        break;
+        case '%':
+          _mode = 'Percentage';
+          _globalFunction = 'PEG';
+          var solver = new SolveMainCalculator(_expression, _globalFunction);
+          String result = solver.solveExpression();
+
+          _expressionDisplayer.add(function);
+          _result = result;
+          _resultAnimationController.forward();
         break;
       }
     });
@@ -220,6 +238,7 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
 
   void deleteAllInput() {
     setState(() {
+      resetGlobalFunction();
       _inputAnimationController.reverse();
       _resultAnimationController.reverse();
 
