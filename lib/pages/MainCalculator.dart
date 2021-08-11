@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:calculary/functions/solve_calculator.dart';
 import 'package:calculary/widgets/FunctionsPad.dart';
@@ -105,6 +106,15 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         case '(':
         case '^':
         case 'sqrt':
+        case 'sin':
+        case 'cos':
+        case 'tan':
+        case 'asin':
+        case 'acos':
+        case 'atan':
+        case 'log':
+        case 'ln':
+        case 'exp':
           _openedParenthesis = true;
           _canSolve = false;
           
@@ -193,6 +203,14 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
           _expressionDisplayer.add(function);
           _result = result;
           _resultAnimationController.forward();
+        break;
+        case 'RAND':
+          var rng = new Random();
+          String randomNumber = rng.nextInt(100).toString();
+
+          _expression.add(randomNumber);
+          _expressionDisplayer.add(randomNumber);
+          _inputAnimationController.forward();
         break;
       }
     });

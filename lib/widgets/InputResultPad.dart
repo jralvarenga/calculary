@@ -39,24 +39,24 @@ class InputResultPad extends StatelessWidget {
                 direction: Axis.horizontal,
                 children: [
                   Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(right: 10, bottom: 15),
-                    reverse: true,
-                    scrollDirection: Axis.horizontal,
-                    child: SelectableText(
-                      expression.join(),
-                      showCursor: false,
-                      cursorWidth: 3,
-                      cursorColor: themeData.primaryColor,
-                      cursorRadius: Radius.circular(100),
-                      style: TextStyle(
-                        fontSize: 45,
-                        color: theme.textColor,
-                        fontWeight: FontWeight.bold
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.only(right: 10, bottom: 15),
+                      reverse: true,
+                      scrollDirection: Axis.horizontal,
+                      child: SelectableText(
+                        expression.join(),
+                        showCursor: false,
+                        cursorWidth: 3,
+                        cursorColor: themeData.primaryColor,
+                        cursorRadius: Radius.circular(100),
+                        style: TextStyle(
+                          fontSize: 45,
+                          color: theme.textColor,
+                          fontWeight: FontWeight.bold
+                        ),
                       ),
-                    ),
-                  )
-                ),
+                    )
+                  ),
                 ]
               ),
             )
