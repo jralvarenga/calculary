@@ -43,7 +43,14 @@ class SolveMainCalculator {
 
   String evaluateAllInstances() {
     ContextModel cm = ContextModel();
-    var splitted = this.expression.join().split(' ');
+    String joinedExpression = this.expression.join();
+
+    if (joinedExpression.contains(')(')) {
+      joinedExpression = joinedExpression.replaceAll(')(', ')*(');
+    }
+    
+    print(joinedExpression);
+    List<String> splitted = joinedExpression.split(' ');
     var values = [];
     bool error = false;
 
@@ -117,7 +124,6 @@ class SolveMainCalculator {
     newExpression.removeLast();
     this.expression = newExpression;
     var expressionResult = evaluateAllInstances();
-    print(expressionResult);
     double expressionWithPercentage = percentage * double.parse(expressionResult);
     List<String> expressionEvaluator = [expressionResult, percentageSign, expressionWithPercentage.toString()];
     this.expression = expressionEvaluator;

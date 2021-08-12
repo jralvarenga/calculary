@@ -150,8 +150,6 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
         _result = result;
       }
     });
-    print(_expression);
-    print(_expressionDisplayer);
   }
 
   void addOperator(String operator, String value) {
