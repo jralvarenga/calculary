@@ -31,6 +31,8 @@ dependencies:
   math_expressions: ^2.1.1
   provider: ^5.0.0
   http: ^0.13.3
+  modal_bottom_sheet: ^2.0.0
+  flutter_svg: ^0.22.0
 
 dev_dependencies:
   flutter_test:
@@ -48,9 +50,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/calculator.svg
+    - assets/counter.svg
+    - assets/function.svg
+    - assets/history.svg
+    - assets/settings.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

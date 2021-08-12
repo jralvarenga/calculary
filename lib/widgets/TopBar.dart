@@ -6,15 +6,13 @@ class TopBar extends StatelessWidget {
   TopBar({
     Key? key,
     required this.mode,
-    required this.rightButtonFunction
+    required this.rightButtonFunction,
+    required this.leftButtonFunction
   }) : super(key: key);
 
   final String mode;
   final rightButtonFunction;
-
-  void pressed() {
-    print('hi');
-  }
+  final leftButtonFunction;
   
   @override
   Widget build(BuildContext context) {
@@ -25,7 +23,7 @@ class TopBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: pressed,
+          onTap: leftButtonFunction,
           child: Container(
             padding: const EdgeInsets.only(left: 20, right: 20),
             decoration: BoxDecoration(

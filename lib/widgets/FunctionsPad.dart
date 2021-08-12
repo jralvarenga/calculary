@@ -1,5 +1,7 @@
+import 'package:calculary/services/CustomTheme.dart';
 import 'package:calculary/widgets/CalculatorButton.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FunctionsPad extends StatelessWidget {
   FunctionsPad({
@@ -15,6 +17,8 @@ class FunctionsPad extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CustomTheme theme = Provider.of(context);
+    var themeData = theme.themeData;
 
     return Container(
       child: Flex(
@@ -31,41 +35,41 @@ class FunctionsPad extends StatelessWidget {
                       FunctionButton(
                         text: 'TIP',
                         value: 'Tip',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 16,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addGlobalFunction
                       ),
                       FunctionButton(
                         text: 'AVG',
                         value: 'Average',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 14,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addGlobalFunction
                       ),
                       FunctionButton(
                         text: '!',
                         value: '!',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 22,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'sqrt',
                         value: 'sqrt(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 16,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: '^',
                         value: '^(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 22,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
 
@@ -73,41 +77,41 @@ class FunctionsPad extends StatelessWidget {
                       FunctionButton(
                         text: 'RAND',
                         value: 'rand',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 16,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addGlobalFunction
                       ),
                       FunctionButton(
                         text: 'exp',
                         value: 'e^(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'sin',
                         value: 'sin(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'cos',
                         value: 'cos(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'tan',
                         value: 'tan(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                     ],
@@ -118,41 +122,41 @@ class FunctionsPad extends StatelessWidget {
                       FunctionButton(
                         text: 'pi',
                         value: '3.14159265',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 22,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'e',
                         value: '2.718281828',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 22,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: '%',
                         value: '%',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 22,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addGlobalFunction
                       ),
                       FunctionButton(
                         text: '(',
                         value: '(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 22,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: ')',
                         value: ')',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 22,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
 
@@ -160,41 +164,41 @@ class FunctionsPad extends StatelessWidget {
                       FunctionButton(
                         text: 'log',
                         value: 'log10(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'ln',
                         value: 'ln(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'asin',
                         value: 'arcsin(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'acos',
                         value: 'arccos(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: 'atan',
                         value: 'arctan(',
-                        textColor: Color.fromRGBO(114, 114, 114, 1),
+                        textColor: theme.paperTextColor,
                         textSize: 20,
-                        buttonColor: Color.fromRGBO(249, 220, 197, 1),
+                        buttonColor: themeData.accentColor,
                         callback: addNumberExpression
                       ),
                     ],

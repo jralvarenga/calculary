@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:calculary/functions/solve_calculator.dart';
 import 'package:calculary/widgets/FunctionsPad.dart';
 import 'package:calculary/widgets/InputResultPad.dart';
+import 'package:calculary/widgets/MenuBottomSheet.dart';
 import 'package:calculary/widgets/NumberPad.dart';
 import 'package:calculary/widgets/TopBar.dart';
 import 'package:flutter/material.dart';
@@ -319,6 +320,15 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
                       children: [
                         TopBar(
                           mode: _mode,
+                          leftButtonFunction: () => showModalBottomSheet(
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30)
+                              )
+                            ),
+                            builder: (context) => buildSheet()
+                          ),
                           rightButtonFunction: resetGlobalFunction,
                         ),
                         InputResultPad(
@@ -360,4 +370,6 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
       ),
     );
   }
+
+  Widget buildSheet() => MenuBottomSheet();
 }
