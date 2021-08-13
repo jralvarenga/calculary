@@ -6,19 +6,22 @@ class CounterCalculator extends StatefulWidget {
   final String title;
 
   @override
-  _CounterCalculator createState() => _CounterCalculator();
+  _CounterCalculatorState createState() => _CounterCalculatorState();
 }
 
-class _CounterCalculator extends State<CounterCalculator> {
+class _CounterCalculatorState extends State<CounterCalculator> {
   
   @override
   Widget build(BuildContext context) {
 
-    return Container(
-      color: Colors.red,
-      child: Center(
-        child: Text('data'),
-      ),
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Container(
+            child: Text('hi'),
+          ),
+        ),
+      )
     );
   }
 }

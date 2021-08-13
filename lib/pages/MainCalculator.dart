@@ -15,10 +15,10 @@ class MainCalculator extends StatefulWidget {
   final String title;
   
   @override
-  _MainCalculator createState() => _MainCalculator();
+  _MainCalculatorState createState() => _MainCalculatorState();
 }
 
-class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixin {
+class _MainCalculatorState extends State<MainCalculator> with TickerProviderStateMixin {
   String _mode = 'Calculator';
   List<String> _expression = [];
   List<String> _expressionDisplayer = [];
