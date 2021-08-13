@@ -320,15 +320,6 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
                       children: [
                         TopBar(
                           mode: _mode,
-                          leftButtonFunction: () => showModalBottomSheet(
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(30)
-                              )
-                            ),
-                            builder: (context) => buildSheet()
-                          ),
                           rightButtonFunction: resetGlobalFunction,
                         ),
                         InputResultPad(
@@ -370,6 +361,4 @@ class _MainCalculator extends State<MainCalculator> with TickerProviderStateMixi
       ),
     );
   }
-
-  Widget buildSheet() => MenuBottomSheet();
 }

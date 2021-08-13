@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:calculary/services/CustomTheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,18 @@ class MenuBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     CustomTheme theme = Provider.of(context);
     var themeData = theme.themeData;
+
+    void goToPage(String link) {
+      Navigator.of(context).pop();
+      Navigator.pushNamed(context, link);
+
+      /*Timer(
+        Duration(seconds: 1),
+        () {
+          Navigator.pushNamed(context, link);
+        }
+      );*/
+    }
 
     return Container(
       padding: EdgeInsets.all(25),
@@ -25,12 +39,12 @@ class MenuBottomSheet extends StatelessWidget {
             children: [
               MenuBottomSheetItem(
                 itemName: 'Calculator',
-                itemFunction: () => print('hi'),
+                itemFunction: () => goToPage('/'),
                 icon: 'assets/calculator.svg',
               ),
               MenuBottomSheetItem(
                 itemName: 'Counter',
-                itemFunction: () => Navigator.pushNamed(context, '/counter'),
+                itemFunction: () => goToPage('/counter'),
                 icon: 'assets/counter.svg',
               ),
             ],
