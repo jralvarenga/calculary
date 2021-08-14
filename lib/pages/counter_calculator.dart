@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:calculary/services/custom_theme.dart';
+import 'package:calculary/widgets/counter_calculator/counter_added_item.dart';
+import 'package:calculary/widgets/counter_calculator/counter_options.dart';
 import 'package:calculary/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -114,11 +117,40 @@ class _CounterCalculatorState extends State<CounterCalculator> {
       prefs.setString('counter_calculator_input_value', _inputControler.text);
     });
   }
+
+  void resetCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      _count = '0';
+      _counterItems = [];
+      
+      prefs.setString('counter_calculator_count', _count);
+      prefs.setString('counter_calculator_items', jsonEncode(_counterItems));
+      prefs.setString('counter_calculator_input_value', '1');
+    });
+
+    Navigator.of(context).pop();
+  }
   
   @override
   Widget build(BuildContext context) {
     CustomTheme theme = Provider.of(context);
     var themeData = theme.themeData;
+
+    void openCounterOptions() {
+      HapticFeedback.lightImpact();
+
+      showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(30)
+          )
+        ),
+        builder: (context) => buildSheet()
+      );
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -134,7 +166,7 @@ class _CounterCalculatorState extends State<CounterCalculator> {
                       children: [
                         TopBar(
                           mode: mode,
-                          rightButtonFunction: () => print('hi')
+                          rightButtonFunction: () => openCounterOptions()
                         ),
                         Container(
                           alignment: Alignment(1, 1),
@@ -225,53 +257,8 @@ class _CounterCalculatorState extends State<CounterCalculator> {
       )
     );
   }
-}
 
-// ignore: must_be_immutable
-class CounterAddedItem extends StatelessWidget {
-  CounterAddedItem({
-    Key? key,
-    required this.addedAmount,
-    required this.itemIndex,
-    required this.removeFromCount
-  }) : super(key: key);
-
-  String addedAmount;
-  int itemIndex;
-  Function removeFromCount;
-
-  @override
-  Widget build(BuildContext context) {
-    CustomTheme theme = Provider.of(context);
-    var themeData = theme.themeData;
-
-    return Container(
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: themeData.dialogBackgroundColor,
-          width: 2
-        )
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Added amount: ' + addedAmount,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold
-            ),
-          ),
-          IconButton(
-            onPressed: () => removeFromCount(itemIndex),
-            icon: Icon(
-              Icons.delete
-            )
-          ),
-        ],
-      ),    
-    );
-  }
+  Widget buildSheet() => CounterOptions(
+    resetCounter: resetCounter
+  );
 }
