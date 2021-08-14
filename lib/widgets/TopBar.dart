@@ -1,6 +1,7 @@
 import 'package:calculary/services/CustomTheme.dart';
 import 'package:calculary/widgets/MenuBottomSheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class TopBar extends StatefulWidget {
@@ -24,19 +25,25 @@ class _TopBarState extends State<TopBar> {
     CustomTheme theme = Provider.of(context);
     var themeData = theme.themeData;
 
+    void showMenuBottomSheet() {
+      HapticFeedback.lightImpact();
+      
+      showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(30)
+          )
+        ),
+        builder: (context) => buildSheet()
+      );
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: () => showModalBottomSheet(
-            context: context,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(30)
-              )
-            ),
-            builder: (context) => buildSheet()
-          ),
+          onTap: () => showMenuBottomSheet(),
           child: Container(
             padding: const EdgeInsets.only(left: 20, right: 20),
             decoration: BoxDecoration(
