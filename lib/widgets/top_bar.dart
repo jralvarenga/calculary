@@ -1,5 +1,5 @@
-import 'package:calculary/services/CustomTheme.dart';
-import 'package:calculary/widgets/MenuBottomSheet.dart';
+import 'package:calculary/services/custom_theme.dart';
+import 'package:calculary/widgets/menu_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

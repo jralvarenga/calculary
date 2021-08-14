@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:calculary/services/CustomTheme.dart';
-import 'package:calculary/widgets/TopBar.dart';
+import 'package:calculary/services/custom_theme.dart';
+import 'package:calculary/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

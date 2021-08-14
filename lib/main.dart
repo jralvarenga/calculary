@@ -1,6 +1,6 @@
-import 'package:calculary/pages/CounterCalculator.dart';
-import 'package:calculary/pages/MainCalculator.dart';
-import 'package:calculary/services/CustomTheme.dart';
+import 'package:calculary/pages/counter_calculator.dart';
+import 'package:calculary/pages/main_calculator.dart';
+import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

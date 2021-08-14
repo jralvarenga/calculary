@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:calculary/functions/solve_calculator.dart';
-import 'package:calculary/widgets/FunctionsPad.dart';
-import 'package:calculary/widgets/InputResultPad.dart';
-import 'package:calculary/widgets/MenuBottomSheet.dart';
-import 'package:calculary/widgets/NumberPad.dart';
-import 'package:calculary/widgets/TopBar.dart';
+import 'package:calculary/widgets/function_pad.dart';
+import 'package:calculary/widgets/input_result_pad.dart';
+import 'package:calculary/widgets/menu_bottom_sheet.dart';
+import 'package:calculary/widgets/number_pad.dart';
+import 'package:calculary/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 
 class MainCalculator extends StatefulWidget {
