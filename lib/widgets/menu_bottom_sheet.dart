@@ -16,13 +16,6 @@ class MenuBottomSheet extends StatelessWidget {
     void goToPage(String link) {
       Navigator.of(context).pop();
       Navigator.pushNamed(context, link);
-
-      /*Timer(
-        Duration(seconds: 1),
-        () {
-          Navigator.pushNamed(context, link);
-        }
-      );*/
     }
 
     return Container(
