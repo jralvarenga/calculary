@@ -88,8 +88,9 @@ class _CounterCalculatorState extends State<CounterCalculator> {
     final prefs = await SharedPreferences.getInstance();
     String counterNewValue = _inputControler.text;
     var newCounter = double.parse(_count) + double.parse(counterNewValue);
-
     newCounter.toStringAsFixed(2);
+
+    HapticFeedback.lightImpact();
     setState(() {
       _count = newCounter.toString();
       _counterItems.add(CounterItemData(
@@ -108,6 +109,7 @@ class _CounterCalculatorState extends State<CounterCalculator> {
     var newCounter = double.parse(_count) - double.parse(reversedItems[i].amount);
     reversedItems.removeAt(i);
 
+    HapticFeedback.lightImpact();
     setState(() {
       _count = newCounter.toString();
       _counterItems = reversedItems.reversed.toList();
