@@ -2,9 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:calculary/functions/solve_calculator.dart';
-import 'package:calculary/widgets/function_pad.dart';
-import 'package:calculary/widgets/input_result_pad.dart';
-import 'package:calculary/widgets/menu_bottom_sheet.dart';
+import 'package:calculary/widgets/main_calculator/function_pad.dart';
+import 'package:calculary/widgets/main_calculator/input_result_pad.dart';
 import 'package:calculary/widgets/number_pad.dart';
 import 'package:calculary/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
