@@ -51,11 +51,6 @@ class MenuBottomSheet extends StatelessWidget {
                 itemFunction: () => print('hi'),
                 icon: 'assets/settings.svg',
               ),
-              MenuBottomSheetItem(
-                itemName: 'History',
-                itemFunction: () => print('hi'),
-                icon: 'assets/history.svg',
-              ),
             ],
           )
         ],

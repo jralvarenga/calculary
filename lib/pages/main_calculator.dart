@@ -4,9 +4,11 @@ import 'dart:math';
 import 'package:calculary/functions/solve_calculator.dart';
 import 'package:calculary/widgets/main_calculator/function_pad.dart';
 import 'package:calculary/widgets/main_calculator/input_result_pad.dart';
+import 'package:calculary/widgets/main_calculator/main_calculator_options.dart';
 import 'package:calculary/widgets/number_pad.dart';
 import 'package:calculary/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MainCalculator extends StatefulWidget {
   MainCalculator({Key? key, required this.title}) : super(key: key);
@@ -302,6 +304,19 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
   
   @override
   Widget build(BuildContext context) {
+
+    void openCalculatorOptions() {
+      HapticFeedback.lightImpact();
+      showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(30)
+          )
+        ),
+        builder: (context) => buildCalculatorOptions()
+      );
+    }
   
     return Scaffold(
       body: SafeArea(
@@ -318,8 +333,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TopBar(
-                          mode: _mode,
-                          rightButtonFunction: resetGlobalFunction,
+                          mode: 'History',
+                          rightButtonFunction: openCalculatorOptions,
                         ),
                         InputResultPad(
                           expression: _expressionDisplayer,
@@ -360,4 +375,6 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       ),
     );
   }
+
+  Widget buildCalculatorOptions() => MainCalculatorOptions();
 }

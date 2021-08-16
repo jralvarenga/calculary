@@ -3,7 +3,6 @@ import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
 class CounterAddedItem extends StatelessWidget {
   CounterAddedItem({
     Key? key,
@@ -12,9 +11,9 @@ class CounterAddedItem extends StatelessWidget {
     required this.removeFromCount
   }) : super(key: key);
 
-  String addedAmount;
-  int itemIndex;
-  Function removeFromCount;
+  final String addedAmount;
+  final int itemIndex;
+  final Function removeFromCount;
 
   @override
   Widget build(BuildContext context) {

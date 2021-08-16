@@ -2,14 +2,13 @@ import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// ignore: must_be_immutable
 class CounterOptions extends StatelessWidget {
   CounterOptions({
     Key? key,
     required this.resetCounter,
   }) : super(key: key);
 
-  var resetCounter;
+  final resetCounter;
   
   @override
   Widget build(BuildContext context) {
