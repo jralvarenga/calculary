@@ -1,17 +1,21 @@
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/main_calculator/history_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MainCalculatorOptions extends StatelessWidget {
+class MainCalculatorOptions extends StatefulWidget {
   const MainCalculatorOptions({
-    Key? key,
+    Key? key
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    CustomTheme theme = Provider.of(context);
+  _MainCalculatorOptionsState createState() => _MainCalculatorOptionsState();
+}
+
+class _MainCalculatorOptionsState extends State<MainCalculatorOptions> {
+
+  @override
+  Widget build(BuildContext context) {CustomTheme theme = Provider.of(context);
     var themeData = theme.themeData;
 
     void selectHistoryItem(int index) {
