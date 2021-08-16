@@ -1,12 +1,44 @@
+import 'dart:convert';
+
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/main_calculator/history_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class HistoryItemData {
+  List<String> expression;
+  List<String> expressionDisplayer;
+  String result;
+
+  factory HistoryItemData.fromJson(Map<String, dynamic> json) {
+    return HistoryItemData(
+      expression: List<String>.from(json["expression"].map((x) => x)),
+      expressionDisplayer: List<String>.from(json["expressionDisplayer"].map((x) => x)),
+      result: json['result'] as String,
+    );
+  }
+  
+  HistoryItemData({
+    Key? key,
+    required this.expression,
+    required this.expressionDisplayer,
+    required this.result,
+  });
+}
 
 class MainCalculatorOptions extends StatefulWidget {
   const MainCalculatorOptions({
-    Key? key
+    Key? key,
+    required this.history,
+    required this.setItemsFromHistory,
+    required this.resetHistory
   }) : super(key: key);
+
+  final List history;
+  final Function setItemsFromHistory;
+  final resetHistory;
 
   @override
   _MainCalculatorOptionsState createState() => _MainCalculatorOptionsState();
@@ -15,11 +47,16 @@ class MainCalculatorOptions extends StatefulWidget {
 class _MainCalculatorOptionsState extends State<MainCalculatorOptions> {
 
   @override
-  Widget build(BuildContext context) {CustomTheme theme = Provider.of(context);
+  Widget build(BuildContext context) {
+    CustomTheme theme = Provider.of(context);
     var themeData = theme.themeData;
+    final List calculatorHistory = widget.history;
 
     void selectHistoryItem(int index) {
-      print(index);
+      HapticFeedback.lightImpact();
+      List reversedHistory = calculatorHistory.reversed.toList();
+      var historyItem = reversedHistory[index];
+      widget.setItemsFromHistory(historyItem);
     }
 
     return Container(
@@ -45,7 +82,7 @@ class _MainCalculatorOptionsState extends State<MainCalculatorOptions> {
                 ),
               ),
               TextButton(
-                onPressed: () => print('clear'),
+                onPressed: widget.resetHistory,
                 style: TextButton.styleFrom(
                   backgroundColor: themeData.dialogBackgroundColor,
                   shape: RoundedRectangleBorder(
@@ -65,15 +102,15 @@ class _MainCalculatorOptionsState extends State<MainCalculatorOptions> {
           Expanded(
             child: Container(
               child: ListView.separated(
-                itemCount: [1, 2, 3].length,
+                itemCount: calculatorHistory.length,
                 separatorBuilder: (_, i) => SizedBox(
                   height: 10,
                 ),
                 itemBuilder: (_, i) => Container(
                   child: HistoryItem(
-                    index: 2,
-                    expression: '2+6-9+pi',
-                    result: '455',
+                    index: i,
+                    expression: calculatorHistory.reversed.toList()[i].expressionDisplayer.join(),
+                    result: calculatorHistory.reversed.toList()[i].result,
                     selectItem: selectHistoryItem,
                   ),
                 ),

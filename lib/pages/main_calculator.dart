@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:calculary/functions/solve_calculator.dart';
@@ -9,6 +10,34 @@ import 'package:calculary/widgets/number_pad.dart';
 import 'package:calculary/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class HistoryItem {
+  List<String> expression;
+  List<String> expressionDisplayer;
+  String result;
+
+  Map toJson() => {
+    'expression': expression,
+    'expressionDisplayer': expressionDisplayer,
+    'result': result,
+  };
+
+  factory HistoryItem.fromJson(Map<String, dynamic> json) {
+    return HistoryItem(
+      expression: List<String>.from(json["expression"].map((x) => x.toString())),
+      expressionDisplayer: List<String>.from(json["expressionDisplayer"].map((x) => x.toString())),
+      result: json['result'] as String,
+    );
+  }
+  
+  HistoryItem({
+    Key? key,
+    required this.expression,
+    required this.expressionDisplayer,
+    required this.result,
+  });
+}
 
 class MainCalculator extends StatefulWidget {
   MainCalculator({Key? key, required this.title}) : super(key: key);
@@ -20,6 +49,7 @@ class MainCalculator extends StatefulWidget {
 }
 
 class _MainCalculatorState extends State<MainCalculator> with TickerProviderStateMixin {
+  List _calculatorHistory = [];
   String _mode = 'Calculator';
   List<String> _expression = [];
   List<String> _expressionDisplayer = [];
@@ -38,9 +68,23 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
   late Animation _inputAnimation;
   late Animation _resultAnimation;
 
+  void getCalculatorHistory() async {
+    final prefs = await SharedPreferences.getInstance();
+    String historyJson = (prefs.getString('main_calculator_history') ?? '[]');
+    final parsedHistoryJson = jsonDecode(historyJson).cast<Map<String, dynamic>>();
+    List history = parsedHistoryJson.map<HistoryItem>((json) => HistoryItem.fromJson(json)).toList();
+
+    setState(() {
+      _calculatorHistory = history;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+
+    getCalculatorHistory();
+
     _inputAnimationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 200),
@@ -70,6 +114,27 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
   }
   /////////////////////////
 
+  void setItemsFromHistory(HistoryItem item) {
+    setState(() {
+      _expression = item.expression;
+      _expressionDisplayer = item.expressionDisplayer;
+      _result = item.result;
+    });
+    _inputAnimationController.forward();
+    _resultAnimationController.forward();
+    Navigator.of(context).pop();
+  }
+
+  void resetHistory() async {
+    HapticFeedback.lightImpact();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('main_calculator_history');
+    setState(() {
+      _calculatorHistory = [];
+    });
+    Navigator.of(context).pop();
+  }
+  
   void addNumberExpression(String expression, String value) {
     setState(() {
       _inputAnimationController.forward();
@@ -278,7 +343,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     });
   }
 
-  void enterExpression() {
+  void enterExpression() async {
+    final prefs = await SharedPreferences.getInstance();
     setState(() {
       if (_openedParenthesis) {
         final snackBar = SnackBar(
@@ -288,7 +354,16 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       } else {
         var solver = new SolveMainCalculator(_expression, _globalFunction);
+
         String result = solver.solveExpression();
+        HistoryItem historyItem = HistoryItem(
+          expression: _expression,
+          expressionDisplayer: _expressionDisplayer,
+          result: result
+        );
+        _calculatorHistory.add(historyItem);
+        prefs.setString('main_calculator_history', jsonEncode(_calculatorHistory));
+
         _resultAnimationController.reverse();
         _expression = result.split('');
         _expressionDisplayer = result.split('');
@@ -376,5 +451,9 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     );
   }
 
-  Widget buildCalculatorOptions() => MainCalculatorOptions();
+  Widget buildCalculatorOptions() => MainCalculatorOptions(
+    history: _calculatorHistory,
+    setItemsFromHistory: setItemsFromHistory,
+    resetHistory: resetHistory,
+  );
 }
