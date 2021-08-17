@@ -2,6 +2,7 @@ import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import "package:charcode/charcode.dart";
 
 class FunctionsPad extends StatelessWidget {
   FunctionsPad({
@@ -57,7 +58,7 @@ class FunctionsPad extends StatelessWidget {
                         callback: addNumberExpression
                       ),
                       FunctionButton(
-                        text: 'sqrt',
+                        text: String.fromCharCode($radic),
                         value: 'sqrt(',
                         textColor: theme.paperTextColor,
                         textSize: 16,
@@ -120,7 +121,7 @@ class FunctionsPad extends StatelessWidget {
                     children: [
                       // Main functions
                       FunctionButton(
-                        text: 'pi',
+                        text: String.fromCharCode($pi),
                         value: '3.14159265',
                         textColor: theme.paperTextColor,
                         textSize: 22,

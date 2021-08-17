@@ -156,9 +156,11 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         _canSolve = false;
       }
 
-      switch (expression) {
-        case 'pi':
-        case 'e':
+      switch (value) {
+        // Pi
+        case '3.14159265':
+        // Euler number
+        case '2.718281828':
           _expression.add(value);
           _expressionDisplayer.add(expression);
           _result = value;
@@ -183,16 +185,16 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         break;
         case '(':
         case '^':
-        case 'sqrt':
-        case 'sin':
-        case 'cos':
-        case 'tan':
-        case 'asin':
-        case 'acos':
-        case 'atan':
-        case 'log':
-        case 'ln':
-        case 'exp':
+        case 'sqrt(':
+        case 'sin(':
+        case 'cos(':
+        case 'tan(':
+        case 'asin(':
+        case 'acos(':
+        case 'atan(':
+        case 'log(':
+        case 'ln(':
+        case 'exp(':
           _openedParenthesis = true;
           _canSolve = false;
           
