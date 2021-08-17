@@ -53,7 +53,6 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
   String _mode = 'Calculator';
   List<String> _expression = [];
   List<String> _expressionDisplayer = [];
-  int characterNumber = 0;
   String _globalFunction = '';
   var _result = '';
 

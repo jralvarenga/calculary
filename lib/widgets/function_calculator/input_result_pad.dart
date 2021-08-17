@@ -2,10 +2,17 @@ import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class InputPad extends StatelessWidget {
-  const InputPad({
-    Key? key
+class InputResultPadFunctionCalculator extends StatelessWidget {
+  const InputResultPadFunctionCalculator({
+    Key? key,
+    required this.expression,
+    required this.result,
+    required this.xValue
   }) : super(key: key);
+
+  final List<String> expression;
+  final String result;
+  final String xValue;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +39,7 @@ class InputPad extends StatelessWidget {
                       reverse: true,
                       scrollDirection: Axis.horizontal,
                       child: SelectableText(
-                        'f(x)=' + '2x^(2)+3x-1',
+                        'f(x)=' + expression.join(),
                         showCursor: false,
                         cursorWidth: 3,
                         cursorColor: themeData.primaryColor,
@@ -69,7 +76,7 @@ class InputPad extends StatelessWidget {
                       reverse: true,
                       scrollDirection: Axis.horizontal,
                       child: SelectableText(
-                        'x=' + '3',
+                        'x=' + xValue,
                         showCursor: false,
                         cursorWidth: 3,
                         cursorColor: themeData.primaryColor,
@@ -104,28 +111,13 @@ class InputPad extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: SelectableText(
-                      'a=' + '3',
+                      result,
                       showCursor: false,
                       cursorWidth: 3,
                       cursorColor: themeData.primaryColor,
                       cursorRadius: Radius.circular(100),
                       style: TextStyle(
-                        fontSize: 25,
-                        color: theme.textColor,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: SelectableText(
-                      'b=' + '5',
-                      showCursor: false,
-                      cursorWidth: 3,
-                      cursorColor: themeData.primaryColor,
-                      cursorRadius: Radius.circular(100),
-                      style: TextStyle(
-                        fontSize: 25,
+                        fontSize: 30,
                         color: theme.textColor,
                         fontWeight: FontWeight.bold
                       ),

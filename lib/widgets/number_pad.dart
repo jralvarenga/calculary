@@ -11,6 +11,7 @@ class NumberPad extends StatelessWidget {
     required this.deleteFromExpression,
     required this.deleteAllInput,
     required this.enterExpression,
+    this.productIcon = 'x'
   }) : super(key: key);
 
   final Function addNumberExpression;
@@ -18,6 +19,7 @@ class NumberPad extends StatelessWidget {
   final Function deleteFromExpression;
   final Function enterExpression;
   final Function deleteAllInput;
+  final String productIcon;
 
   void addFunction(String function) {
     print(function);
@@ -132,7 +134,7 @@ class NumberPad extends StatelessWidget {
               callback: addOperator
             ),
             FunctionButton(
-              text: 'x',
+              text: productIcon,
               value: '*',
               textColor: theme.paperTextColor,
               textSize: 22,
