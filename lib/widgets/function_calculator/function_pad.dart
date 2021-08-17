@@ -142,7 +142,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                         textColor: theme.paperTextColor,
                         textSize: 22,
                         buttonColor: themeData.accentColor,
-                        callback: addGlobalFunction
+                        callback: addNumberExpression
                       ),
                       FunctionButton(
                         text: '(',

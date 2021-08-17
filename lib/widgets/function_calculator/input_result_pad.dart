@@ -7,12 +7,16 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
     Key? key,
     required this.expression,
     required this.result,
-    required this.xValue
+    required this.xValue,
+    required this.inputIndex,
+    required this.changeInputIndex
   }) : super(key: key);
 
   final List<String> expression;
   final String result;
   final String xValue;
+  final int inputIndex;
+  final changeInputIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,8 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(100)
             ),
-            child: Container(
+            child: GestureDetector(
+              onTap: () => changeInputIndex(0),
               //opacity: inputAnimation,
               child: Flex(
                 direction: Axis.horizontal,
@@ -38,12 +43,8 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       reverse: true,
                       scrollDirection: Axis.horizontal,
-                      child: SelectableText(
+                      child: Text(
                         'f(x)=' + expression.join(),
-                        showCursor: false,
-                        cursorWidth: 3,
-                        cursorColor: themeData.primaryColor,
-                        cursorRadius: Radius.circular(100),
                         style: TextStyle(
                           fontSize: 30,
                           color: theme.textColor,
@@ -58,14 +59,15 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
           ),
           Divider(
             thickness: 1,
-            color: themeData.dialogBackgroundColor,
+            color: inputIndex == 0 ? themeData.primaryColor : themeData.dialogBackgroundColor,
           ),
           Container(
             alignment: Alignment(1, 1),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Container(
+            child: GestureDetector(
+              onTap: () => changeInputIndex(1),
               //opacity: inputAnimation,
               child: Flex(
                 direction: Axis.horizontal,
@@ -75,12 +77,8 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       reverse: true,
                       scrollDirection: Axis.horizontal,
-                      child: SelectableText(
+                      child: Text(
                         'x=' + xValue,
-                        showCursor: false,
-                        cursorWidth: 3,
-                        cursorColor: themeData.primaryColor,
-                        cursorRadius: Radius.circular(100),
                         style: TextStyle(
                           fontSize: 25,
                           color: theme.textColor,
@@ -95,7 +93,7 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
           ),
           Divider(
             thickness: 1,
-            color: themeData.dialogBackgroundColor,
+            color: inputIndex == 1 ? themeData.primaryColor : themeData.dialogBackgroundColor,
           ),
           Container(
             alignment: Alignment(1, 1),

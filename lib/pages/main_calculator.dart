@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:calculary/functions/solve_calculator.dart';
+import 'package:calculary/services/solve_calculator.dart';
 import 'package:calculary/widgets/main_calculator/function_pad.dart';
 import 'package:calculary/widgets/main_calculator/input_result_pad.dart';
 import 'package:calculary/widgets/main_calculator/main_calculator_options.dart';
@@ -66,6 +66,14 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
   late AnimationController _resultAnimationController;
   late Animation _inputAnimation;
   late Animation _resultAnimation;
+
+  void sendSnackbar(String text) {
+    final snackBar = SnackBar(
+      content: Text(text)
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   void getCalculatorHistory() async {
     final prefs = await SharedPreferences.getInstance();
@@ -238,17 +246,9 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       }
       // Verifies AVG mode
       if (_globalFunction == 'AVG' && (operator == 'x' || operator == '/')) {
-        final snackBar = SnackBar(
-          content: const Text('Only + & - operators allowed in average mode')
-        );
-
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        sendSnackbar('Only + & - operators allowed in average mode');
       } else if (_globalFunction == 'PEG') {
-        final snackBar = SnackBar(
-          content: const Text('Only can introduce 1 percentage at a time')
-        );
-
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        sendSnackbar('Only can introduce 1 percentage at a time');
       } else {
         _expressionDisplayer.add(operator);
         _expression.add(value);
@@ -348,8 +348,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       _canSolve = true;
 
       Timer(Duration(milliseconds: 200), () {
-        _expression = [''];
-        _expressionDisplayer = [''];
+        _expression = [];
+        _expressionDisplayer = [];
         _result = '';
       });
     });
@@ -359,11 +359,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       if (_openedParenthesis) {
-        final snackBar = SnackBar(
-          content: const Text('Close all parenthesis')
-        );
-
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        sendSnackbar('Close all parenthesis');
       } else {
         var solver = new SolveMainCalculator(_expression, _globalFunction);
 
