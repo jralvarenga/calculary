@@ -40,9 +40,9 @@ class HistoryItem {
 }
 
 class MainCalculator extends StatefulWidget {
-  MainCalculator({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  MainCalculator({
+    Key? key,
+  }) : super(key: key);
   
   @override
   _MainCalculatorState createState() => _MainCalculatorState();

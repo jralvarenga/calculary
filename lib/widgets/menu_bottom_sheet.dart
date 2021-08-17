@@ -45,6 +45,11 @@ class MenuBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               MenuBottomSheetItem(
+                itemName: 'Function',
+                itemFunction: () => goToPage('/function'),
+                icon: 'assets/function.svg',
+              ),
+              MenuBottomSheetItem(
                 itemName: 'Settings',
                 itemFunction: () => print('hi'),
                 icon: 'assets/settings.svg',

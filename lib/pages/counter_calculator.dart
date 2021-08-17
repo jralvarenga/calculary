@@ -43,9 +43,9 @@ class AllCounterData {
 }
 
 class CounterCalculator extends StatefulWidget {
-  CounterCalculator({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  CounterCalculator({
+    Key? key
+  }) : super(key: key);
 
   @override
   _CounterCalculatorState createState() => _CounterCalculatorState();

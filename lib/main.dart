@@ -1,4 +1,5 @@
 import 'package:calculary/pages/counter_calculator.dart';
+import 'package:calculary/pages/function_calculator.dart';
 import 'package:calculary/pages/main_calculator.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
@@ -30,11 +31,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Calculary',
         theme: appTheme.themeData,
-        home: MainCalculator(
-          title: 'Main Calculator'
-        ),
+        home: MainCalculator(),
         routes: {
-          '/counter': (context) => CounterCalculator(title: 'Counter Calculator')
+          '/counter': (context) => CounterCalculator(),
+          '/function': (context) => FunctionCalculator()
         },
       ),
     );
