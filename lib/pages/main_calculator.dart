@@ -134,6 +134,17 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     });
     Navigator.of(context).pop();
   }
+
+  void setANS() {
+    HapticFeedback.lightImpact();
+    var lastHistoryItem = _calculatorHistory.last;
+    setState(() {
+      _expression.add(lastHistoryItem.result);
+      _expressionDisplayer.add(lastHistoryItem.result);
+    });
+    _inputAnimationController.forward();
+    Navigator.of(context).pop();
+  }
   
   void addNumberExpression(String expression, String value) {
     setState(() {
@@ -455,5 +466,6 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     history: _calculatorHistory,
     setItemsFromHistory: setItemsFromHistory,
     resetHistory: resetHistory,
+    setANS: setANS,
   );
 }

@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/main_calculator/history_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryItemData {
   List<String> expression;
@@ -33,12 +30,14 @@ class MainCalculatorOptions extends StatefulWidget {
     Key? key,
     required this.history,
     required this.setItemsFromHistory,
-    required this.resetHistory
+    required this.resetHistory,
+    required this.setANS
   }) : super(key: key);
 
   final List history;
   final Function setItemsFromHistory;
   final resetHistory;
+  final setANS;
 
   @override
   _MainCalculatorOptionsState createState() => _MainCalculatorOptionsState();
@@ -66,13 +65,20 @@ class _MainCalculatorOptionsState extends State<MainCalculatorOptions> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'History',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.transparent
+              TextButton(
+                onPressed: widget.setANS,
+                style: TextButton.styleFrom(
+                  backgroundColor: themeData.dialogBackgroundColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  )
                 ),
+                child: Text(
+                  'ANS',
+                  style: TextStyle(
+                    color: theme.textColor
+                  ),
+                )
               ),
               Text(
                 'History',
