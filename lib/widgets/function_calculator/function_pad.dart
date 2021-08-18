@@ -180,7 +180,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       ),
                       FunctionButton(
                         text: 'asin',
-                        value: 'arcsin(',
+                        value: 'asin(',
                         textColor: theme.paperTextColor,
                         textSize: 20,
                         buttonColor: themeData.accentColor,
@@ -188,7 +188,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       ),
                       FunctionButton(
                         text: 'acos',
-                        value: 'arccos(',
+                        value: 'acos(',
                         textColor: theme.paperTextColor,
                         textSize: 20,
                         buttonColor: themeData.accentColor,
@@ -196,7 +196,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       ),
                       FunctionButton(
                         text: 'atan',
-                        value: 'arctan(',
+                        value: 'atan(',
                         textColor: theme.paperTextColor,
                         textSize: 20,
                         buttonColor: themeData.accentColor,

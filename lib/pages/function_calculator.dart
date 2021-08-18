@@ -1,3 +1,4 @@
+import 'package:calculary/services/solve_function_calculator.dart';
 import 'package:calculary/widgets/function_calculator/function_pad.dart';
 import 'package:calculary/widgets/function_calculator/input_result_pad.dart';
 import 'package:calculary/widgets/number_pad.dart';
@@ -17,11 +18,26 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   String _xValue = '?';
   String _result = '';
   int _inputIndex = 0;
+  String _mode = 'function';
 
   // Solver conditions
   bool _openedParenthesis = false;
   bool _hasOperator = false;
   bool _canSolve = true;
+
+  void changeInputIndex(int index) {
+    setState(() {
+      _inputIndex = index;
+    });
+  }
+
+  void sendSnackbar(String text) {
+    final snackBar = SnackBar(
+      content: Text(text)
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   void addNumberExpression(String expression, String value) {
     setState(() {
@@ -36,7 +52,11 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
               _expressionDisplayer.add(expression);
             break;
             case 1:
-              _xValue = value;
+              if (_xValue == '?') {
+                _xValue = value; 
+              } else {
+                _xValue += value;
+              }
             break;
           }
         break;
@@ -52,7 +72,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
           _expressionDisplayer.add(addedFactorialInDisplayer);
         break;
         case '(':
-        case '^':
+        case '^(':
         case 'sqrt(':
         case 'sin(':
         case 'cos(':
@@ -81,8 +101,19 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
           _expressionDisplayer.add(expression);
         break;
         default:
-          _expression.add(value);
-          _expressionDisplayer.add(expression);
+          switch (_inputIndex) {
+            case 0:
+              _expression.add(value);
+              _expressionDisplayer.add(expression);
+            break;
+            case 1:
+              if (_xValue == '?') {
+                _xValue = value; 
+              } else {
+                _xValue += value;
+              }
+            break;
+          }
         break;
       }
 
@@ -110,11 +141,44 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       } else {
         _openedParenthesis = false;
       }
+      
+      switch (_inputIndex) {
+        case 0:
+          _expressionDisplayer.removeLast();
+          _expression.removeLast();  
+        break;
+        case 1:
+          print('hi');
+          _xValue = _xValue.substring(0, _xValue.length - 1);
+        break;
+      }
+    });
+  }
 
-      print(_expressionDisplayer);
+  void enterExpression() async {
+    if (_xValue == '?') {
+      sendSnackbar('Try plotting this function or give it an x value');
+    } else {
+      var solver = new SolveFunctionCalculator(x: _xValue, fx: _expression, mode: _mode);
+      String result = await solver.solveFunction();
+      setState(() {
+        _result = result;
+      });
+    }
+    setState(() {
+      _inputIndex = 0;
+    });
+  }
 
-      _expressionDisplayer.removeLast();
-      _expression.removeLast();
+  void deleteAllInput() {
+    setState(() {
+      _openedParenthesis = false;
+      _hasOperator = false;
+      _canSolve = true;
+      _expression = [];
+      _expressionDisplayer = [];
+      _xValue = '?';
+      _result = '';
     });
   }
 
@@ -142,6 +206,8 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                           expression: _expressionDisplayer,
                           result: _result,
                           xValue: _xValue,
+                          inputIndex: _inputIndex,
+                          changeInputIndex: changeInputIndex
                         ),
                         SizedBox(height: 20),
                         FunctionPadFunctionCalculator(
@@ -153,8 +219,8 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                           addNumberExpression: addNumberExpression,
                           addOperator: addOperator,
                           deleteFromExpression: deleteFromExpression,
-                          deleteAllInput: () => print('object'),
-                          enterExpression: () => print('object'),
+                          deleteAllInput: deleteAllInput,
+                          enterExpression: enterExpression,
                           productIcon: '*',
                         )
                       ],

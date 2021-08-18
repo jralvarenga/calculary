@@ -191,14 +191,14 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           _resultAnimationController.forward();
         break;
         case '(':
-        case '^':
+        case '^(':
         case 'sqrt(':
         case 'sin(':
         case 'cos(':
         case 'tan(':
-        case 'asin(':
-        case 'acos(':
-        case 'atan(':
+        case 'arcsin(':
+        case 'arccos(':
+        case 'arctan(':
         case 'log(':
         case 'ln(':
         case 'exp(':
