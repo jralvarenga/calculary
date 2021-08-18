@@ -59,9 +59,18 @@ class _MainCalculatorOptionsState extends State<MainCalculatorOptions> {
     }
 
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.only(top: 10, left: 20, right: 20),
       child: Column(
         children: [
+          Container(
+            width: 80,
+            height: 8,
+            decoration: BoxDecoration(
+              color: themeData.dialogBackgroundColor,
+              borderRadius: BorderRadius.circular(20)
+            ),
+          ),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

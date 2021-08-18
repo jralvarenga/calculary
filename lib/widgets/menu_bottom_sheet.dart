@@ -17,7 +17,7 @@ class MenuBottomSheet extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.all(25),
+      padding: EdgeInsets.only(top: 10, right: 25, left: 25),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: themeData.backgroundColor
@@ -25,6 +25,15 @@ class MenuBottomSheet extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Container(
+            width: 80,
+            height: 8,
+            decoration: BoxDecoration(
+              color: themeData.dialogBackgroundColor,
+              borderRadius: BorderRadius.circular(20)
+            ),
+          ),
+          SizedBox(height: 25),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -48,6 +57,7 @@ class MenuBottomSheet extends StatelessWidget {
                 itemName: 'Function',
                 itemFunction: () => goToPage('/function'),
                 icon: 'assets/function.svg',
+                requiresInternet: true,
               ),
               MenuBottomSheetItem(
                 itemName: 'Settings',
@@ -68,11 +78,13 @@ class MenuBottomSheetItem extends StatelessWidget {
     required this.itemName,
     required this.itemFunction,
     required this.icon,
+    this.requiresInternet = false
   }) : super(key: key);
 
   final String itemName;
   final itemFunction;
   final String icon;
+  final bool requiresInternet;
   
   @override
   Widget build(BuildContext context) {
@@ -93,7 +105,8 @@ class MenuBottomSheetItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
-                children: [
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
                   Text(
                     itemName,
                     style: TextStyle(
@@ -101,6 +114,8 @@ class MenuBottomSheetItem extends StatelessWidget {
                       fontWeight: FontWeight.bold
                     ),
                   ),
+                  if (requiresInternet)
+                    Icon(Icons.wifi)
                 ],
               ),
               Expanded(
