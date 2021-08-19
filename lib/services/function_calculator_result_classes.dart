@@ -20,3 +20,27 @@ class FunctionData {
     this.result = 0
   });
 }
+
+class DerivativenData {
+  String fx;
+  String order;
+  String derivative;
+
+  Map toJson() => {
+    'fx': fx,
+    'order': int.parse(order)
+  };
+
+  factory DerivativenData.fromJson(Map<String, dynamic> json) {
+    return DerivativenData(
+      derivative: json['derivative'],
+      order: json['order'].toString()
+    );
+  }
+
+  DerivativenData({
+    this.fx = 'x',
+    this.derivative = 'x',
+    this.order = '1'
+  });
+}

@@ -8,10 +8,13 @@ class SolveFunctionCalculator {
   String x;
   String mode;
 
+  String dxOrder;
+
   SolveFunctionCalculator({
-    required this.x,
     required this.fx,
     required this.mode,
+    this.x = '1',
+    this.dxOrder = '1',
   });
 
   Future<String> sendData(String body, String url) async {
@@ -24,7 +27,14 @@ class SolveFunctionCalculator {
     );
 
     if (response.statusCode == 200) {
-      return FunctionData.fromJson(jsonDecode(response.body)).result.toString();
+      switch (this.mode) {
+        case 'function':
+          return FunctionData.fromJson(jsonDecode(response.body)).result.toString();
+        case 'derivative':
+          return DerivativenData.fromJson(jsonDecode(response.body)).derivative;
+        default:
+          return FunctionData.fromJson(jsonDecode(response.body)).result.toString();
+      }
     } else {
       return 'Error';
     }
@@ -37,13 +47,43 @@ class SolveFunctionCalculator {
     );
     return jsonEncode(data.toJson());
   }
+  String formatForDerivative(String fx) {
+    DerivativenData data = DerivativenData(
+      fx: fx
+    );
+    return jsonEncode(data.toJson());
+  }
+
+  String formatExpressionInput(List<String> expression) {
+    List<String> newExp = [];
+    for (var i = 0; i < expression.length; i++) {
+      String item = expression[i];
+      if (item == 'x') {
+        if (expression[i-1].contains(new RegExp(r'[0-9]')) || expression[i-1].contains(')')) {
+          newExp.add('*');
+        }
+      }
+      newExp.add(item);
+    }
+
+    String joinedExpression = newExp.join();
+    joinedExpression = joinedExpression.replaceAll(')(', ')*(');
+
+    return joinedExpression;
+  }
   
   Future<String> solveFunction() async {
-    String fx = this.fx.join();
+    String fx = formatExpressionInput(this.fx);
     switch (this.mode) {
       case 'function':
         String url = 'https://mathapi.vercel.app/api/function/solve/';
         String formatedData = formatForFunction(fx);
+
+        String result = await sendData(formatedData, url);
+        return result;
+      case 'derivative':
+        String url = 'https://mathapi.vercel.app/api/derivative/?order=' + this.dxOrder;
+        String formatedData = formatForDerivative(fx);
 
         String result = await sendData(formatedData, url);
         return result;

@@ -1,9 +1,11 @@
 import 'package:calculary/services/solve_function_calculator.dart';
+import 'package:calculary/widgets/function_calculator/function_calculator_menu.dart';
 import 'package:calculary/widgets/function_calculator/function_pad.dart';
 import 'package:calculary/widgets/function_calculator/input_result_pad.dart';
 import 'package:calculary/widgets/number_pad.dart';
 import 'package:calculary/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class FunctionCalculator extends StatefulWidget {
   const FunctionCalculator({ Key? key }) : super(key: key);
@@ -19,6 +21,11 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   String _result = '';
   int _inputIndex = 0;
   String _mode = 'function';
+  String _initialModeText = 'f(x)=';
+  String _finalModeText = '';
+
+  // Derivative options
+  String _dxOrder = '1';
 
   // Solver conditions
   bool _openedParenthesis = false;
@@ -156,16 +163,27 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   }
 
   void enterExpression() async {
-    if (_xValue == '?') {
+    if (_xValue == '?' && _mode == 'function') {
       sendSnackbar('Try plotting this function or give it an x value');
-    } else {
-      var solver = new SolveFunctionCalculator(x: _xValue, fx: _expression, mode: _mode);
-      String result = await solver.solveFunction();
-      setState(() {
-        _result = result;
-      });
+      return;
     }
+    String result = 'x';
+    switch (_mode) {
+      case 'function':
+        var solver = new SolveFunctionCalculator(x: _xValue, fx: _expression, mode: _mode);
+        result = await solver.solveFunction();
+      break;
+      case 'derivative':
+        var solver = new SolveFunctionCalculator(dxOrder: _dxOrder, fx: _expression, mode: _mode);
+        result = await solver.solveFunction();
+      break;
+      default:
+        var solver = new SolveFunctionCalculator(x: _xValue, fx: _expression, mode: _mode);
+        result = await solver.solveFunction();
+    }
+
     setState(() {
+      _result = result;
       _inputIndex = 0;
     });
   }
@@ -182,8 +200,31 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
     });
   }
 
+  void changeCalculatorMode(String mode, String initialModeText, String finalModeText) {
+    Navigator.of(context).pop();
+    setState(() {
+      _mode = mode;
+      _initialModeText = initialModeText;
+      _finalModeText = finalModeText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    void openFunctionMenu() {
+      HapticFeedback.lightImpact();
+      showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(30)
+          )
+        ),
+        builder: (context) => functionMenu()
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -199,15 +240,18 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                       children: [
                         TopBar(
                           mode: 'Function',
-                          rightButtonFunction: () => print('hi')
+                          rightButtonFunction: openFunctionMenu
                         ),
                         SizedBox(height: 20),
                         InputResultPadFunctionCalculator(
+                          mode: _mode,
                           expression: _expressionDisplayer,
                           result: _result,
                           xValue: _xValue,
                           inputIndex: _inputIndex,
-                          changeInputIndex: changeInputIndex
+                          changeInputIndex: changeInputIndex,
+                          initialModeText: _initialModeText,
+                          finalModeText: _finalModeText,
                         ),
                         SizedBox(height: 20),
                         FunctionPadFunctionCalculator(
@@ -234,4 +278,8 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       ),
     );
   }
+
+  Widget functionMenu() => FunctionCalculatorMenu(
+    changeCalculatorMode: changeCalculatorMode,
+  );
 }
