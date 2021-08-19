@@ -1,4 +1,5 @@
 import 'package:calculary/services/custom_theme.dart';
+import 'package:calculary/widgets/function_calculator/options_for_derivative.dart';
 import 'package:calculary/widgets/function_calculator/options_for_function.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,9 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
     required this.inputIndex,
     required this.changeInputIndex,
     required this.initialModeText,
-    required this.finalModeText
+    required this.finalModeText,
+
+    required this.dxOrder,
   }) : super(key: key);
 
   final String mode;
@@ -26,6 +29,9 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
   final String finalModeText;
 
   final changeInputIndex;
+
+  // Derivative mode
+  final String dxOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +82,10 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
               xValue: xValue
             ),
           if (mode == 'derivative')
-            OptionForFunction(
+            OptionsForDerivative(
+              xValue: xValue,
+              dxOrder: dxOrder,
               changeInputIndex: changeInputIndex,
-              xValue: 'derivative'
             ),
           if (mode == 'integral')
             OptionForFunction(

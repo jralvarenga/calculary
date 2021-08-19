@@ -115,10 +115,14 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
             break;
             case 1:
               if (_xValue == '?') {
-                _xValue = value; 
-              } else {
-                _xValue += value;
+                _xValue = value;
+                break;
               }
+              if (_mode == 'derivative') {
+                _dxOrder = value;
+                break;
+              }
+              _xValue += value;
             break;
           }
         break;
@@ -155,29 +159,40 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
           _expression.removeLast();  
         break;
         case 1:
-          print('hi');
-          _xValue = _xValue.substring(0, _xValue.length - 1);
+          if (_mode == 'derivative') {
+            _dxOrder = _dxOrder.substring(0, _dxOrder.length - 1);
+          } else {
+            _xValue = _xValue.substring(0, _xValue.length - 1);
+          }
         break;
       }
     });
   }
 
   void enterExpression() async {
-    if (_xValue == '?' && _mode == 'function') {
-      sendSnackbar('Try plotting this function or give it an x value');
-      return;
-    }
     String result = 'x';
     switch (_mode) {
       case 'function':
+        if (_xValue == '?') {
+          sendSnackbar('Try plotting this function or give it an x value');
+          return;
+        }
         var solver = new SolveFunctionCalculator(x: _xValue, fx: _expression, mode: _mode);
         result = await solver.solveFunction();
       break;
       case 'derivative':
+        if (_dxOrder == '?' || _dxOrder == '' || _dxOrder == '0') {
+          sendSnackbar("Order of dx can't be null or 0");
+          return;
+        }
         var solver = new SolveFunctionCalculator(dxOrder: _dxOrder, fx: _expression, mode: _mode);
         result = await solver.solveFunction();
       break;
       default:
+        if (_xValue == '?') {
+          sendSnackbar('Try plotting this function or give it an x value');
+          return;
+        }
         var solver = new SolveFunctionCalculator(x: _xValue, fx: _expression, mode: _mode);
         result = await solver.solveFunction();
     }
@@ -196,6 +211,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       _expression = [];
       _expressionDisplayer = [];
       _xValue = '?';
+      _dxOrder = '1';
       _result = '';
     });
   }
@@ -252,6 +268,8 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                           changeInputIndex: changeInputIndex,
                           initialModeText: _initialModeText,
                           finalModeText: _finalModeText,
+
+                          dxOrder: _dxOrder,
                         ),
                         SizedBox(height: 20),
                         FunctionPadFunctionCalculator(
