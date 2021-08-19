@@ -1,6 +1,7 @@
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/function_calculator/options_for_derivative.dart';
 import 'package:calculary/widgets/function_calculator/options_for_function.dart';
+import 'package:calculary/widgets/function_calculator/options_for_integral.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,11 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
     required this.finalModeText,
 
     required this.dxOrder,
+
+    required this.integralAValue,
+    required this.integralBValue,
+    required this.changeIntegralIndex,
+    required this.integralIndexOptions,
   }) : super(key: key);
 
   final String mode;
@@ -32,6 +38,12 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
 
   // Derivative mode
   final String dxOrder;
+
+  // Integral mode
+  final String integralAValue;
+  final String integralBValue;
+  final int integralIndexOptions;
+  final changeIntegralIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +100,12 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
               changeInputIndex: changeInputIndex,
             ),
           if (mode == 'integral')
-            OptionForFunction(
-              changeInputIndex: changeInputIndex,
-              xValue: 'integral'
+            OptionsForIntegral(
+              integralAValue: integralAValue,
+              integralBValue: integralBValue,
+              integralIndexOptions: integralIndexOptions,
+              changeIntegralIndex: changeIntegralIndex,
+              changeInputIndex: changeInputIndex
             ),
           if (mode == 'plot')
             OptionForFunction(

@@ -27,6 +27,11 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   // Derivative options
   String _dxOrder = '1';
 
+  // Integral options
+  String _integralAValue = '?';
+  String _integralBValue = '?';
+  int _integralIndexOptions = 0;
+
   // Solver conditions
   bool _openedParenthesis = false;
   bool _hasOperator = false;
@@ -35,6 +40,13 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   void changeInputIndex(int index) {
     setState(() {
       _inputIndex = index;
+    });
+  }
+
+  void changeIntegralIndex(int index) {
+    setState(() {
+      _inputIndex = 1;
+      _integralIndexOptions = index;
     });
   }
 
@@ -122,6 +134,25 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                 _dxOrder = value;
                 break;
               }
+              if (_mode == 'integral') {
+                switch (_integralIndexOptions) {
+                  case 0:
+                    if (_integralAValue == '?') {
+                      _integralAValue = value;
+                    } else {
+                      _integralAValue += value;
+                    }
+                  break;
+                  case 1:
+                    if (_integralBValue == '?') {
+                      _integralBValue = value;
+                    } else {
+                      _integralBValue += value;
+                    }
+                  break;
+                }
+                break;
+              }
               _xValue += value;
             break;
           }
@@ -161,6 +192,15 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
         case 1:
           if (_mode == 'derivative') {
             _dxOrder = _dxOrder.substring(0, _dxOrder.length - 1);
+          } else if (_mode == 'integral') {
+            switch (_integralIndexOptions) {
+              case 0:
+                _integralAValue = _integralAValue.substring(0, _integralAValue.length - 1);
+              break;
+              case 1:
+                _integralBValue = _integralBValue.substring(0, _integralBValue.length - 1);
+              break;
+            }
           } else {
             _xValue = _xValue.substring(0, _xValue.length - 1);
           }
@@ -186,6 +226,14 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
           return;
         }
         var solver = new SolveFunctionCalculator(dxOrder: _dxOrder, fx: _expression, mode: _mode);
+        result = await solver.solveFunction();
+      break;
+      case 'integral':
+        bool evaluateIntegral = true;
+        if ((_integralAValue == '?' || _integralAValue == '') || (_integralBValue == '?' || _integralBValue == '')) {
+          evaluateIntegral = false;
+        }
+        var solver = new SolveFunctionCalculator(evaluateIntegral: evaluateIntegral, a: _integralAValue, b: _integralBValue, fx: _expression, mode: _mode);
         result = await solver.solveFunction();
       break;
       default:
@@ -270,6 +318,10 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                           finalModeText: _finalModeText,
 
                           dxOrder: _dxOrder,
+                          integralAValue: _integralAValue,
+                          integralBValue: _integralBValue,
+                          changeIntegralIndex: changeIntegralIndex,
+                          integralIndexOptions: _integralIndexOptions,
                         ),
                         SizedBox(height: 20),
                         FunctionPadFunctionCalculator(

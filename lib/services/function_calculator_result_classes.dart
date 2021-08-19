@@ -44,3 +44,31 @@ class DerivativenData {
     this.order = '1'
   });
 }
+
+class IntegralData {
+  String fx;
+  String order;
+  String integral;
+  String a;
+  String b;
+
+  Map toJson() => {
+    'fx': fx,
+    'a': a,
+    'b': b
+  };
+
+  factory IntegralData.fromJson(Map<String, dynamic> json) {
+    return IntegralData(
+      integral: json['integral'],
+    );
+  }
+
+  IntegralData({
+    this.fx = 'x',
+    this.integral = 'x',
+    this.order = '1',
+    this.a = '0',
+    this.b = '1',
+  });
+}

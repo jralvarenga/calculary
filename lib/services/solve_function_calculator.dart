@@ -10,11 +10,18 @@ class SolveFunctionCalculator {
 
   String dxOrder;
 
+  bool evaluateIntegral;
+  String a;
+  String b;
+
   SolveFunctionCalculator({
     required this.fx,
     required this.mode,
     this.x = '1',
     this.dxOrder = '1',
+    this.evaluateIntegral = false,
+    this.a = '0',
+    this.b = '1'
   });
 
   Future<String> sendData(String body, String url) async {
@@ -32,6 +39,8 @@ class SolveFunctionCalculator {
           return FunctionData.fromJson(jsonDecode(response.body)).result.toString();
         case 'derivative':
           return DerivativenData.fromJson(jsonDecode(response.body)).derivative;
+        case 'integral':
+          return IntegralData.fromJson(jsonDecode(response.body)).integral;
         default:
           return FunctionData.fromJson(jsonDecode(response.body)).result.toString();
       }
@@ -50,6 +59,14 @@ class SolveFunctionCalculator {
   String formatForDerivative(String fx) {
     DerivativenData data = DerivativenData(
       fx: fx
+    );
+    return jsonEncode(data.toJson());
+  }
+  String formatForIntegral(String fx) {
+    IntegralData data = IntegralData(
+      fx: fx,
+      a: this.a,
+      b: this.b,
     );
     return jsonEncode(data.toJson());
   }
@@ -85,6 +102,15 @@ class SolveFunctionCalculator {
         String url = 'https://mathapi.vercel.app/api/derivative/?order=' + this.dxOrder;
         String formatedData = formatForDerivative(fx);
 
+        String result = await sendData(formatedData, url);
+        return result;
+      case 'integral':
+        String url = 'https://mathapi.vercel.app/api/integral/';
+        if (this.evaluateIntegral) {
+          url = url + 'evaluate/';
+        }
+
+        String formatedData = formatForIntegral(fx);
         String result = await sendData(formatedData, url);
         return result;
       default:
