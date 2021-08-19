@@ -8,11 +8,15 @@ class OptionsForDerivative extends StatelessWidget {
     required this.xValue,
     required this.dxOrder,
     required this.changeInputIndex,
+    required this.changeDerivativeIndex,
+    required this.derivativeIndexOptions
   }) : super(key: key);
 
   final String xValue;
   final String dxOrder;
+  final int derivativeIndexOptions;
   final changeInputIndex;
+  final changeDerivativeIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,8 @@ class OptionsForDerivative extends StatelessWidget {
           direction: Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Expanded(
+            GestureDetector(
+              onTap: () => changeDerivativeIndex(0),
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(10),
                 reverse: true,
@@ -39,12 +44,29 @@ class OptionsForDerivative extends StatelessWidget {
                   'order=' + dxOrder,
                   style: TextStyle(
                     fontSize: 25,
-                    color: theme.textColor,
+                    color: derivativeIndexOptions == 0 ? theme.textColor : theme.paperTextColor,
                     fontWeight: FontWeight.bold
                   ),
                 ),
-              )
+              ),
             ),
+            SizedBox(width: 20),
+            GestureDetector(
+              onTap: () => changeDerivativeIndex(1),
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(10),
+                reverse: true,
+                scrollDirection: Axis.horizontal,
+                child: Text(
+                  'x=' + xValue,
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: derivativeIndexOptions == 1 ? theme.textColor : theme.paperTextColor,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+            )
           ]
         ),
       )

@@ -8,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class FunctionCalculator extends StatefulWidget {
-  const FunctionCalculator({ Key? key }) : super(key: key);
+  const FunctionCalculator({
+    Key? key
+  }) : super(key: key);
 
   @override
   _FunctionCalculatorState createState() => _FunctionCalculatorState();
@@ -26,6 +28,8 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
 
   // Derivative options
   String _dxOrder = '1';
+  String _dxXValue = '?';
+  int _derivativeIndexOptions = 0;
 
   // Integral options
   String _integralAValue = '?';
@@ -47,6 +51,13 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
     setState(() {
       _inputIndex = 1;
       _integralIndexOptions = index;
+    });
+  }
+
+  void changeDerivativeIndex(int index) {
+    setState(() {
+      _inputIndex = 1;
+      _derivativeIndexOptions = index;
     });
   }
 
@@ -126,34 +137,54 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
               _expressionDisplayer.add(expression);
             break;
             case 1:
-              if (_xValue == '?') {
-                _xValue = value;
+              switch (_mode) {
+                case 'derivative':
+                  switch (_derivativeIndexOptions) {
+                    case 0:
+                      _dxOrder = value;
+                    break;
+                    case 1:
+                      if (_dxXValue == '?') {
+                        _dxXValue = value;
+                      } else {
+                        _dxXValue += value;
+                      }
+                    break;
+                  }
+                break;
+                case 'integral':
+                  switch (_integralIndexOptions) {
+                    case 0:
+                      if (_integralAValue == '?') {
+                        _integralAValue = value;
+                      } else {
+                        _integralAValue += value;
+                      }
+                    break;
+                    case 1:
+                      if (_integralBValue == '?') {
+                        _integralBValue = value;
+                      } else {
+                        _integralBValue += value;
+                      }
+                    break;
+                  }
+                break;
+                case 'function':
+                  if (_xValue == '?') {
+                    _xValue = value;
+                  } else {
+                    _xValue += value;
+                  }
+                break;
+                default:
+                  if (_xValue == '?') {
+                    _xValue = value;
+                  } else {
+                    _xValue += value;
+                  }
                 break;
               }
-              if (_mode == 'derivative') {
-                _dxOrder = value;
-                break;
-              }
-              if (_mode == 'integral') {
-                switch (_integralIndexOptions) {
-                  case 0:
-                    if (_integralAValue == '?') {
-                      _integralAValue = value;
-                    } else {
-                      _integralAValue += value;
-                    }
-                  break;
-                  case 1:
-                    if (_integralBValue == '?') {
-                      _integralBValue = value;
-                    } else {
-                      _integralBValue += value;
-                    }
-                  break;
-                }
-                break;
-              }
-              _xValue += value;
             break;
           }
         break;
@@ -190,19 +221,33 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
           _expression.removeLast();  
         break;
         case 1:
-          if (_mode == 'derivative') {
-            _dxOrder = _dxOrder.substring(0, _dxOrder.length - 1);
-          } else if (_mode == 'integral') {
-            switch (_integralIndexOptions) {
-              case 0:
-                _integralAValue = _integralAValue.substring(0, _integralAValue.length - 1);
-              break;
-              case 1:
-                _integralBValue = _integralBValue.substring(0, _integralBValue.length - 1);
-              break;
-            }
-          } else {
-            _xValue = _xValue.substring(0, _xValue.length - 1);
+          switch (_mode) {
+            case 'derivative':
+              switch (_derivativeIndexOptions) {
+                case 0:
+                  _dxOrder = _dxOrder.substring(0, _dxOrder.length - 1);
+                break;
+                case 1:
+                  _dxXValue = _dxXValue.substring(0, _dxXValue.length - 1);
+                break;
+              }
+            break;
+            case 'integral':
+              switch (_integralIndexOptions) {
+                case 0:
+                  _integralAValue = _integralAValue.substring(0, _integralAValue.length - 1);
+                break;
+                case 1:
+                  _integralBValue = _integralBValue.substring(0, _integralBValue.length - 1);
+                break;
+              }
+            break;
+            case 'function':
+              _xValue = _xValue.substring(0, _xValue.length - 1);
+            break;
+            default:
+              _xValue = _xValue.substring(0, _xValue.length - 1);
+            break;
           }
         break;
       }
@@ -221,11 +266,21 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
         result = await solver.solveFunction();
       break;
       case 'derivative':
+        bool evaluateDx = true;
         if (_dxOrder == '?' || _dxOrder == '' || _dxOrder == '0') {
           sendSnackbar("Order of dx can't be null or 0");
           return;
         }
-        var solver = new SolveFunctionCalculator(dxOrder: _dxOrder, fx: _expression, mode: _mode);
+        if (_dxXValue == '?' || _dxXValue == '') {
+          evaluateDx = false;
+        }
+        var solver = new SolveFunctionCalculator(
+          evaluateDx: evaluateDx,
+          dxX: (_dxXValue == '?' || _dxXValue == '') ? 1 : double.parse(_dxXValue),
+          dxOrder: _dxOrder,
+          fx: _expression,
+          mode: _mode
+        );
         result = await solver.solveFunction();
       break;
       case 'integral':
@@ -260,6 +315,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       _expressionDisplayer = [];
       _xValue = '?';
       _dxOrder = '1';
+      _dxXValue = '?';
       _result = '';
     });
   }
@@ -318,6 +374,10 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                           finalModeText: _finalModeText,
 
                           dxOrder: _dxOrder,
+                          dxXValue: _dxXValue,
+                          changeDerivativeIndex: changeDerivativeIndex,
+                          derivativeIndexOptions: _derivativeIndexOptions,
+
                           integralAValue: _integralAValue,
                           integralBValue: _integralBValue,
                           changeIntegralIndex: changeIntegralIndex,

@@ -24,11 +24,12 @@ class FunctionData {
 class DerivativenData {
   String fx;
   String order;
-  String derivative;
+  double x;
+  var derivative;
 
   Map toJson() => {
     'fx': fx,
-    'order': int.parse(order)
+    'x': x,
   };
 
   factory DerivativenData.fromJson(Map<String, dynamic> json) {
@@ -41,7 +42,8 @@ class DerivativenData {
   DerivativenData({
     this.fx = 'x',
     this.derivative = 'x',
-    this.order = '1'
+    this.order = '1',
+    this.x = 1
   });
 }
 

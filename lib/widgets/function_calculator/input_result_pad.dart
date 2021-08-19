@@ -18,6 +18,9 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
     required this.finalModeText,
 
     required this.dxOrder,
+    required this.dxXValue,
+    required this.changeDerivativeIndex,
+    required this.derivativeIndexOptions,
 
     required this.integralAValue,
     required this.integralBValue,
@@ -38,6 +41,9 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
 
   // Derivative mode
   final String dxOrder;
+  final String dxXValue;
+  final int derivativeIndexOptions;
+  final changeDerivativeIndex;
 
   // Integral mode
   final String integralAValue;
@@ -95,9 +101,11 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
             ),
           if (mode == 'derivative')
             OptionsForDerivative(
-              xValue: xValue,
+              xValue: dxXValue,
               dxOrder: dxOrder,
               changeInputIndex: changeInputIndex,
+              changeDerivativeIndex: changeDerivativeIndex,
+              derivativeIndexOptions: derivativeIndexOptions,
             ),
           if (mode == 'integral')
             OptionsForIntegral(

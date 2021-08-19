@@ -9,6 +9,8 @@ class SolveFunctionCalculator {
   String mode;
 
   String dxOrder;
+  double dxX;
+  bool evaluateDx;
 
   bool evaluateIntegral;
   String a;
@@ -19,6 +21,8 @@ class SolveFunctionCalculator {
     required this.mode,
     this.x = '1',
     this.dxOrder = '1',
+    this.dxX = 1,
+    this.evaluateDx = false,
     this.evaluateIntegral = false,
     this.a = '0',
     this.b = '1'
@@ -38,7 +42,11 @@ class SolveFunctionCalculator {
         case 'function':
           return FunctionData.fromJson(jsonDecode(response.body)).result.toString();
         case 'derivative':
-          return DerivativenData.fromJson(jsonDecode(response.body)).derivative;
+          if (this.evaluateDx) {
+            return DerivativenData.fromJson(jsonDecode(response.body)).derivative.toString(); 
+          } else {
+            return DerivativenData.fromJson(jsonDecode(response.body)).derivative;
+          }
         case 'integral':
           return IntegralData.fromJson(jsonDecode(response.body)).integral;
         default:
@@ -58,7 +66,8 @@ class SolveFunctionCalculator {
   }
   String formatForDerivative(String fx) {
     DerivativenData data = DerivativenData(
-      fx: fx
+      fx: fx,
+      x: this.dxX
     );
     return jsonEncode(data.toJson());
   }
@@ -99,9 +108,13 @@ class SolveFunctionCalculator {
         String result = await sendData(formatedData, url);
         return result;
       case 'derivative':
-        String url = 'https://mathapi.vercel.app/api/derivative/?order=' + this.dxOrder;
-        String formatedData = formatForDerivative(fx);
+        String url = 'https://mathapi.vercel.app/api/derivative/';
+        if (this.evaluateDx) {
+          url = url + 'evaluate/';
+        }
 
+        url = url + '?order=' + this.dxOrder;
+        String formatedData = formatForDerivative(fx);
         String result = await sendData(formatedData, url);
         return result;
       case 'integral':
