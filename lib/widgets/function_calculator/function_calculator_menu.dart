@@ -42,14 +42,14 @@ class FunctionCalculatorMenu extends StatelessWidget {
               ),
             ]
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MenuBottomSheetItem(
+              /*MenuBottomSheetItem(
                 itemName: 'Plot',
                 itemFunction: () => changeCalculatorMode('plot', 'Plot(f(x)=', ')'),
-              ),
+              ),*/
               MenuBottomSheetItem(
                 itemName: 'Integral',
                 itemFunction: () => changeCalculatorMode('integral', String.fromCharCode($int) + '(', ')dx'),

@@ -59,11 +59,11 @@ class MenuBottomSheet extends StatelessWidget {
                 icon: 'assets/function.svg',
                 requiresInternet: true,
               ),
-              MenuBottomSheetItem(
+              /*MenuBottomSheetItem(
                 itemName: 'Settings',
                 itemFunction: () => print('hi'),
                 icon: 'assets/settings.svg',
-              ),
+              ),*/
             ],
           )
         ],
