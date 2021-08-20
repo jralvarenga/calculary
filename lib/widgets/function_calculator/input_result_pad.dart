@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 class InputResultPadFunctionCalculator extends StatelessWidget {
   const InputResultPadFunctionCalculator({
     Key? key,
+    required this.loadingResult,
     required this.mode,
     required this.expression,
     required this.result,
@@ -28,6 +29,7 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
     required this.integralIndexOptions,
   }) : super(key: key);
 
+  final bool loadingResult;
   final String mode;
 
   final List<String> expression;
@@ -134,7 +136,13 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
               child: Flex(
                 direction: Axis.horizontal,
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+                children: <Widget>[
+                  if (loadingResult) 
+                    CircularProgressIndicator(
+                      strokeWidth: 7,
+                      color: themeData.primaryColor,
+                      backgroundColor: themeData.accentColor
+                    ),
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: SelectableText(

@@ -21,6 +21,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   List<String> _expressionDisplayer = [];
   String _xValue = '?';
   String _result = '';
+  bool _loadingResult = false;
   int _inputIndex = 0;
   String _mode = 'function';
   String _initialModeText = 'f(x)=';
@@ -255,6 +256,9 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   }
 
   void enterExpression() async {
+    setState(() {
+      _loadingResult = true;
+    });
     String result = 'x';
     switch (_mode) {
       case 'function':
@@ -303,6 +307,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
     setState(() {
       _result = result;
       _inputIndex = 0;
+      _loadingResult = false;
     });
   }
 
@@ -364,6 +369,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                         ),
                         SizedBox(height: 20),
                         InputResultPadFunctionCalculator(
+                          loadingResult: _loadingResult,
                           mode: _mode,
                           expression: _expressionDisplayer,
                           result: _result,
