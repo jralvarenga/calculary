@@ -12,16 +12,16 @@ class CustomTheme {
   }
 
   Color get paperTextColor {
-    return isDark ? Color.fromRGBO(114, 114, 114, 1) : Color.fromRGBO(114, 114, 114, 1);
+    return isDark ? Color.fromRGBO(150, 150, 150, 1) : Color.fromRGBO(120, 120, 120, 1);
   }
 
   ThemeData get themeData {
   
     var theme = ThemeData(
       primarySwatch: Colors.pink,
-      primaryColor: Color.fromRGBO(210, 155, 253, 1),
-      accentColor: Color.fromRGBO(249, 220, 197, 1),
-      backgroundColor: isDark ? Colors.black : Colors.white,
+      primaryColor: isDark ? Color.fromRGBO(198, 125, 255, 1) : Color.fromRGBO(188, 102, 255, 1),
+      accentColor: isDark ? Color.fromRGBO(255, 214, 181, 1) : Color.fromRGBO(255, 203, 165, 1),
+      backgroundColor: isDark ? Colors.grey[850] : Colors.white,
       dialogBackgroundColor: isDark ? Color.fromRGBO(60, 60, 60, 1) : Color.fromRGBO(227, 227, 227, 1),
       brightness: isDark ? Brightness.dark : Brightness.light,
       errorColor: Colors.red.shade400,
