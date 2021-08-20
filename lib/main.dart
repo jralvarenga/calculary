@@ -1,6 +1,7 @@
 import 'package:calculary/pages/counter_calculator.dart';
 import 'package:calculary/pages/function_calculator.dart';
 import 'package:calculary/pages/main_calculator.dart';
+import 'package:calculary/pages/settings_page.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         home: MainCalculator(),
         routes: {
           '/counter': (context) => CounterCalculator(),
-          '/function': (context) => FunctionCalculator()
+          '/function': (context) => FunctionCalculator(),
+          '/settings': (context) => SettingsPage(),
         },
       ),
     );
