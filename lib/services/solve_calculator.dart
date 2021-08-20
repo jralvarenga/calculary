@@ -20,7 +20,7 @@ class SolveMainCalculator {
     if (decimals[1].length >= 8) {
       var number = double.parse(result);
       var reduced = number.toStringAsFixed(8);
-      return reduced.toString();
+      return reduced.toString().replaceAll(RegExp(r"([.]*0+)(?!.*\d)"), "");
     }
 
     return result;
@@ -49,7 +49,6 @@ class SolveMainCalculator {
       joinedExpression = joinedExpression.replaceAll(')(', ')*(');
     }
     
-    print(joinedExpression);
     List<String> splitted = joinedExpression.split(' ');
     var values = [];
     bool error = false;

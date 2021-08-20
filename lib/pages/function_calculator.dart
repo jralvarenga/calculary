@@ -321,6 +321,8 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       _xValue = '?';
       _dxOrder = '1';
       _dxXValue = '?';
+      _integralAValue = '?';
+      _integralBValue = '?';
       _result = '';
     });
   }
