@@ -5,8 +5,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({
-    Key? key
+    Key? key,
+    required this.setGlobalThemeConfig
   }) : super(key: key);
+
+  final setGlobalThemeConfig;
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -54,6 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
     final prefs = await SharedPreferences.getInstance();
     String saveConfig = config.toString();
     prefs.setString('theme_config', saveConfig);
+    widget.setGlobalThemeConfig(saveConfig);
 
     setState(() {
       _themeConfig = config;
@@ -75,6 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: IconThemeData(
           color: theme.textColor
         ),
@@ -129,7 +134,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(width: 20),
                         Text(
-                          'Trigonometric units',
+                          'Angular units: Radians',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold
