@@ -26,7 +26,6 @@ class _MyAppState extends State<MyApp> {
   bool _darkModeOn = true;
 
   void setThemeConfig(String config) {
-    print(config);
     switch (config) {
       case 'ThemeConfig.system':
         var brightness = SchedulerBinding.instance!.window.platformBrightness;

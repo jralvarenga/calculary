@@ -1,3 +1,4 @@
+import 'package:calculary/function/gamma_function.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class SolveMainCalculator {
@@ -27,18 +28,10 @@ class SolveMainCalculator {
   }
 
   String factorialSolver(String number) {
-    var factorial = 1;
+    double num = double.parse(number);
+    var factorial = gamma(num + 1);
 
-    if (!number.contains('.')) {
-      int num = int.parse(number);
-      for (var i = 1; i <= num; i++) {
-        factorial = factorial*i;
-      }
-
-      return factorial.toString();
-    } else {
-      return 'error';
-    }
+    return factorial.toString();
   }
 
   String evaluateAllInstances() {

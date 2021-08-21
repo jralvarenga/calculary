@@ -159,9 +159,6 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       if (_mode == 'Tip') {
         _mode = 'Calculator';
       }
-      if (value == '0' && _expression.last == '/') {
-        _canSolve = false;
-      }
 
       switch (value) {
         // Pi
