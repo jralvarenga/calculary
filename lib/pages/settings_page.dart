@@ -144,6 +144,30 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   )
                 ),
+              ),
+              Material(
+                child: InkWell(
+                  onTap: () => print('object'),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.category,
+                          size: 25,
+                        ),
+                        SizedBox(width: 20),
+                        Text(
+                          'Tip percentage: 10%',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ),
               )
             ],
           ),

@@ -198,7 +198,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         case 'arctan(':
         case 'log(':
         case 'ln(':
-        case 'exp(':
+        case 'e^(':
+          print('object');
           _openedParenthesis = true;
           _canSolve = false;
           

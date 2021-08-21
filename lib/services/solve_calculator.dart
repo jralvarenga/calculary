@@ -6,6 +6,9 @@ class SolveMainCalculator {
   List<String> expression;
   String globalFunction;
 
+  bool percentageOperation = true;
+  List<double> percentages = [];
+
   SolveMainCalculator(
     this.expression,
     this.globalFunction
@@ -81,7 +84,12 @@ class SolveMainCalculator {
         Expression exp = p.parse(input);
         input = exp.evaluate(EvaluationType.REAL, cm).toString();
         evaluatedExpression.add(input);
-      } else {
+      } else if (input.contains('%')) {
+        input = input.replaceAll('%', '');
+        double percentage = double.parse(input)/100;
+
+        this.percentages.add(percentage);
+      } {
         evaluatedExpression.add(input);
       }
     }
@@ -94,6 +102,12 @@ class SolveMainCalculator {
     String joinedNewExpression = newExpression.join();
     Expression exp = p.parse(joinedNewExpression);
     String result = exp.evaluate(EvaluationType.REAL, cm).toString();
+
+    /*if (this.percentageOperation) {
+      for (var i = 0; i < this.percentages.length; i++) {
+        result = ( percentages[i]*double.parse(result) + double.parse(result) ).toString();
+      }
+    }*/
 
     return result;
   }
