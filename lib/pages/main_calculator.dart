@@ -160,6 +160,12 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       if (_mode == 'Tip') {
         _mode = 'Calculator';
       }
+      // Divition in zero handler
+      if (_expression.length > 0) {
+        if (_expression.last == '/' && value == '0') {
+          _canSolve = false;
+        }
+      }
 
       switch (value) {
         // Pi
