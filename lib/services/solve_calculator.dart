@@ -34,6 +34,18 @@ class SolveMainCalculator {
     return factorial.toString();
   }
 
+  List<String> getExpressionSigns(String exp) {
+    List<String> signs = [];
+    for (var i = 0; i < exp.split('').length; i++) {
+      String chrt = exp[i];
+      if (chrt == '+' || chrt == '-') {
+        signs.add(chrt);
+      }
+    }
+
+    return signs;
+  }
+
   String evaluateAllInstances() {
     ContextModel cm = ContextModel();
     String joinedExpression = this.expression.join();
@@ -42,39 +54,48 @@ class SolveMainCalculator {
       joinedExpression = joinedExpression.replaceAll(')(', ')*(');
     }
     
-    List<String> splitted = joinedExpression.split(' ');
-    var values = [];
-    bool error = false;
+    List<String> splitted = joinedExpression.split(RegExp(r'[+-]'));
+    List<String> signs = getExpressionSigns(joinedExpression);
+    List<String> evaluatedExpression = [];
 
     for (var i = 0; i < splitted.length; i++) {
-      String _input = splitted[i];
-      String expValue = '';
+      String input = splitted[i];
 
-      if (_input.contains('!') == true) {
-        // Is factorial case
-        String value = factorialSolver(_input.replaceAll('!', ''));
-        if (value == 'error') {
-          error = true;
-          break; 
-        }
-        expValue = value;
+      if (input.contains('!')) {
+        input = input.replaceAll('!', '');
+        input = factorialSolver(input);
+        evaluatedExpression.add(input);
+      } else if (
+        input.contains('sin(') ||
+        input.contains('cos(') ||
+        input.contains('tan(') ||
+        input.contains('arcsin(') ||
+        input.contains('arccos(') ||
+        input.contains('arctan(') ||
+        input.contains('arcsin(') ||
+        input.contains('sqrt(') ||
+        input.contains('^(') ||
+        input.contains('log10(') ||
+        input.contains('ln(')
+      ) {
+        Expression exp = p.parse(input);
+        input = exp.evaluate(EvaluationType.REAL, cm).toString();
+        evaluatedExpression.add(input);
       } else {
-        // Default case
-        Expression exp = p.parse(_input);
-        expValue = exp.evaluate(EvaluationType.REAL, cm).toString();
+        evaluatedExpression.add(input);
       }
-      values.add(expValue);
     }
 
-    if (error) {
-      return 'ERROR';
-    } else {
-      String newInput = values.join();
-      Expression exp = p.parse(newInput);
-      
-      String evaluatedResult = exp.evaluate(EvaluationType.REAL, cm).toString();
-      return evaluatedResult;
+    List<String> newExpression = [evaluatedExpression[0]];
+    for (var i = 0; i < signs.length; i++) {
+      newExpression.add(signs[i]);
+      newExpression.add(evaluatedExpression[i + 1]);
     }
+    String joinedNewExpression = newExpression.join();
+    Expression exp = p.parse(joinedNewExpression);
+    String result = exp.evaluate(EvaluationType.REAL, cm).toString();
+
+    return result;
   }
 
   String getExpressionAvg() {

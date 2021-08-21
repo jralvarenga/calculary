@@ -54,6 +54,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
   List<String> _expression = [];
   List<String> _expressionDisplayer = [];
   String _globalFunction = '';
+  String _functionEnd = '';
   var _result = '';
 
   // Solver conditions
@@ -172,15 +173,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           _resultAnimationController.forward();
         break;
         case '!':
-          String lastNumberInExpression = _expression.last;
-          String lastNumberInDisplay = _expressionDisplayer.last;
-          String addedFactorial = lastNumberInExpression + value;
-          String addedFactorialInDisplayer = lastNumberInDisplay + expression;
-          _expression.removeLast();
-          _expressionDisplayer.removeLast();
-
-          _expression.add(addedFactorial);
-          _expressionDisplayer.add(addedFactorialInDisplayer);
+          _expression.add(value);
+          _expressionDisplayer.add(value);
           
           var solver = new SolveMainCalculator(_expression, _globalFunction);
           String result = solver.solveExpression();
@@ -263,6 +257,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           _globalFunction = function;
 
           _expressionDisplayer.insert(0, function + '(');
+          _functionEnd = ')';
         break;
         case 'TIP':
           _mode = value;
@@ -343,6 +338,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       _openedParenthesis = false;
       _hasOperator = false;
       _canSolve = true;
+      _functionEnd = '';
 
       Timer(Duration(milliseconds: 200), () {
         _expression = [];
@@ -421,6 +417,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
                           result: _result,
                           inputAnimation: _inputAnimation,
                           resultAnimation: _resultAnimation,
+                          functionEnd: _functionEnd,
                         ),
                       ],
                     ),

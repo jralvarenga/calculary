@@ -7,14 +7,14 @@ class InputResultPad extends StatelessWidget {
     Key? key,
     required this.expression,
     required this.result,
-    this.function = '',
+    this.functionEnd = '',
     required this.inputAnimation,
     required this.resultAnimation,
   }) : super(key: key);
 
   final List<String> expression;
   final String result;
-  final String function;
+  final String functionEnd;
   final inputAnimation;
   final resultAnimation;
   
@@ -44,7 +44,7 @@ class InputResultPad extends StatelessWidget {
                       reverse: true,
                       scrollDirection: Axis.horizontal,
                       child: SelectableText(
-                        expression.join(),
+                        expression.join() + functionEnd,
                         showCursor: false,
                         cursorWidth: 3,
                         cursorColor: themeData.primaryColor,
