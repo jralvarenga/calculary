@@ -35,7 +35,6 @@ dependencies:
   flutter_svg: ^0.22.0
   shared_preferences: ^2.0.6
   charcode: ^1.2.0
-  page_transition: ^2.0.2
 
 dev_dependencies:
   flutter_test:

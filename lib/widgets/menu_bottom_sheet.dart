@@ -13,6 +13,10 @@ class MenuBottomSheet extends StatelessWidget {
 
     void goToPage(String link) {
       Navigator.of(context).pop();
+      if (link == '/') {
+        Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+        return;
+      }
       Navigator.pushNamed(context, link);
     }
 

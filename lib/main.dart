@@ -6,7 +6,6 @@ import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,24 +82,10 @@ class _MyAppState extends State<MyApp> {
         title: 'Calculary',
         theme: appTheme.themeData,
         home: MainCalculator(),
-        /*routes: {
+        routes: {
           '/counter': (context) => CounterCalculator(),
           '/function': (context) => FunctionCalculator(),
           '/settings': (context) => SettingsPage(setGlobalThemeConfig: setThemeConfig),
-        },*/
-        onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case '/':
-              return PageTransition(child: MainCalculator(), type: PageTransitionType.fade);
-            case '/counter':
-              return PageTransition(child: CounterCalculator(), type: PageTransitionType.fade);
-            case '/function':
-              return PageTransition(child: FunctionCalculator(), type: PageTransitionType.fade);
-            case '/settings':
-              return PageTransition(child: SettingsPage(setGlobalThemeConfig: setThemeConfig), type: PageTransitionType.rightToLeft);
-            default:
-              return null;
-          }
         },
       ),
     );

@@ -39,7 +39,7 @@ class NumberPad extends StatelessWidget {
               text: '7',
               value: '7',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -47,7 +47,7 @@ class NumberPad extends StatelessWidget {
               text: '8',
               value: '8',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -55,7 +55,7 @@ class NumberPad extends StatelessWidget {
               text: '9',
               value: '9',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -105,7 +105,7 @@ class NumberPad extends StatelessWidget {
               text: '4',
               value: '4',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -113,7 +113,7 @@ class NumberPad extends StatelessWidget {
               text: '5',
               value: '5',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -121,7 +121,7 @@ class NumberPad extends StatelessWidget {
               text: '6',
               value: '6',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -129,7 +129,7 @@ class NumberPad extends StatelessWidget {
               text: '-',
               value: '-',
               textColor: theme.paperTextColor,
-              textSize: 22,
+              textSize: 26,
               buttonColor: themeData.accentColor,
               callback: addOperator
             ),
@@ -150,7 +150,7 @@ class NumberPad extends StatelessWidget {
               text: '1',
               value: '1',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -158,7 +158,7 @@ class NumberPad extends StatelessWidget {
               text: '2',
               value: '2',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -166,7 +166,7 @@ class NumberPad extends StatelessWidget {
               text: '3',
               value: '3',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
@@ -174,7 +174,7 @@ class NumberPad extends StatelessWidget {
               text: '+',
               value: '+',
               textColor: theme.paperTextColor,
-              textSize: 22,
+              textSize: 26,
               buttonColor: themeData.accentColor,
               callback: addOperator
             ),
@@ -187,7 +187,7 @@ class NumberPad extends StatelessWidget {
               text: '0',
               value: '0',
               textColor: theme.textColor,
-              textSize: 20,
+              textSize: 24,
               buttonColor: themeData.dialogBackgroundColor,
               callback: addNumberExpression
             ),
