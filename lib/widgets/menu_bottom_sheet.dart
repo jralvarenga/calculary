@@ -26,52 +26,65 @@ class MenuBottomSheet extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         color: themeData.backgroundColor
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            width: 80,
-            height: 8,
-            decoration: BoxDecoration(
-              color: themeData.dialogBackgroundColor,
-              borderRadius: BorderRadius.circular(20)
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              width: 80,
+              height: 8,
+              decoration: BoxDecoration(
+                color: themeData.dialogBackgroundColor,
+                borderRadius: BorderRadius.circular(20)
+              ),
             ),
-          ),
-          SizedBox(height: 25),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              MenuBottomSheetItem(
-                itemName: 'Calculator',
-                itemFunction: () => goToPage('/'),
-                icon: 'assets/calculator.svg',
-              ),
-              MenuBottomSheetItem(
-                itemName: 'Counter',
-                itemFunction: () => goToPage('/counter'),
-                icon: 'assets/counter.svg',
-              ),
-            ],
-          ),
-          SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              MenuBottomSheetItem(
-                itemName: 'Function',
-                itemFunction: () => goToPage('/function'),
-                icon: 'assets/function.svg',
-                requiresInternet: true,
-              ),
-              MenuBottomSheetItem(
-                itemName: 'Settings',
-                itemFunction: () => goToPage('/settings'),
-                icon: 'assets/settings.svg',
-              ),
-            ],
-          )
-        ],
-      ),
+            SizedBox(height: 25),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MenuBottomSheetItem(
+                  itemName: 'Calculator',
+                  itemFunction: () => goToPage('/'),
+                  icon: 'assets/calculator.svg',
+                ),
+                MenuBottomSheetItem(
+                  itemName: 'Counter',
+                  itemFunction: () => goToPage('/counter'),
+                  icon: 'assets/counter.svg',
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MenuBottomSheetItem(
+                  itemName: 'Function',
+                  itemFunction: () => goToPage('/function'),
+                  icon: 'assets/function.svg',
+                  requiresInternet: true,
+                ),
+                MenuBottomSheetItem(
+                  itemName: 'N. methods',
+                  itemFunction: () => goToPage('/numeric-methods-menu'),
+                  icon: 'assets/numeric_methods.svg',
+                ),
+              ],
+            ),
+            SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                MenuBottomSheetItem(
+                  itemName: 'Settings',
+                  itemFunction: () => goToPage('/settings'),
+                  icon: 'assets/settings.svg',
+                ),
+              ],
+            )
+          ],
+        ),
+      )
     );
   }
 }
@@ -129,6 +142,7 @@ class MenuBottomSheetItem extends StatelessWidget {
                     icon,
                     width: 45,
                     height: 45,
+                    color: theme.textColor,
                   ),
                 )
               )
