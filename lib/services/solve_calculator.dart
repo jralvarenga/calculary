@@ -79,7 +79,8 @@ class SolveMainCalculator {
         input.contains('sqrt(') ||
         input.contains('^(') ||
         input.contains('log10(') ||
-        input.contains('ln(')
+        input.contains('ln(') ||
+        input.contains('e^(')
       ) {
         Expression exp = p.parse(input);
         input = exp.evaluate(EvaluationType.REAL, cm).toString();
@@ -89,7 +90,7 @@ class SolveMainCalculator {
         double percentage = double.parse(input)/100;
 
         this.percentages.add(percentage);
-      } {
+      } else {
         evaluatedExpression.add(input);
       }
     }
@@ -100,6 +101,7 @@ class SolveMainCalculator {
       newExpression.add(evaluatedExpression[i + 1]);
     }
     String joinedNewExpression = newExpression.join();
+    print(evaluatedExpression);
     Expression exp = p.parse(joinedNewExpression);
     String result = exp.evaluate(EvaluationType.REAL, cm).toString();
 
