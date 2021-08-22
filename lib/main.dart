@@ -1,6 +1,7 @@
 import 'package:calculary/pages/counter_calculator.dart';
 import 'package:calculary/pages/function_calculator.dart';
 import 'package:calculary/pages/main_calculator.dart';
+import 'package:calculary/pages/numeric_methods_menu.dart';
 import 'package:calculary/pages/settings_page.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,7 @@ class _MyAppState extends State<MyApp> {
           '/counter': (context) => CounterCalculator(),
           '/function': (context) => FunctionCalculator(),
           '/settings': (context) => SettingsPage(setGlobalThemeConfig: setThemeConfig),
+          '/numeric-methods-menu': (context) => NumericMethodsMenu(),
         },
       ),
     );

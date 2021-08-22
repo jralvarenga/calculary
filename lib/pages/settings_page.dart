@@ -153,7 +153,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     child: Row(
                       children: [
                         Icon(
-                          Icons.category,
+                          Icons.payment,
                           size: 25,
                         ),
                         SizedBox(width: 20),
