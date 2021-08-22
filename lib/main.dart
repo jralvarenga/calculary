@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:calculary/pages/counter_calculator.dart';
 import 'package:calculary/pages/function_calculator.dart';
 import 'package:calculary/pages/main_calculator.dart';
@@ -9,6 +11,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(MyApp());
@@ -54,11 +57,31 @@ class _MyAppState extends State<MyApp> {
     setThemeConfig(themeConfig);
   }
 
+  void initMathAPIServer() async {
+    final response = await http.post(
+      Uri.parse('https://mathapi.vercel.app/api/function/solve/'),
+      headers: <String, String> {
+        'Content-Type': 'application/json'
+      },
+      body: jsonEncode({
+        "fx": "3*x + 1",
+        "value": 3
+      })
+    );
+
+    if (response.statusCode == 200) {
+      print('mathapi ready');
+    } else {
+      print('MathAPI Server Error');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
     getConfig();
+    initMathAPIServer();
   }
 
   @override
