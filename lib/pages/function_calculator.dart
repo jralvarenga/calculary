@@ -9,8 +9,11 @@ import 'package:flutter/services.dart';
 
 class FunctionCalculator extends StatefulWidget {
   const FunctionCalculator({
-    Key? key
+    Key? key,
+    required this.mathAPIAvaliable
   }) : super(key: key);
+
+  final bool mathAPIAvaliable;
 
   @override
   _FunctionCalculatorState createState() => _FunctionCalculatorState();
@@ -367,7 +370,8 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                       children: [
                         TopBar(
                           mode: 'Function',
-                          rightButtonFunction: openFunctionMenu
+                          rightButtonFunction: openFunctionMenu,
+                          mathAPIAvaliable: widget.mathAPIAvaliable,
                         ),
                         SizedBox(height: 20),
                         InputResultPadFunctionCalculator(

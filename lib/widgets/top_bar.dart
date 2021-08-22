@@ -9,10 +9,12 @@ class TopBar extends StatefulWidget {
     Key? key,
     required this.mode,
     required this.rightButtonFunction,
+    required this.mathAPIAvaliable
   }) : super(key: key);
 
   final String mode;
   final rightButtonFunction;
+  final bool mathAPIAvaliable;
 
   @override
   _TopBarState createState() => _TopBarState();
@@ -76,5 +78,7 @@ class _TopBarState extends State<TopBar> {
     );
   }
 
-  Widget buildSheet() => MenuBottomSheet();
+  Widget buildSheet() => MenuBottomSheet(
+    mathAPIAvaliable: widget.mathAPIAvaliable,
+  );
 }

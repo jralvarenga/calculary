@@ -44,8 +44,11 @@ class AllCounterData {
 
 class CounterCalculator extends StatefulWidget {
   CounterCalculator({
-    Key? key
+    Key? key,
+    required this.mathAPIAvaliable
   }) : super(key: key);
+  
+  final bool mathAPIAvaliable;
 
   @override
   _CounterCalculatorState createState() => _CounterCalculatorState();
@@ -168,7 +171,8 @@ class _CounterCalculatorState extends State<CounterCalculator> {
                       children: [
                         TopBar(
                           mode: mode,
-                          rightButtonFunction: () => openCounterOptions()
+                          rightButtonFunction: () => openCounterOptions(),
+                          mathAPIAvaliable: widget.mathAPIAvaliable,
                         ),
                         Container(
                           alignment: Alignment(1, 1),

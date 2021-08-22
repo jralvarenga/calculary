@@ -42,7 +42,10 @@ class HistoryItem {
 class MainCalculator extends StatefulWidget {
   MainCalculator({
     Key? key,
+    required this.mathAPIAvaliable
   }) : super(key: key);
+
+  final bool mathAPIAvaliable;
   
   @override
   _MainCalculatorState createState() => _MainCalculatorState();
@@ -417,6 +420,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
                         TopBar(
                           mode: 'History',
                           rightButtonFunction: openCalculatorOptions,
+                          mathAPIAvaliable: widget.mathAPIAvaliable,
                         ),
                         InputResultPad(
                           expression: _expressionDisplayer,

@@ -5,6 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MenuBottomSheet extends StatelessWidget {
+  MenuBottomSheet({
+    Key? key,
+    required this.mathAPIAvaliable
+  }) : super(key: key);
+  
+  final bool mathAPIAvaliable;
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +19,26 @@ class MenuBottomSheet extends StatelessWidget {
 
     void goToPage(String link) {
       Navigator.of(context).pop();
-      if (link == '/') {
-        Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
-        return;
+      switch (link) {
+        case '/':
+          Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);  
+        break;
+        case '/function':
+        case '/numeric-methods-menu':
+          if (!mathAPIAvaliable) {
+            final snackBar = SnackBar(
+              content: Text('MathAPI server not connected')
+            );
+
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);            
+          } else {
+            Navigator.pushNamed(context, link);
+          }
+        break;
+        default:
+          Navigator.pushNamed(context, link);
+        break;
       }
-      Navigator.pushNamed(context, link);
     }
 
     return Container(
@@ -63,11 +84,14 @@ class MenuBottomSheet extends StatelessWidget {
                   itemFunction: () => goToPage('/function'),
                   icon: 'assets/function.svg',
                   requiresInternet: true,
+                  mathAPIAvaliable: mathAPIAvaliable,
                 ),
                 MenuBottomSheetItem(
                   itemName: 'N. methods',
                   itemFunction: () => goToPage('/numeric-methods-menu'),
                   icon: 'assets/numeric_methods.svg',
+                  requiresInternet: true,
+                  mathAPIAvaliable: mathAPIAvaliable,
                 ),
               ],
             ),
@@ -95,13 +119,15 @@ class MenuBottomSheetItem extends StatelessWidget {
     required this.itemName,
     required this.itemFunction,
     required this.icon,
-    this.requiresInternet = false
+    this.requiresInternet = false,
+    this.mathAPIAvaliable = true
   }) : super(key: key);
 
   final String itemName;
   final itemFunction;
   final String icon;
   final bool requiresInternet;
+  final bool mathAPIAvaliable;
   
   @override
   Widget build(BuildContext context) {
@@ -115,7 +141,7 @@ class MenuBottomSheetItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         onTap: itemFunction,
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.40,
+          width: MediaQuery.of(context).size.width * 0.42,
           padding: EdgeInsets.all(18),
           height: 150,
           child: Column(
@@ -128,11 +154,16 @@ class MenuBottomSheetItem extends StatelessWidget {
                     itemName,
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
+                      color: mathAPIAvaliable ? theme.textColor : theme.paperTextColor
                     ),
                   ),
                   if (requiresInternet)
-                    Icon(Icons.wifi)
+                    Icon(
+                      mathAPIAvaliable ? Icons.signal_wifi_4_bar_outlined : Icons.signal_wifi_connected_no_internet_4_outlined,
+                      size: 20,
+                      color: mathAPIAvaliable ? theme.textColor : theme.paperTextColor
+                    )
                 ],
               ),
               Expanded(
@@ -142,7 +173,7 @@ class MenuBottomSheetItem extends StatelessWidget {
                     icon,
                     width: 45,
                     height: 45,
-                    color: theme.textColor,
+                    color: mathAPIAvaliable ? theme.textColor : theme.paperTextColor
                   ),
                 )
               )

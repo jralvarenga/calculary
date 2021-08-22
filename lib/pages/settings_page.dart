@@ -6,10 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SettingsPage extends StatefulWidget {
   SettingsPage({
     Key? key,
-    required this.setGlobalThemeConfig
+    required this.setGlobalThemeConfig,
+    required this.mathAPIAvaliable,
+    required this.retryMathAPIServer
   }) : super(key: key);
 
   final setGlobalThemeConfig;
+  final bool mathAPIAvaliable;
+  final retryMathAPIServer;
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -70,6 +74,15 @@ class _SettingsPageState extends State<SettingsPage> {
     CustomTheme theme = Provider.of(context);
     var themeData = theme.themeData;
 
+    void retryMathAPIServer() {
+      final snackBar = SnackBar(
+        content: Text('Retrying MathAPI availability')
+      );
+      
+      widget.retryMathAPIServer();
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+
     void openThemeDialog() {
       showDialog(
         context: context,
@@ -97,6 +110,34 @@ class _SettingsPageState extends State<SettingsPage> {
           padding: EdgeInsets.only(top: 15),
           child: Column(
             children: [
+              Material(
+                child: InkWell(
+                  onTap: retryMathAPIServer,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: widget.mathAPIAvaliable ? Colors.green[400] : Colors.red[400],
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        Text(
+                          'MathAPI Server Status',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ),
+              ),
               Material(
                 child: InkWell(
                   onTap: openThemeDialog,

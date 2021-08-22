@@ -28,6 +28,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _darkModeOn = true;
+  bool _mathAPIAvailable = true;
 
   void setThemeConfig(String config) {
     switch (config) {
@@ -72,6 +73,9 @@ class _MyAppState extends State<MyApp> {
     if (response.statusCode == 200) {
       print('mathapi ready');
     } else {
+      setState(() {
+        _mathAPIAvailable = false;
+      });
       print('MathAPI Server Error');
     }
   }
@@ -104,11 +108,21 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'Calculary',
         theme: appTheme.themeData,
-        home: MainCalculator(),
+        home: MainCalculator(
+          mathAPIAvaliable: _mathAPIAvailable,
+        ),
         routes: {
-          '/counter': (context) => CounterCalculator(),
-          '/function': (context) => FunctionCalculator(),
-          '/settings': (context) => SettingsPage(setGlobalThemeConfig: setThemeConfig),
+          '/counter': (context) => CounterCalculator(
+            mathAPIAvaliable: _mathAPIAvailable,
+          ),
+          '/function': (context) => FunctionCalculator(
+            mathAPIAvaliable: _mathAPIAvailable,
+          ),
+          '/settings': (context) => SettingsPage(
+            setGlobalThemeConfig: setThemeConfig,
+            mathAPIAvaliable: _mathAPIAvailable,
+            retryMathAPIServer: initMathAPIServer,
+          ),
           '/numeric-methods-menu': (context) => NumericMethodsMenu(),
         },
       ),
