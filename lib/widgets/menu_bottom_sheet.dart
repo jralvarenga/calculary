@@ -47,68 +47,75 @@ class MenuBottomSheet extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         color: themeData.backgroundColor
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              width: 80,
-              height: 8,
-              decoration: BoxDecoration(
-                color: themeData.dialogBackgroundColor,
-                borderRadius: BorderRadius.circular(20)
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width: 80,
+            height: 8,
+            decoration: BoxDecoration(
+              color: themeData.dialogBackgroundColor,
+              borderRadius: BorderRadius.circular(20)
+            ),
+          ),
+          SizedBox(height: 25),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MenuBottomSheetItem(
+                        itemName: 'Calculator',
+                        itemFunction: () => goToPage('/'),
+                        icon: 'assets/calculator.svg',
+                      ),
+                      MenuBottomSheetItem(
+                        itemName: 'Counter',
+                        itemFunction: () => goToPage('/counter'),
+                        icon: 'assets/counter.svg',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MenuBottomSheetItem(
+                        itemName: 'Function',
+                        itemFunction: () => goToPage('/function'),
+                        icon: 'assets/function.svg',
+                        requiresInternet: true,
+                        mathAPIAvaliable: mathAPIAvaliable,
+                      ),
+                      MenuBottomSheetItem(
+                        itemName: 'N. methods',
+                        itemFunction: () => goToPage('/numeric-methods-menu'),
+                        icon: 'assets/numeric_methods.svg',
+                        requiresInternet: true,
+                        mathAPIAvaliable: mathAPIAvaliable,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MenuBottomSheetItem(
+                        itemName: 'Settings',
+                        itemFunction: () => goToPage('/settings'),
+                        icon: 'assets/settings.svg',
+                      ),
+                    ],
+                  )
+                ],
               ),
-            ),
-            SizedBox(height: 25),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MenuBottomSheetItem(
-                  itemName: 'Calculator',
-                  itemFunction: () => goToPage('/'),
-                  icon: 'assets/calculator.svg',
-                ),
-                MenuBottomSheetItem(
-                  itemName: 'Counter',
-                  itemFunction: () => goToPage('/counter'),
-                  icon: 'assets/counter.svg',
-                ),
-              ],
-            ),
-            SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MenuBottomSheetItem(
-                  itemName: 'Function',
-                  itemFunction: () => goToPage('/function'),
-                  icon: 'assets/function.svg',
-                  requiresInternet: true,
-                  mathAPIAvaliable: mathAPIAvaliable,
-                ),
-                MenuBottomSheetItem(
-                  itemName: 'N. methods',
-                  itemFunction: () => goToPage('/numeric-methods-menu'),
-                  icon: 'assets/numeric_methods.svg',
-                  requiresInternet: true,
-                  mathAPIAvaliable: mathAPIAvaliable,
-                ),
-              ],
-            ),
-            SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MenuBottomSheetItem(
-                  itemName: 'Settings',
-                  itemFunction: () => goToPage('/settings'),
-                  icon: 'assets/settings.svg',
-                ),
-              ],
             )
-          ],
-        ),
-      )
+          )
+        ],
+      ),
     );
   }
 }
