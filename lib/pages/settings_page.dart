@@ -193,9 +193,13 @@ class _SettingsPageState extends State<SettingsPage> {
                     padding: EdgeInsets.all(20),
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.payment,
-                          size: 25,
+                        SizedBox(width: 5),
+                        Text(
+                          '%',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold
+                          ),
                         ),
                         SizedBox(width: 20),
                         Text(
