@@ -9,6 +9,7 @@ import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -59,6 +60,12 @@ class _MyAppState extends State<MyApp> {
     setThemeConfig(themeConfig);
   }
 
+  void showToastMessage(String text) {
+    Fluttertoast.showToast(
+      msg: text,
+    );
+  }
+
   void initMathAPIServer() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
@@ -74,17 +81,18 @@ class _MyAppState extends State<MyApp> {
       );
 
       if (response.statusCode == 201) {
-        print('mathapi ready');
+        showToastMessage('mathapi ready');
       } else {
         setState(() {
           _mathAPIAvailable = false;
         });
-        print('MathAPI Server Error');
+        showToastMessage('MathAPI Server Not Available');
       }
     } else {
       setState(() {
         _mathAPIAvailable = false;
       });
+      showToastMessage('MathAPI Server Not Available');
     }
   }
 
@@ -116,8 +124,10 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'Calculary',
         theme: appTheme.themeData,
-        home: MainCalculator(
-          mathAPIAvaliable: _mathAPIAvailable,
+        home: Scaffold(
+          body: MainCalculator(
+            mathAPIAvaliable: _mathAPIAvailable,
+          ),
         ),
         routes: {
           '/counter': (context) => CounterCalculator(
@@ -135,5 +145,13 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
+  }
+
+  void showSnackBar(BuildContext context) {
+    final snackBar = SnackBar(
+      content: Text('MathAPI Server Error')
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
