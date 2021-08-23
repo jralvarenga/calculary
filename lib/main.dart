@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 void main() {
   runApp(MyApp());
@@ -59,24 +60,31 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initMathAPIServer() async {
-    final response = await http.post(
-      Uri.parse('https://mathapi.vercel.app/api/function/solve/'),
-      headers: <String, String> {
-        'Content-Type': 'application/json'
-      },
-      body: jsonEncode({
-        "fx": "3*x + 1",
-        "value": 3
-      })
-    );
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+      final response = await http.post(
+        Uri.parse('https://mathapi.vercel.app/api/function/solve/'),
+        headers: <String, String> {
+          'Content-Type': 'application/json'
+        },
+        body: jsonEncode({
+          "fx": "3*x + 1",
+          "value": 3
+        })
+      );
 
-    if (response.statusCode == 200) {
-      print('mathapi ready');
+      if (response.statusCode == 201) {
+        print('mathapi ready');
+      } else {
+        setState(() {
+          _mathAPIAvailable = false;
+        });
+        print('MathAPI Server Error');
+      }
     } else {
       setState(() {
         _mathAPIAvailable = false;
       });
-      print('MathAPI Server Error');
     }
   }
 

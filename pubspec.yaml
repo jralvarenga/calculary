@@ -35,6 +35,7 @@ dependencies:
   flutter_svg: ^0.22.0
   shared_preferences: ^2.0.6
   charcode: ^1.2.0
+  connectivity_plus: ^1.1.0
 
 dev_dependencies:
   flutter_test:
