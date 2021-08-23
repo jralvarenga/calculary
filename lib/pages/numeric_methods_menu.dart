@@ -1,3 +1,4 @@
+import 'package:calculary/pages/numeric_methods.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,19 +21,45 @@ class _NumericMethodsMenuState extends State<NumericMethodsMenu> {
     void goToMethod(String link) {
       switch (link) {
         case 'newton-rhapson':
-          print('xd1');
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => NumericMethods(
+              methodName: 'Newton-Rhapson',
+              methodURI: 'https://mathapi.vercel.app/api/methods/function-root/newton-rhapson/',
+            )
+          ));
         break;
         case 'bisection':
-          print('xd2');
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => NumericMethods(
+              methodName: 'Bisection',
+              methodURI: 'https://mathapi.vercel.app/api/methods/function-root/bisection/',
+            )
+          ));
         break;
         case 'fixed-point':
-          print('xd3');
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => NumericMethods(
+              methodName: 'Fixed point',
+              methodURI: 'https://mathapi.vercel.app/api/methods/function-root/fixed-point/',
+              
+            )
+          ));
         break;
         case 'simpson':
-          print('xd4');
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => NumericMethods(
+              methodName: "Simpson's rule",
+              methodURI: 'https://mathapi.vercel.app/api/methods/integral/simpson/',
+            )
+          ));
         break;
         case 'trapz':
-          print('xd5');
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => NumericMethods(
+              methodName: "Trapz rule",
+              methodURI: 'https://mathapi.vercel.app/api/methods/integral/trapz/',
+            )
+          ));
         break;
       }
     }
