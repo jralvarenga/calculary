@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
       );
 
       if (response.statusCode == 200) {
-        showToastMessage('mathapi ready');
+        return;
       } else {
         setState(() {
           _mathAPIAvailable = false;
