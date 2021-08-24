@@ -27,8 +27,10 @@ class ColorsDialog extends StatelessWidget {
 
   final List<ColorItem> colors = [
     ColorItem(primary: "lila", accent: "peach"),
-    ColorItem(primary: "alphaca", accent: "mango"),
+    ColorItem(primary: "raisin", accent: "pink"),
     ColorItem(primary: "blossom", accent: "lavanda"),
+    ColorItem(primary: "navy", accent: "orange"),
+    ColorItem(primary: "turquoise", accent: "tan"),
   ];
 
   @override
@@ -46,7 +48,7 @@ class ColorsDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(20)
       ),
       content: Container(
-        height: 200,
+        height: 300,
         child: Column(
           children: <Widget>[
             for (var i = 0; i < colors.length; i++)
