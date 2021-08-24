@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class CustomTheme {
   CustomTheme({
     required this.isDark,
+    required this.accent,
+    required this.primary,
   });
 
   final bool isDark;
+  final Color primary;
+  final Color accent;
 
   Color get textColor {
     return isDark ? Color.fromRGBO(255, 255, 255, 1) : Color.fromRGBO(0, 0, 0, 1);
@@ -19,8 +23,8 @@ class CustomTheme {
   
     var theme = ThemeData(
       primarySwatch: Colors.pink,
-      primaryColor: isDark ? Color.fromRGBO(198, 125, 255, 1) : Color.fromRGBO(188, 102, 255, 1),
-      accentColor: isDark ? Color.fromRGBO(255, 214, 181, 1) : Color.fromRGBO(255, 203, 165, 1),
+      primaryColor: primary,
+      accentColor: accent,
       backgroundColor: isDark ? Colors.grey[850] : Colors.white,
       dialogBackgroundColor: isDark ? Color.fromRGBO(70, 70, 70, 1) : Color.fromRGBO(227, 227, 227, 1),
       brightness: isDark ? Brightness.dark : Brightness.light,

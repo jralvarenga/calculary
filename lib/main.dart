@@ -6,6 +6,7 @@ import 'package:calculary/pages/main_calculator.dart';
 import 'package:calculary/pages/numeric_methods_menu.dart';
 import 'package:calculary/pages/settings_page.dart';
 import 'package:calculary/services/custom_theme.dart';
+import 'package:calculary/services/format_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +32,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _darkModeOn = true;
   bool _mathAPIAvailable = true;
+  String _primaryColor = 'lila';
+  String _accentColor = 'peach';
 
   void setThemeConfig(String config) {
     switch (config) {
@@ -58,8 +61,22 @@ class _MyAppState extends State<MyApp> {
     final prefs = await SharedPreferences.getInstance();
     String themeConfig = (prefs.getString('theme_config') ?? 'ThemeConfig.system');
     setThemeConfig(themeConfig);
+
+    String primaryColorConfig = (prefs.getString('primary_color') ?? 'lila');
+    String accentColorConfig = (prefs.getString('accent_color') ?? 'peach');
+    setState(() {
+      _primaryColor = primaryColorConfig;
+      _accentColor = accentColorConfig;
+    });
   }
 
+  void setGlobalColors(String primary, String accent) {
+    setState(() {
+      _primaryColor = primary;
+      _accentColor = accent;
+    });
+  }
+  
   void showToastMessage(String text) {
     Fluttertoast.showToast(
       msg: text,
@@ -106,8 +123,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    
-    CustomTheme appTheme = CustomTheme(isDark: _darkModeOn);
+    final FormatColor formatColor = FormatColor(primary: _primaryColor, accent: _accentColor, isDark: _darkModeOn);
+    Color primaryColor = formatColor.getPrimaryColor();
+    Color accentColor = formatColor.getAccentColor();
+    CustomTheme appTheme = CustomTheme(isDark: _darkModeOn, primary: primaryColor, accent: accentColor);
     var themeData = appTheme.themeData;
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -140,6 +159,7 @@ class _MyAppState extends State<MyApp> {
             setGlobalThemeConfig: setThemeConfig,
             mathAPIAvaliable: _mathAPIAvailable,
             retryMathAPIServer: initMathAPIServer,
+            setGlobalColors: setGlobalColors,
           ),
           '/numeric-methods-menu': (context) => NumericMethodsMenu(),
         },

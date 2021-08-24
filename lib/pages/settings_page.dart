@@ -1,4 +1,5 @@
 import 'package:calculary/services/custom_theme.dart';
+import 'package:calculary/widgets/settings_page/colors_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,10 +9,12 @@ class SettingsPage extends StatefulWidget {
     Key? key,
     required this.setGlobalThemeConfig,
     required this.mathAPIAvaliable,
-    required this.retryMathAPIServer
+    required this.retryMathAPIServer,
+    required this.setGlobalColors
   }) : super(key: key);
 
   final setGlobalThemeConfig;
+  final setGlobalColors;
   final bool mathAPIAvaliable;
   final retryMathAPIServer;
 
@@ -23,6 +26,8 @@ enum ThemeConfig { light, dark, system }
 
 class _SettingsPageState extends State<SettingsPage> {
   ThemeConfig _themeConfig = ThemeConfig.system;
+  String _primaryColor = 'lila';
+  String _accentColor = 'peach';
 
   void setThemeConfig(String config) {
     switch (config) {
@@ -47,8 +52,14 @@ class _SettingsPageState extends State<SettingsPage> {
   void getSettings() async {
     final prefs = await SharedPreferences.getInstance();
     String themeConfig = (prefs.getString('theme_config') ?? 'ThemeConfig.system');
-    print(themeConfig);
     setThemeConfig(themeConfig);
+
+    String primaryColorConfig = (prefs.getString('primary_color') ?? 'lila');
+    String accentColorConfig = (prefs.getString('accent_color') ?? 'peach');
+    setState(() {
+      _primaryColor = primaryColorConfig;
+      _accentColor = accentColorConfig;
+    });
   }
 
   @override
@@ -65,6 +76,19 @@ class _SettingsPageState extends State<SettingsPage> {
 
     setState(() {
       _themeConfig = config;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void changeColorsConfig(String primary, String accent) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('primary_color', primary);
+    prefs.setString('accent_color', accent);
+
+    setState(() {
+      _primaryColor = primary;
+      _accentColor = accent;
+      widget.setGlobalColors(primary, accent);
     });
     Navigator.of(context).pop();
   }
@@ -87,6 +111,13 @@ class _SettingsPageState extends State<SettingsPage> {
       showDialog(
         context: context,
         builder: (context) => buildThemeDialog()
+      );
+    }
+
+    void openColorsDialog() {
+      showDialog(
+        context: context,
+        builder: (context) => buildColorDialog()
       );
     }
 
@@ -152,6 +183,31 @@ class _SettingsPageState extends State<SettingsPage> {
                         SizedBox(width: 20),
                         Text(
                           'Theme',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ),
+              ),
+              
+              Material(
+                child: InkWell(
+                  onTap: openColorsDialog,
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.color_lens,
+                          size: 25,
+                        ),
+                        SizedBox(width: 20),
+                        Text(
+                          'Colors',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold
@@ -278,5 +334,11 @@ class _SettingsPageState extends State<SettingsPage> {
         ],
       ),
     ),
+  );
+
+  Widget buildColorDialog() => ColorsDialog(
+    primaryColorConfig: _primaryColor,
+    accentColorConfig: _accentColor,
+    changeColorConfig: changeColorsConfig,
   );
 }
