@@ -1,4 +1,5 @@
 import 'package:calculary/services/custom_theme.dart';
+import 'package:calculary/services/format_color.dart';
 import 'package:calculary/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +63,7 @@ class NumberPad extends StatelessWidget {
             FunctionButton(
               text: '/',
               value: '/',
-              textColor: theme.paperTextColor,
+              textColor: estimateBrightnessForColorForText(themeData.accentColor),
               textSize: 22,
               buttonColor: themeData.accentColor,
               callback: addOperator
@@ -88,7 +89,7 @@ class NumberPad extends StatelessWidget {
                   child: Text(
                     'DEL',
                     style: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 1),
+                      color: estimateBrightnessForColorForText(themeData.primaryColor),
                       fontSize: 16,
                       fontWeight: FontWeight.bold
                     ),
@@ -128,7 +129,7 @@ class NumberPad extends StatelessWidget {
             FunctionButton(
               text: '-',
               value: '-',
-              textColor: theme.paperTextColor,
+              textColor: estimateBrightnessForColorForText(themeData.accentColor),
               textSize: 26,
               buttonColor: themeData.accentColor,
               callback: addOperator
@@ -136,7 +137,7 @@ class NumberPad extends StatelessWidget {
             FunctionButton(
               text: productIcon,
               value: '*',
-              textColor: theme.paperTextColor,
+              textColor: estimateBrightnessForColorForText(themeData.accentColor),
               textSize: 22,
               buttonColor: themeData.accentColor,
               callback: addOperator
@@ -173,7 +174,7 @@ class NumberPad extends StatelessWidget {
             LargeFunctionButton(
               text: '+',
               value: '+',
-              textColor: theme.paperTextColor,
+              textColor: estimateBrightnessForColorForText(themeData.accentColor),
               textSize: 26,
               buttonColor: themeData.accentColor,
               callback: addOperator
@@ -202,7 +203,7 @@ class NumberPad extends StatelessWidget {
             LargeFunctionButton(
               text: '=',
               value: 'enter',
-              textColor: Color.fromRGBO(255, 255, 255, 1),
+              textColor: estimateBrightnessForColorForText(themeData.primaryColor),
               textSize: 22,
               buttonColor: themeData.primaryColor,
               callback: enterExpression

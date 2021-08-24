@@ -65,3 +65,12 @@ class FormatColor {
     }
   }
 }
+
+Color estimateBrightnessForColorForText(Color color) {
+  final double relativeLuminance = color.computeLuminance();
+
+  const double kThreshold = 0.15;
+  if ((relativeLuminance + 0.05) * (relativeLuminance + 0.05) > kThreshold)
+    return Color.fromRGBO(0, 0, 0, 1);
+  return Color.fromRGBO(255, 255, 255, 1);
+}

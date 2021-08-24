@@ -1,4 +1,5 @@
 import 'package:calculary/services/custom_theme.dart';
+import 'package:calculary/services/format_color.dart';
 import 'package:calculary/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: '?',
                         value: '?',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 18,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -44,7 +45,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: String.fromCharCode($infin),
                         value: 'inf',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 25,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -52,7 +53,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: '!',
                         value: '!',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -60,7 +61,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: String.fromCharCode($radic),
                         value: 'sqrt(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 16,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -68,7 +69,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: '^',
                         value: '^(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -78,7 +79,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'abc',
                         value: 'abc',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 18,
                         buttonColor: themeData.accentColor,
                         callback: addGlobalFunction
@@ -86,7 +87,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'exp',
                         value: 'e^(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -94,7 +95,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'sin',
                         value: 'sin(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -102,7 +103,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'cos',
                         value: 'cos(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -110,7 +111,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'tan',
                         value: 'tan(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -123,7 +124,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: String.fromCharCode($pi),
                         value: '3.14159265',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -131,7 +132,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'e',
                         value: '2.718281828',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -139,7 +140,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'x',
                         value: 'x',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -147,7 +148,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: '(',
                         value: '(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -155,7 +156,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: ')',
                         value: ')',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -165,7 +166,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'log',
                         value: 'log10(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -173,7 +174,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'ln',
                         value: 'ln(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -181,7 +182,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'asin',
                         value: 'asin(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -189,7 +190,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'acos',
                         value: 'acos(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
@@ -197,7 +198,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       FunctionButton(
                         text: 'atan',
                         value: 'atan(',
-                        textColor: theme.paperTextColor,
+                        textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,
                         callback: addNumberExpression
