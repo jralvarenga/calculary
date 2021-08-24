@@ -109,7 +109,9 @@ class MenuBottomSheet extends StatelessWidget {
                         icon: 'assets/settings.svg',
                       ),
                     ],
-                  )
+                  ),
+                  
+                  SizedBox(height: 20)
                 ],
               ),
             )

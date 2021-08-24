@@ -90,6 +90,8 @@ class _CounterCalculatorState extends State<CounterCalculator> {
   void addToCounter() async {
     final prefs = await SharedPreferences.getInstance();
     String counterNewValue = _inputControler.text;
+    counterNewValue =  counterNewValue.replaceAll(',', '.');
+    counterNewValue =  counterNewValue.replaceAll(' ', '');
     var newCounter = double.parse(_count) + double.parse(counterNewValue);
     newCounter.toStringAsFixed(2);
 
@@ -157,110 +159,122 @@ class _CounterCalculatorState extends State<CounterCalculator> {
       );
     }
 
-    return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Container(
-            padding: EdgeInsets.all(15),
-            child: Column(
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: Container(
-                    child: Column(
-                      children: [
-                        TopBar(
-                          mode: mode,
-                          rightButtonFunction: () => openCounterOptions(),
-                          mathAPIAvaliable: widget.mathAPIAvaliable,
-                        ),
-                        Container(
-                          alignment: Alignment(1, 1),
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.only(top: 60, bottom: 60),
-                                child: Center(
-                                  child: Text(
-                                    _count,
-                                    style: TextStyle(
-                                      fontSize: 50,
-                                      fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(20),
-                                child: Center(
-                                  child: Container(
-                                    child:Container(
-                                      child: TextField(
-                                        keyboardType: TextInputType.number,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold
-                                        ),
-                                        controller: _inputControler,
-                                      ),
-                                    )
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextButton(
-                                    onPressed: addToCounter,
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: themeData.primaryColor,
-                                      padding: EdgeInsets.only(top: 15, bottom: 15, right: 50, left: 50),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Add',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white
-                                      ),
-                                    )
-                                  )
-                                ],
-                              )
-                            ],
+    void unFocusKeyboard() {
+      FocusScopeNode currentFocus = FocusScope.of(context);
+
+      if (!currentFocus.hasPrimaryFocus) {
+        currentFocus.unfocus();
+      }
+    }
+
+    return GestureDetector(
+      // Dismise keyboard
+      onTap: unFocusKeyboard,
+      child: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Container(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: Container(
+                      child: Column(
+                        children: [
+                          TopBar(
+                            mode: mode,
+                            rightButtonFunction: () => openCounterOptions(),
+                            mathAPIAvaliable: widget.mathAPIAvaliable,
                           ),
-                        ),
-                        SizedBox(height: 20),
-                        Expanded(
-                          child: Container(
-                            child: ListView.separated(
-                              itemCount: _counterItems.length,
-                              separatorBuilder: (_, i) => SizedBox(
-                                height: 5,
-                              ),
-                              itemBuilder: (_, i) => Container(
-                                child: CounterAddedItem(
-                                  addedAmount: _counterItems.reversed.toList()[i].amount,
-                                  itemIndex: i,
-                                  removeFromCount: removeFromCount
+                          Container(
+                            alignment: Alignment(1, 1),
+                            child: Column(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(top: 60, bottom: 60),
+                                  child: Center(
+                                    child: Text(
+                                      _count,
+                                      style: TextStyle(
+                                        fontSize: 50,
+                                        fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(20),
+                                  child: Center(
+                                    child: Container(
+                                      child:Container(
+                                        child: TextField(
+                                          keyboardType: TextInputType.number,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold
+                                          ),
+                                          controller: _inputControler,
+                                        ),
+                                      )
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                      onPressed: addToCounter,
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: themeData.primaryColor,
+                                        padding: EdgeInsets.only(top: 15, bottom: 15, right: 50, left: 50),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Add',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white
+                                        ),
+                                      )
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Expanded(
+                            child: Container(
+                              child: ListView.separated(
+                                itemCount: _counterItems.length,
+                                separatorBuilder: (_, i) => SizedBox(
+                                  height: 5,
+                                ),
+                                itemBuilder: (_, i) => Container(
+                                  child: CounterAddedItem(
+                                    addedAmount: _counterItems.reversed.toList()[i].amount,
+                                    itemIndex: i,
+                                    removeFromCount: removeFromCount
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ),
-              ],
-            )
+                        ],
+                      ),
+                    )
+                  ),
+                ],
+              )
+            ),
           ),
-        ),
-      )
+        )
+      ),
     );
   }
 
