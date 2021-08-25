@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:calculary/services/solve_function_calculator.dart';
 import 'package:calculary/widgets/function_calculator/function_calculator_menu.dart';
 import 'package:calculary/widgets/function_calculator/function_pad.dart';
@@ -40,6 +42,13 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   String _integralBValue = '?';
   int _integralIndexOptions = 0;
 
+  // Plot options
+  String _from = '-10';
+  String _to = '10';
+  int _plotIndexOptions = 0;
+  List<dynamic> _xValues = [0];
+  List<dynamic> _yValues = [0];
+
   // Solver conditions
   bool _openedParenthesis = false;
   bool _hasOperator = false;
@@ -55,6 +64,13 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
     setState(() {
       _inputIndex = 1;
       _integralIndexOptions = index;
+    });
+  }
+
+  void changePlotIndex(int index) {
+    setState(() {
+      _inputIndex = 1;
+      _plotIndexOptions = index;
     });
   }
 
@@ -174,6 +190,16 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                     break;
                   }
                 break;
+                case 'plot':
+                  switch (_plotIndexOptions) {
+                    case 0:
+                      _from += value;
+                    break;
+                    case 1:
+                      _to += value;
+                    break;
+                  }
+                break;
                 case 'function':
                   if (_xValue == '?') {
                     _xValue = value;
@@ -246,6 +272,16 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                 break;
               }
             break;
+            case 'plot':
+              switch (_plotIndexOptions) {
+                case 0:
+                  _from = _from.substring(0, _from.length - 1);
+                break;
+                case 1:
+                  _to = _to.substring(0, _to.length - 1);
+                break;
+              }
+            break;
             case 'function':
               _xValue = _xValue.substring(0, _xValue.length - 1);
             break;
@@ -267,6 +303,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       case 'function':
         if (_xValue == '?') {
           sendSnackbar('Try plotting this function or give it an x value');
+          setState(() => _loadingResult = false);
           return;
         }
         var solver = new SolveFunctionCalculator(x: _xValue, fx: _expression, mode: _mode);
@@ -276,6 +313,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
         bool evaluateDx = true;
         if (_dxOrder == '?' || _dxOrder == '' || _dxOrder == '0') {
           sendSnackbar("Order of dx can't be null or 0");
+          setState(() => _loadingResult = false);
           return;
         }
         if (_dxXValue == '?' || _dxXValue == '') {
@@ -298,9 +336,27 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
         var solver = new SolveFunctionCalculator(evaluateIntegral: evaluateIntegral, a: _integralAValue, b: _integralBValue, fx: _expression, mode: _mode);
         result = await solver.solveFunction();
       break;
+      case 'plot':
+        if ((_from == '?' || _from == '') || (_to == '?' || _to == '')) {
+          sendSnackbar("Limits need to have a value");
+          setState(() => _loadingResult = false);
+          return;
+        }
+        result = '';
+        var solver = new SolveFunctionCalculator(from: _from, to: _to, fx: _expression, mode: _mode);
+        String values = await solver.solveFunction();
+        List<dynamic> xValues = jsonDecode(values.split(';')[0]);
+        List<dynamic> yValues = jsonDecode(values.split(';')[1]);
+        setState(() {
+          _xValues = xValues;
+          _yValues = yValues;
+        });
+        print(_xValues);
+      break;
       default:
         if (_xValue == '?') {
           sendSnackbar('Try plotting this function or give it an x value');
+          setState(() => _loadingResult = false);
           return;
         }
         var solver = new SolveFunctionCalculator(x: _xValue, fx: _expression, mode: _mode);
@@ -326,6 +382,8 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       _dxXValue = '?';
       _integralAValue = '?';
       _integralBValue = '?';
+      _from = '-10';
+      _to = '10';
       _result = '';
     });
   }
@@ -389,6 +447,11 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                           dxXValue: _dxXValue,
                           changeDerivativeIndex: changeDerivativeIndex,
                           derivativeIndexOptions: _derivativeIndexOptions,
+
+                          from: _from,
+                          to: _to,
+                          changePlotIndex: changePlotIndex,
+                          plotIndexOptions: _plotIndexOptions,
 
                           integralAValue: _integralAValue,
                           integralBValue: _integralBValue,

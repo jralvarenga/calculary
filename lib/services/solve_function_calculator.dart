@@ -12,6 +12,9 @@ class SolveFunctionCalculator {
   double dxX;
   bool evaluateDx;
 
+  String from;
+  String to;
+
   bool evaluateIntegral;
   String a;
   String b;
@@ -25,7 +28,9 @@ class SolveFunctionCalculator {
     this.evaluateDx = false,
     this.evaluateIntegral = false,
     this.a = '0',
-    this.b = '1'
+    this.b = '1',
+    this.from = '-10',
+    this.to = '10'
   });
 
   Future<String> sendData(String body, String url) async {
@@ -49,6 +54,12 @@ class SolveFunctionCalculator {
           }
         case 'integral':
           return IntegralData.fromJson(jsonDecode(response.body)).integral;
+        case 'plot':
+          String result = response.body;
+          result = result.replaceAll('{"x": ', '');
+          result = result.replaceAll(', "y": ', ';');
+          result = result.replaceAll('}', '');
+          return result;
         default:
           return FunctionData.fromJson(jsonDecode(response.body)).result.toString();
       }
@@ -76,6 +87,14 @@ class SolveFunctionCalculator {
       fx: fx,
       a: this.a,
       b: this.b,
+    );
+    return jsonEncode(data.toJson());
+  }
+  String formatForPlot(String fx) {
+    PlotData data = PlotData(
+      fx: fx,
+      from: this.from,
+      to:  this.to,
     );
     return jsonEncode(data.toJson());
   }
@@ -125,6 +144,13 @@ class SolveFunctionCalculator {
 
         String formatedData = formatForIntegral(fx);
         String result = await sendData(formatedData, url);
+        return result;
+      case 'plot':
+        String url = 'https://mathapi.vercel.app/api/function/points/?step=0.5';
+        String formatedData = formatForPlot(fx);
+        String result = await sendData(formatedData, url);
+        //print(result);
+
         return result;
       default:
         return '';

@@ -2,6 +2,7 @@ import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/function_calculator/options_for_derivative.dart';
 import 'package:calculary/widgets/function_calculator/options_for_function.dart';
 import 'package:calculary/widgets/function_calculator/options_for_integral.dart';
+import 'package:calculary/widgets/function_calculator/options_for_plot.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,11 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
     required this.dxXValue,
     required this.changeDerivativeIndex,
     required this.derivativeIndexOptions,
+
+    required this.from,
+    required this.to,
+    required this.changePlotIndex,
+    required this.plotIndexOptions,
 
     required this.integralAValue,
     required this.integralBValue,
@@ -46,6 +52,12 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
   final String dxXValue;
   final int derivativeIndexOptions;
   final changeDerivativeIndex;
+
+  // Plot mode
+  final String from;
+  final String to;
+  final int plotIndexOptions;
+  final changePlotIndex;
 
   // Integral mode
   final String integralAValue;
@@ -118,9 +130,12 @@ class InputResultPadFunctionCalculator extends StatelessWidget {
               changeInputIndex: changeInputIndex
             ),
           if (mode == 'plot')
-            OptionForFunction(
-              changeInputIndex: changeInputIndex,
-              xValue: 'plot'
+            OptionsForPlot(
+              from: from,
+              to: to,
+              changePlotIndex: changePlotIndex,
+              plotIndexOptions: plotIndexOptions,
+              changeInputIndex: changeInputIndex
             ),
           Divider(
             thickness: 1,

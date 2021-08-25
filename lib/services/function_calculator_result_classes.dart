@@ -74,3 +74,33 @@ class IntegralData {
     this.b = '1',
   });
 }
+
+class PlotData {
+  String fx;
+  String from;
+  String to;
+  List<double> x;
+  List<double> y;
+
+  Map toJson() => {
+    'fx': fx,
+    'from': double.parse(from),
+    'to': double.parse(to),
+  };
+
+  factory PlotData.fromJson(Map<String, List<double>> json) {
+    return PlotData(
+      x: json['x']!,
+      y: json['y']!,
+
+    );
+  }
+
+  PlotData({
+    this.fx = 'x',
+    this.from = '-10',
+    this.to = '10',
+    this.x = const [0],
+    this.y = const [0],
+  });
+}

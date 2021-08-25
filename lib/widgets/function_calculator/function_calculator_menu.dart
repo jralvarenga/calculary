@@ -46,10 +46,10 @@ class FunctionCalculatorMenu extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              /*MenuBottomSheetItem(
+              MenuBottomSheetItem(
                 itemName: 'Plot',
-                itemFunction: () => changeCalculatorMode('plot', 'Plot(f(x)=', ')'),
-              ),*/
+                itemFunction: () => changeCalculatorMode('plot', 'Plot: f(x)=', ''),
+              ),
               MenuBottomSheetItem(
                 itemName: 'Integral',
                 itemFunction: () => changeCalculatorMode('integral', String.fromCharCode($int) + '(', ')dx'),
