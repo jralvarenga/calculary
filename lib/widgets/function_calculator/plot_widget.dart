@@ -1,37 +1,87 @@
 import 'dart:math' as math;
+import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PlotWidget extends StatelessWidget {
-  const PlotWidget({ Key? key }) : super(key: key);
+  const PlotWidget({
+    Key? key,
+    required this.x,
+    required this.y
+  }) : super(key: key);
+
+  final List<dynamic> x;
+  final List<dynamic> y;
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Container(
-        child: CustomPaint(
-          size: Size(100, 300),
-          painter: FunctionPainter(),
-        ),
+    CustomTheme theme = Provider.of(context);
+    var themeData = theme.themeData;
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: themeData.dialogBackgroundColor,
+        centerTitle: true,
+        title: Text(
+          'Function plot',
+        )
       ),
+      body: Center(
+        child: Container(
+          child: CustomPaint(
+            size: Size(
+              MediaQuery.of(context).size.width * 0.9,
+              MediaQuery.of(context).size.height * 0.7,
+            ),
+            painter: FunctionPainter(
+              x: x,
+              y: y,
+              theme: theme,
+              widthSize: MediaQuery.of(context).size.width * 0.9,
+              heightSize: MediaQuery.of(context).size.height * 0.7
+            ),
+          ),
+        ),
+      )
     );
   }
 }
 
 class FunctionPainter extends CustomPainter {
-  @override void paint(Canvas canvas, Size size){
+  const FunctionPainter({
+    Key? key,
+    required this.x,
+    required this.y,
+    required this.theme,
+    required this.heightSize,
+    required this.widthSize
+  });
+
+  final List<dynamic> x;
+  final List<dynamic> y;
+  final CustomTheme theme;
+  final double widthSize;
+  final double heightSize;
+
+  @override void paint(Canvas canvas, Size size) {
     final midY = size.height/2;
     final midX = size.width/2;
-    final paint = Paint()..style = PaintingStyle.fill
+    final axisPaint = Paint()..style = PaintingStyle.fill
+      ..color = theme.paperTextColor
+      ..strokeWidth = 0.5;
+    final functionPaint = Paint()..style = PaintingStyle.fill
+      ..color = theme.textColor
+      ..strokeWidth = 3;
 
-    ..color = Colors.black;
+    canvas.drawLine(Offset(0, midY), Offset(size.width, midY), axisPaint);
+    canvas.drawLine(Offset(midX, 0), Offset(midX, size.height), axisPaint);
 
-    canvas.drawLine(Offset(0, midY), Offset(size.width,midY), paint);
-    canvas.drawLine(Offset(midX, 0), Offset(midX, size.height), paint);
-
-    var pt = Offset(0,midY);
-    for(double i = 0; i < 100; i += 0.5){
-      final npt = Offset(i, midY - 30);
-      canvas.drawLine(pt, npt, paint);
+    var pt = Offset(midX, midY);
+    for(int i = 0; i < widthSize; i++){
+      double xValue = x[i];
+      double yValue = y[i];
+      final npt = Offset(midX + xValue*10, midY - yValue*10);
+      canvas.drawLine(pt, npt, functionPaint);
       pt = npt;
     }
   }

@@ -352,11 +352,12 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
           _xValues = xValues;
           _yValues = yValues;
         });
-        showDialog(
-          context: context,
-          builder: (context) => buildFunctionPlot()
-        );
-        print(_xValues);
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) => PlotWidget(
+            x: _xValues,
+            y: _yValues,
+          )
+        ));
       break;
       default:
         if (_xValue == '?') {
@@ -432,7 +433,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                     child: Column(
                       children: [
                         TopBar(
-                          mode: 'Function',
+                          mode: 'Modes',
                           rightButtonFunction: openFunctionMenu,
                           mathAPIAvaliable: widget.mathAPIAvaliable,
                         ),
@@ -492,6 +493,4 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   Widget functionMenu() => FunctionCalculatorMenu(
     changeCalculatorMode: changeCalculatorMode,
   );
-
-  Widget buildFunctionPlot() => PlotWidget();
 }
