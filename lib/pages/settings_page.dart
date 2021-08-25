@@ -1,5 +1,6 @@
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/settings_page/colors_dialog.dart';
+import 'package:calculary/widgets/settings_page/tip_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,6 +29,7 @@ class _SettingsPageState extends State<SettingsPage> {
   ThemeConfig _themeConfig = ThemeConfig.system;
   String _primaryColor = 'lila';
   String _accentColor = 'peach';
+  TextEditingController _tipInputControler = TextEditingController(text: '10');
 
   void setThemeConfig(String config) {
     switch (config) {
@@ -56,9 +58,11 @@ class _SettingsPageState extends State<SettingsPage> {
 
     String primaryColorConfig = (prefs.getString('primary_color') ?? 'lila');
     String accentColorConfig = (prefs.getString('accent_color') ?? 'peach');
+    String tipValueConfig = (prefs.getString('tip_value') ?? '10');
     setState(() {
       _primaryColor = primaryColorConfig;
       _accentColor = accentColorConfig;
+      _tipInputControler = TextEditingController(text: tipValueConfig);
     });
   }
 
@@ -93,6 +97,16 @@ class _SettingsPageState extends State<SettingsPage> {
     Navigator.of(context).pop();
   }
 
+  void changeTipValue(String tip) async {
+    tip =  tip.replaceAll(',', '.');
+    tip =  tip.replaceAll(' ', '');
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('tip_value', tip);
+    setState(() {
+      _tipInputControler = TextEditingController(text: tip);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     CustomTheme theme = Provider.of(context);
@@ -118,6 +132,13 @@ class _SettingsPageState extends State<SettingsPage> {
       showDialog(
         context: context,
         builder: (context) => buildColorDialog()
+      );
+    }
+
+    void openTipDialog() {
+      showDialog(
+        context: context,
+        builder: (context) => buildTipDialog()
       );
     }
 
@@ -244,7 +265,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Material(
                 child: InkWell(
-                  onTap: () => print('object'),
+                  onTap: openTipDialog,
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: Row(
@@ -259,7 +280,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(width: 20),
                         Text(
-                          'Tip percentage: 10%',
+                          "Tip percentage ${_tipInputControler.text}%",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold
@@ -340,5 +361,10 @@ class _SettingsPageState extends State<SettingsPage> {
     primaryColorConfig: _primaryColor,
     accentColorConfig: _accentColor,
     changeColorConfig: changeColorsConfig,
+  );
+
+  Widget buildTipDialog() => TipDialog(
+    tipInputController: _tipInputControler,
+    changeTipValue: changeTipValue
   );
 }

@@ -258,7 +258,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     });
   }
 
-  void addGlobalFunction(String function, String value) {
+  void addGlobalFunction(String function, String value) async {
+    final prefs = await SharedPreferences.getInstance();
     setState(() {
       switch (function) {
         case 'AVG':
@@ -270,12 +271,33 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         break;
         case 'TIP':
           _mode = value;
+          String tipValue = (prefs.getString('tip_value') ?? '10');
+          double tip = double.parse(tipValue) / 100;
+
           var solver = new SolveMainCalculator(_expression, _globalFunction);
           String result = solver.solveExpression();
-          double onlyTip = double.parse(result) * 0.1;
+          HistoryItem resultItem = HistoryItem(
+            expression: _expression,
+            expressionDisplayer: _expressionDisplayer,
+            result: result
+          );
+          
+          double resultTip = double.parse(result) * tip;
+          String tipExpression = result + '*' + tip.toString();
+          String tipExpressionDisplayer = result + 'x' + tip.toString();
+          HistoryItem tipItem = HistoryItem(
+            expression: tipExpression.split(''),
+            expressionDisplayer: tipExpressionDisplayer.split(''),
+            result: resultTip.toString()
+          );
 
-          _expression = onlyTip.toString().split('');
-          _expressionDisplayer = onlyTip.toString().split('');
+          _calculatorHistory.add(resultItem);
+          prefs.setString('main_calculator_history', jsonEncode(_calculatorHistory));
+          _calculatorHistory.add(tipItem);
+          prefs.setString('main_calculator_history', jsonEncode(_calculatorHistory));
+
+          _expression = resultTip.toString().split('');
+          _expressionDisplayer = resultTip.toString().split('');
           _result = '';
         break;
         case '%':
