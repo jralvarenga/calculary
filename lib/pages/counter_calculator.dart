@@ -57,8 +57,9 @@ class CounterCalculator extends StatefulWidget {
 class _CounterCalculatorState extends State<CounterCalculator> {
   String mode = 'Counter options';
   String _count = '0';
+  String _tip = '0';
   List _counterItems = [];
-  late TextEditingController _inputControler;
+  late TextEditingController _inputControler = TextEditingController(text: '1');
 
   @override
   void initState() {
@@ -69,6 +70,7 @@ class _CounterCalculatorState extends State<CounterCalculator> {
   void getPreviewsCounter() async {
     final prefs = await SharedPreferences.getInstance();
     String previewsCount = (prefs.getString('counter_calculator_count') ?? '0');
+    String previewsTip = (prefs.getString('counter_calculator_tip') ?? '0');
     var previewsCounterItemsJson = (prefs.getString('counter_calculator_items') ?? '[]');
     final parsedPreviewsItemsJson = jsonDecode(previewsCounterItemsJson).cast<Map<String, dynamic>>();
     List previewsCounterItems = parsedPreviewsItemsJson.map<CounterItemData>((json) => CounterItemData.fromJson(json)).toList();
@@ -77,6 +79,7 @@ class _CounterCalculatorState extends State<CounterCalculator> {
     setState(() {
       _count = previewsCount;
       _counterItems = previewsCounterItems;
+      _tip = previewsTip;
       _inputControler = TextEditingController(text: previewsInputText);
     });
   }
@@ -89,20 +92,24 @@ class _CounterCalculatorState extends State<CounterCalculator> {
 
   void addToCounter() async {
     final prefs = await SharedPreferences.getInstance();
+    String tip = (prefs.getString('tip_value') ?? '10');
     String counterNewValue = _inputControler.text;
     counterNewValue =  counterNewValue.replaceAll(',', '.');
     counterNewValue =  counterNewValue.replaceAll(' ', '');
     var newCounter = double.parse(_count) + double.parse(counterNewValue);
     newCounter.toStringAsFixed(2);
+    var newTip = newCounter + newCounter*(double.parse(tip)/100);
 
     HapticFeedback.lightImpact();
     setState(() {
       _count = newCounter.toString();
+      _tip = newTip.toString();
       _counterItems.add(CounterItemData(
         amount: counterNewValue
       ));
 
       prefs.setString('counter_calculator_count', _count);
+      prefs.setString('counter_calculator_tip', _tip);
       prefs.setString('counter_calculator_items', jsonEncode(_counterItems));
       prefs.setString('counter_calculator_input_value', _inputControler.text);
     });
@@ -110,16 +117,20 @@ class _CounterCalculatorState extends State<CounterCalculator> {
 
   void removeFromCount(int i) async {
     final prefs = await SharedPreferences.getInstance();
+    String tip = (prefs.getString('tip_value') ?? '10');
     List reversedItems = _counterItems.reversed.toList();
     var newCounter = double.parse(_count) - double.parse(reversedItems[i].amount);
     reversedItems.removeAt(i);
+    var newTip = newCounter + newCounter*(double.parse(tip)/100);
 
     HapticFeedback.lightImpact();
     setState(() {
       _count = newCounter.toString();
+      _tip = newTip.toString();
       _counterItems = reversedItems.reversed.toList();
       
       prefs.setString('counter_calculator_count', _count);
+      prefs.setString('counter_calculator_tip', _tip);
       prefs.setString('counter_calculator_items', jsonEncode(_counterItems));
       prefs.setString('counter_calculator_input_value', _inputControler.text);
     });
@@ -130,9 +141,11 @@ class _CounterCalculatorState extends State<CounterCalculator> {
 
     setState(() {
       _count = '0';
+      _tip = '0';
       _counterItems = [];
       
       prefs.setString('counter_calculator_count', _count);
+      prefs.setString('counter_calculator_tip', _tip);
       prefs.setString('counter_calculator_items', jsonEncode(_counterItems));
       prefs.setString('counter_calculator_input_value', '1');
     });
@@ -192,7 +205,7 @@ class _CounterCalculatorState extends State<CounterCalculator> {
                             child: Column(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.only(top: 60, bottom: 60),
+                                  padding: EdgeInsets.only(top: 60, bottom: 30),
                                   child: Center(
                                     child: Text(
                                       _count,
@@ -203,6 +216,22 @@ class _CounterCalculatorState extends State<CounterCalculator> {
                                     ),
                                   ),
                                 ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(100),
+                                        color: themeData.dialogBackgroundColor,
+                                      ),
+                                      child: Text(
+                                        "Tip: $_tip"
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 30),
                                 Container(
                                   padding: EdgeInsets.all(20),
                                   child: Center(
@@ -240,8 +269,8 @@ class _CounterCalculatorState extends State<CounterCalculator> {
                                           fontSize: 16,
                                           color: Colors.white
                                         ),
-                                      )
-                                    )
+                                      ),
+                                    ),
                                   ],
                                 )
                               ],
