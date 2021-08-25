@@ -4,6 +4,7 @@ import 'package:calculary/services/solve_function_calculator.dart';
 import 'package:calculary/widgets/function_calculator/function_calculator_menu.dart';
 import 'package:calculary/widgets/function_calculator/function_pad.dart';
 import 'package:calculary/widgets/function_calculator/input_result_pad.dart';
+import 'package:calculary/widgets/function_calculator/plot_widget.dart';
 import 'package:calculary/widgets/number_pad.dart';
 import 'package:calculary/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
@@ -351,6 +352,10 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
           _xValues = xValues;
           _yValues = yValues;
         });
+        showDialog(
+          context: context,
+          builder: (context) => buildFunctionPlot()
+        );
         print(_xValues);
       break;
       default:
@@ -487,4 +492,6 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
   Widget functionMenu() => FunctionCalculatorMenu(
     changeCalculatorMode: changeCalculatorMode,
   );
+
+  Widget buildFunctionPlot() => PlotWidget();
 }
