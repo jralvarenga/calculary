@@ -77,9 +77,9 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
     setState(() {
       switch (value) {
         // Pi
-        case '3.14159265':
+        case 'pi':
         // Euler number
-        case '2.718281828':
+        case 'e':
           switch (_inputIndex) {
             case 0:
               _expression.add(value);

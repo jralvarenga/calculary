@@ -241,30 +241,6 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Material(
                 child: InkWell(
-                  onTap: () => print('object'),
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.category,
-                          size: 25,
-                        ),
-                        SizedBox(width: 20),
-                        Text(
-                          'Angular units: Radians',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ),
-              ),
-              Material(
-                child: InkWell(
                   onTap: openTipDialog,
                   child: Container(
                     padding: EdgeInsets.all(20),
@@ -290,7 +266,31 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   )
                 ),
-              )
+              ),
+              Material(
+                child: InkWell(
+                  onTap: () => print('object'),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.category,
+                          size: 25,
+                        ),
+                        SizedBox(width: 20),
+                        Text(
+                          'Angular units: Radians',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ),
+              ),
             ],
           ),
         )

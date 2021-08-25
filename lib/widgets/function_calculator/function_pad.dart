@@ -123,7 +123,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       // Main functions
                       FunctionButton(
                         text: String.fromCharCode($pi),
-                        value: '3.14159265',
+                        value: 'pi',
                         textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
@@ -131,7 +131,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       ),
                       FunctionButton(
                         text: 'e',
-                        value: '2.718281828',
+                        value: 'e',
                         textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 22,
                         buttonColor: themeData.accentColor,
