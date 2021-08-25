@@ -2,6 +2,7 @@ import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class MenuBottomSheet extends StatelessWidget {
@@ -16,6 +17,12 @@ class MenuBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     CustomTheme theme = Provider.of(context);
     var themeData = theme.themeData;
+
+    void showToastMessage(String text) {
+      Fluttertoast.showToast(
+        msg: text,
+      );
+    }
 
     void goToPage(String link) {
       Navigator.of(context).pop();
@@ -92,10 +99,12 @@ class MenuBottomSheet extends StatelessWidget {
                       ),
                       MenuBottomSheetItem(
                         itemName: 'N. methods',
-                        itemFunction: () => goToPage('/numeric-methods-menu'),
+                        //itemFunction: () => goToPage('/numeric-methods-menu'),
+                        itemFunction: () => showToastMessage("N. mehtods will be available soon"),
                         icon: 'assets/numeric_methods.svg',
                         requiresInternet: true,
-                        mathAPIAvaliable: mathAPIAvaliable,
+                        //mathAPIAvaliable: mathAPIAvaliable,
+                        mathAPIAvaliable: false,
                       ),
                     ],
                   ),
