@@ -1,8 +1,8 @@
 <p align="center">
-  <img height=100 src="https://raw.githubusercontent.com/jralvarenga/calculary/master/assets/icon_bg_white.svg" />
+  <img height=150 src="https://raw.githubusercontent.com/jralvarenga/calculary/master/assets/icon_bg_white.svg" />
 </p>
 
-<p align="center" style="font-size: 25px">
+<p align="center" style="font-size: 30px">
   <strong>Calculary</strong>
 </p>
 
@@ -19,6 +19,8 @@ Does everything that a normal calculator and more, solve your math functions qui
 Calculary is an open source proyect, you can see and colaborate in its development or take some ideas for your proyect.
 
 If you want to colaborate, fork the proyect, work in your thing in <strong>dev branch</strong>, once you're done create a pull request and we're going to review it.
+
+If you encounter errors with the app, create an issue [here](https://github.com/jralvarenga/calculary/issues)
 
 ## Branch Structure
 
