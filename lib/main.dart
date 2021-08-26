@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -143,12 +144,10 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'Calculary',
         theme: appTheme.themeData,
-        home: Scaffold(
-          body: MainCalculator(
-            mathAPIAvaliable: _mathAPIAvailable,
-          ),
+        home: MainCalculator(
+          mathAPIAvaliable: _mathAPIAvailable,
         ),
-        routes: {
+        /*routes: {
           '/counter': (context) => CounterCalculator(
             mathAPIAvaliable: _mathAPIAvailable,
           ),
@@ -162,6 +161,47 @@ class _MyAppState extends State<MyApp> {
             setGlobalColors: setGlobalColors,
           ),
           '/numeric-methods-menu': (context) => NumericMethodsMenu(),
+        },*/
+        onGenerateRoute: (route) {
+          print(route.name);
+          switch (route.name) {
+            case '/counter':
+              return PageTransition(
+                child: CounterCalculator(
+                  mathAPIAvaliable: _mathAPIAvailable,
+                ),
+                type: PageTransitionType.fade
+              );
+            case '/function':
+              return PageTransition(
+                child: FunctionCalculator(
+                  mathAPIAvaliable: _mathAPIAvailable,
+                ),
+                type: PageTransitionType.fade
+              );
+            case '/settings':
+              return PageTransition(
+                child: SettingsPage(
+                  setGlobalThemeConfig: setThemeConfig,
+                  mathAPIAvaliable: _mathAPIAvailable,
+                  retryMathAPIServer: initMathAPIServer,
+                  setGlobalColors: setGlobalColors,
+                ),
+                type: PageTransitionType.rightToLeftWithFade
+              );
+            case '/numeric-methods-menu':
+              return PageTransition(
+                child: NumericMethodsMenu(),
+                type: PageTransitionType.rightToLeftWithFade
+              );
+            default:
+              return PageTransition(
+                child: MainCalculator(
+                  mathAPIAvaliable: _mathAPIAvailable,
+                ),
+                type: PageTransitionType.fade
+              );
+          }
         },
       ),
     );

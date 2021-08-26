@@ -37,6 +37,7 @@ dependencies:
   charcode: ^1.2.0
   connectivity_plus: ^1.1.0
   fluttertoast: ^8.0.8
+  page_transition: ^2.0.2
 
 dev_dependencies:
   flutter_test:
