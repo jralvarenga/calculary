@@ -76,7 +76,7 @@ class FunctionPainter extends CustomPainter {
     canvas.drawLine(Offset(0, midY), Offset(size.width, midY), axisPaint);
     canvas.drawLine(Offset(midX, 0), Offset(midX, size.height), axisPaint);
 
-    var pt = Offset(midX, midY);
+    var pt = Offset(midX + x[0]*10, midY - y[0]*10);
     for(int i = 0; i < widthSize; i++){
       double xValue = x[i];
       double yValue = y[i];

@@ -104,8 +104,10 @@ class SolveFunctionCalculator {
     for (var i = 0; i < expression.length; i++) {
       String item = expression[i];
       if (item == 'x') {
-        if (expression[i-1].contains(new RegExp(r'[0-9]')) || expression[i-1].contains(')')) {
-          newExp.add('*');
+        if (i != 0) {
+          if (expression[i-1].contains(new RegExp(r'[0-9]')) || expression[i-1].contains(')')) {
+            newExp.add('*');
+          }
         }
       }
       newExp.add(item);
@@ -149,7 +151,6 @@ class SolveFunctionCalculator {
         String url = 'https://mathapi.vercel.app/api/function/points/?step=0.5';
         String formatedData = formatForPlot(fx);
         String result = await sendData(formatedData, url);
-        //print(result);
 
         return result;
       default:

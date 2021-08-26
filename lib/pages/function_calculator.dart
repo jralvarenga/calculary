@@ -391,6 +391,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       _from = '-10';
       _to = '10';
       _result = '';
+      _loadingResult = false;
     });
   }
 
