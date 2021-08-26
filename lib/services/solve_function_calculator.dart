@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:calculary/services/function_calculator_result_classes.dart';
+import 'package:charcode/charcode.dart';
 import 'package:http/http.dart' as http;
 
 class SolveFunctionCalculator {
@@ -118,6 +119,11 @@ class SolveFunctionCalculator {
 
     return joinedExpression;
   }
+
+  String formatResult(String result) {
+    result = result.replaceAll('oo', String.fromCharCode($infin));
+    return result;
+  }
   
   Future<String> solveFunction() async {
     String fx = formatExpressionInput(this.fx);
@@ -127,7 +133,7 @@ class SolveFunctionCalculator {
         String formatedData = formatForFunction(fx);
 
         String result = await sendData(formatedData, url);
-        return result;
+        return formatResult(result);
       case 'derivative':
         String url = 'https://mathapi.vercel.app/api/derivative/';
         if (this.evaluateDx) {
@@ -137,7 +143,7 @@ class SolveFunctionCalculator {
         url = url + '?order=' + this.dxOrder;
         String formatedData = formatForDerivative(fx);
         String result = await sendData(formatedData, url);
-        return result;
+        return formatResult(result);
       case 'integral':
         String url = 'https://mathapi.vercel.app/api/integral/';
         if (this.evaluateIntegral) {
@@ -146,7 +152,7 @@ class SolveFunctionCalculator {
 
         String formatedData = formatForIntegral(fx);
         String result = await sendData(formatedData, url);
-        return result;
+        return formatResult(result);
       case 'plot':
         String url = 'https://mathapi.vercel.app/api/function/points/?step=0.5';
         String formatedData = formatForPlot(fx);

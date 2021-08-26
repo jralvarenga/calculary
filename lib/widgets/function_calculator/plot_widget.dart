@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +62,8 @@ class FunctionPainter extends CustomPainter {
   final double widthSize;
   final double heightSize;
 
-  @override void paint(Canvas canvas, Size size) {
+  @override
+  void paint(Canvas canvas, Size size) {
     final midY = size.height/2;
     final midX = size.width/2;
     final axisPaint = Paint()..style = PaintingStyle.fill
@@ -71,7 +71,7 @@ class FunctionPainter extends CustomPainter {
       ..strokeWidth = 0.5;
     final functionPaint = Paint()..style = PaintingStyle.fill
       ..color = theme.textColor
-      ..strokeWidth = 3;
+      ..strokeWidth = 2;
 
     canvas.drawLine(Offset(0, midY), Offset(size.width, midY), axisPaint);
     canvas.drawLine(Offset(midX, 0), Offset(midX, size.height), axisPaint);

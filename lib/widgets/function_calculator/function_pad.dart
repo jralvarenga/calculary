@@ -165,7 +165,7 @@ class FunctionPadFunctionCalculator extends StatelessWidget {
                       // Other functions
                       FunctionButton(
                         text: 'log',
-                        value: 'log10(',
+                        value: 'log(',
                         textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 20,
                         buttonColor: themeData.accentColor,

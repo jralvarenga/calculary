@@ -346,18 +346,22 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
         result = '';
         var solver = new SolveFunctionCalculator(from: _from, to: _to, fx: _expression, mode: _mode);
         String values = await solver.solveFunction();
-        List<dynamic> xValues = jsonDecode(values.split(';')[0]);
-        List<dynamic> yValues = jsonDecode(values.split(';')[1]);
-        setState(() {
-          _xValues = xValues;
-          _yValues = yValues;
-        });
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) => PlotWidget(
-            x: _xValues,
-            y: _yValues,
-          )
-        ));
+        if (values == 'Error') {
+          sendSnackbar("There's been an error with the function entered");
+        } else {
+          List<dynamic> xValues = jsonDecode(values.split(';')[0]);
+          List<dynamic> yValues = jsonDecode(values.split(';')[1]);
+          setState(() {
+            _xValues = xValues;
+            _yValues = yValues;
+          });
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => PlotWidget(
+              x: _xValues,
+              y: _yValues,
+            )
+          ));
+        }
       break;
       default:
         if (_xValue == '?') {
