@@ -2,9 +2,9 @@
   <img height=150 src="https://raw.githubusercontent.com/jralvarenga/calculary/master/assets/icon_bg_white.svg" />
 </p>
 
-<p align="center" style="font-size: 30px">
+<h1 align="center">
   <strong>Calculary</strong>
-</p>
+</h1>
 
 ---
 
