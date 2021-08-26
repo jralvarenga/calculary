@@ -1,16 +1,27 @@
-# calculary
+<p align="center">
+  <img height=100 src="https://raw.githubusercontent.com/jralvarenga/calculary/master/assets/icon_bg_white.svg" />
+</p>
 
-A new Flutter project.
+<p align="center" style="font-size: 25px">
+  <strong>Calculary</strong>
+</p>
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## Description
 
-A few resources to get you started if this is your first Flutter project:
+Calculary it's an open source project, made entirely with Flutter and [MathAPI](https://try-mathapi.vercel.app/)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Does everything that a normal calculator and more, solve your math functions quickly and have a preview of how the plot looks like, solve a function derivative or integral or use numerical methods to solve multiple problems with Calculary.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Source code & Contribution
+
+Calculary is an open source proyect, you can see and colaborate in its development or take some ideas for your proyect.
+
+If you want to colaborate, fork the proyect, work in your thing in <strong>dev branch</strong>, once you're done create a pull request and we're going to review it.
+
+## Branch Structure
+
+- master: Production branch <strong>DO NOT touch this branch</strong>
+- dev: staging branch (for develop, create a branch from here)
+- [branch-name]: branch created from dev (you can give it any name)
