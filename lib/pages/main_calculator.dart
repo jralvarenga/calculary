@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:calculary/services/solve_calculator.dart';
 import 'package:calculary/widgets/main_calculator/function_pad.dart';
@@ -440,7 +441,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TopBar(
-                          mode: 'History',
+                          mode: AppLocalizations.of(context)!.history,
                           rightButtonFunction: openCalculatorOptions,
                           mathAPIAvaliable: widget.mathAPIAvaliable,
                         ),

@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/services/format_color.dart';
 import 'package:calculary/widgets/calculator_button.dart';
@@ -43,7 +44,7 @@ class FunctionsPad extends StatelessWidget {
                         callback: addGlobalFunction
                       ),
                       FunctionButton(
-                        text: 'AVG',
+                        text: AppLocalizations.of(context)!.avg,
                         value: 'Average',
                         textColor: estimateBrightnessForColorForText(themeData.accentColor),
                         textSize: 14,

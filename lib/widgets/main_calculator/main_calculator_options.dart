@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/main_calculator/history_item.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,7 @@ class _MainCalculatorOptionsState extends State<MainCalculatorOptions> {
                 )
               ),
               Text(
-                'History',
+                AppLocalizations.of(context)!.history,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold
@@ -105,7 +106,7 @@ class _MainCalculatorOptionsState extends State<MainCalculatorOptions> {
                   )
                 ),
                 child: Text(
-                  'Clear',
+                  AppLocalizations.of(context)!.clear,
                   style: TextStyle(
                     color: theme.textColor
                   ),

@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'package:calculary/l10n/l10n.dart';
 import 'package:calculary/pages/counter_calculator.dart';
 import 'package:calculary/pages/function_calculator.dart';
 import 'package:calculary/pages/main_calculator.dart';
@@ -10,6 +12,7 @@ import 'package:calculary/services/format_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -147,6 +150,13 @@ class _MyAppState extends State<MyApp> {
         home: MainCalculator(
           mathAPIAvaliable: _mathAPIAvailable,
         ),
+        supportedLocales: L10n.all,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
         /*routes: {
           '/counter': (context) => CounterCalculator(
             mathAPIAvaliable: _mathAPIAvailable,
