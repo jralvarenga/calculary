@@ -5,7 +5,8 @@
 
   "calculator": "Calculadora",  
   "counter": "Contador",
-  "n_methods": "M. numericos",  
+  "function": "Función",
+  "n_methods": "Metodos N.",  
   "settings": "Config.",
 
   "counter_options": "Opciones",
@@ -18,8 +19,8 @@
   "plot": "Gráfica",
   "integral": "Integral",
   "order": "orden",
-  "from": "de",
-  "to": "a",
+  "from": "desde",
+  "to": "hasta",
   "function_plot": "Gráfica de función",
 
   "settings_title": "Configuración",
@@ -28,5 +29,9 @@
   "colors": "Colores",
   "tip_percentage": "Porcentage de Tip",
   "angular_units": "Unidades angulares",
-  "radians": "Radianes"
+  "radians": "Radianes",
+  "light_theme": "Tema claro",
+  "dark_theme": "Tema oscuro",
+  "system_theme": "Tema del sistema",
+  "tip_value": "Valor de tip"
 }

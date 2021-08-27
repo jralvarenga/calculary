@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class TipDialog extends StatelessWidget {
@@ -25,7 +26,7 @@ class TipDialog extends StatelessWidget {
       onTap: closeKeyboard,
       child: AlertDialog(
         title: Text(
-          'Tip value',
+          AppLocalizations.of(context)!.tip_value,
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.bold

@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class OptionsForDerivative extends StatelessWidget {
                 reverse: true,
                 scrollDirection: Axis.horizontal,
                 child: Text(
-                  'order=' + dxOrder,
+                  AppLocalizations.of(context)!.order + '=' + dxOrder,
                   style: TextStyle(
                     fontSize: 25,
                     color: derivativeIndexOptions == 0 ? theme.textColor : theme.paperTextColor,

@@ -1,4 +1,4 @@
-// ignore: must_be_immutable
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +33,7 @@ class CounterAddedItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Added amount: ' + addedAmount,
+            AppLocalizations.of(context)!.added_amount +': ' + addedAmount,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold

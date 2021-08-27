@@ -76,12 +76,12 @@ class MenuBottomSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       MenuBottomSheetItem(
-                        itemName: 'Calculator',
+                        itemName: AppLocalizations.of(context)!.calculator,
                         itemFunction: () => goToPage('/'),
                         icon: 'assets/calculator.svg',
                       ),
                       MenuBottomSheetItem(
-                        itemName: 'Counter',
+                        itemName: AppLocalizations.of(context)!.counter,
                         itemFunction: () => goToPage('/counter'),
                         icon: 'assets/counter.svg',
                       ),
@@ -92,14 +92,14 @@ class MenuBottomSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       MenuBottomSheetItem(
-                        itemName: 'Function',
+                        itemName: AppLocalizations.of(context)!.function,
                         itemFunction: () => goToPage('/function'),
                         icon: 'assets/function.svg',
                         requiresInternet: true,
                         mathAPIAvaliable: mathAPIAvaliable,
                       ),
                       MenuBottomSheetItem(
-                        itemName: 'N. methods',
+                        itemName: AppLocalizations.of(context)!.n_methods,
                         //itemFunction: () => goToPage('/numeric-methods-menu'),
                         itemFunction: () => showToastMessage("N. mehtods will be available soon"),
                         icon: 'assets/numeric_methods.svg',
@@ -114,7 +114,7 @@ class MenuBottomSheet extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       MenuBottomSheetItem(
-                        itemName: 'Settings',
+                        itemName: AppLocalizations.of(context)!.settings,
                         itemFunction: () => goToPage('/settings'),
                         icon: 'assets/settings.svg',
                       ),

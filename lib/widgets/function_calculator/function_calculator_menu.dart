@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:charcode/charcode.dart';
 import 'package:flutter/material.dart';
@@ -33,11 +34,11 @@ class FunctionCalculatorMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               MenuBottomSheetItem(
-                itemName: 'Fx',
+                itemName: 'F(x)',
                 itemFunction: () => changeCalculatorMode('function', 'f(x)=', ''),
               ),
               MenuBottomSheetItem(
-                itemName: 'Derivative',
+                itemName: AppLocalizations.of(context)!.derivative,
                 itemFunction: () => changeCalculatorMode('derivative', 'd/dx(', ')'),
               ),
             ]
@@ -47,11 +48,11 @@ class FunctionCalculatorMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               MenuBottomSheetItem(
-                itemName: 'Plot',
-                itemFunction: () => changeCalculatorMode('plot', 'Plot: f(x)=', ''),
+                itemName: AppLocalizations.of(context)!.plot,
+                itemFunction: () => changeCalculatorMode('plot', AppLocalizations.of(context)!.plot + ': f(x)=', ''),
               ),
               MenuBottomSheetItem(
-                itemName: 'Integral',
+                itemName: AppLocalizations.of(context)!.integral,
                 itemFunction: () => changeCalculatorMode('integral', String.fromCharCode($int) + '(', ')dx'),
               ),
             ],

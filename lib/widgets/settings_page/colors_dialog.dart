@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/services/format_color.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class ColorsDialog extends StatelessWidget {
 
     return AlertDialog(
       title: Text(
-        'Colors',
+        AppLocalizations.of(context)!.colors,
         style: TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold

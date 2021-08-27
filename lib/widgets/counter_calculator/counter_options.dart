@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class CounterOptions extends StatelessWidget {
                       padding: EdgeInsets.all(20),
                       child: Center(
                         child: Text(
-                          'Reset Counter',
+                          AppLocalizations.of(context)!.reset_counter,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold

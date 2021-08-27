@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/counter_calculator/counter_added_item.dart';
 import 'package:calculary/widgets/counter_calculator/counter_options.dart';
@@ -196,7 +197,7 @@ class _CounterCalculatorState extends State<CounterCalculator> {
                       child: Column(
                         children: [
                           TopBar(
-                            mode: mode,
+                            mode: AppLocalizations.of(context)!.counter_options,
                             rightButtonFunction: () => openCounterOptions(),
                             mathAPIAvaliable: widget.mathAPIAvaliable,
                           ),
@@ -264,7 +265,7 @@ class _CounterCalculatorState extends State<CounterCalculator> {
                                         ),
                                       ),
                                       child: Text(
-                                        'Add',
+                                        AppLocalizations.of(context)!.add,
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.white

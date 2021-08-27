@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/solve_function_calculator.dart';
 import 'package:calculary/widgets/function_calculator/function_calculator_menu.dart';
 import 'package:calculary/widgets/function_calculator/function_pad.dart';
@@ -438,7 +439,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                     child: Column(
                       children: [
                         TopBar(
-                          mode: 'Modes',
+                          mode: AppLocalizations.of(context)!.modes,
                           rightButtonFunction: openFunctionMenu,
                           mathAPIAvaliable: widget.mathAPIAvaliable,
                         ),
@@ -473,7 +474,7 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
                         FunctionPadFunctionCalculator(
                           addOperator: addOperator,
                           addNumberExpression: addNumberExpression,
-                          addGlobalFunction: () => print('object')
+                          addGlobalFunction: () => print('')
                         ),
                         NumberPad(
                           addNumberExpression: addNumberExpression,

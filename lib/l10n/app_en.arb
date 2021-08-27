@@ -19,6 +19,11 @@
   "@calculator": {
     "description": "calculator"
   },
+
+  "function": "Function",
+  "@function": {
+    "description": "function"
+  },
   
   "counter": "Counter",
   "@counter": {
@@ -136,5 +141,25 @@
   "radians": "Radians",
   "@radians": {
     "description": "radians"
+  },
+
+  "light_theme": "Light theme",
+  "@light_theme": {
+    "description": "light_theme"
+  },
+
+  "dark_theme": "Dark theme",
+  "@dark_theme": {
+    "description": "dark_theme"
+  },
+
+  "system_theme": "System theme",
+  "@system_theme": {
+    "description": "system_theme"
+  },
+
+  "tip_value": "Tip value",
+  "@tip_value": {
+    "description": "tip_value"
   }
 }

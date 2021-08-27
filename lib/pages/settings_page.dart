@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:calculary/widgets/settings_page/colors_dialog.dart';
 import 'package:calculary/widgets/settings_page/tip_dialog.dart';
@@ -149,7 +150,7 @@ class _SettingsPageState extends State<SettingsPage> {
           color: theme.textColor
         ),
         title: Text(
-          'Settings',
+          AppLocalizations.of(context)!.settings_title,
           style: TextStyle(
             color: theme.textColor,
             fontWeight: FontWeight.bold
@@ -179,7 +180,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(width: 20),
                         Text(
-                          'MathAPI Server Status',
+                          AppLocalizations.of(context)!.mathapi_server_status,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold
@@ -203,7 +204,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(width: 20),
                         Text(
-                          'Theme',
+                          AppLocalizations.of(context)!.theme,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold
@@ -228,7 +229,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(width: 20),
                         Text(
-                          'Colors',
+                          AppLocalizations.of(context)!.colors,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold
@@ -256,7 +257,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(width: 20),
                         Text(
-                          "Tip percentage ${_tipInputControler.text}%",
+                          AppLocalizations.of(context)!.tip_percentage + " ${_tipInputControler.text}%",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold
@@ -280,7 +281,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(width: 20),
                         Text(
-                          'Angular units: Radians',
+                          AppLocalizations.of(context)!.angular_units + ': ' + AppLocalizations.of(context)!.radians,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold
@@ -300,7 +301,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget buildThemeDialog () => AlertDialog(
     title: Text(
-      'Theme',
+      AppLocalizations.of(context)!.theme,
       style: TextStyle(
         fontSize: 25,
         fontWeight: FontWeight.bold
@@ -315,7 +316,7 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           ListTile(
             title: Text(
-              'Light theme',
+              AppLocalizations.of(context)!.light_theme,
               style: TextStyle(
                 fontSize: 18
               ),
@@ -328,7 +329,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             title: Text(
-              'Dark theme',
+              AppLocalizations.of(context)!.dark_theme,
               style: TextStyle(
                 fontSize: 18
               ),
@@ -341,7 +342,7 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           ListTile(
             title: Text(
-              'System default',
+              AppLocalizations.of(context)!.system_theme,
               style: TextStyle(
                 fontSize: 18
               ),

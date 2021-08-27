@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:calculary/services/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,10 @@ class PlotWidget extends StatelessWidget {
         backgroundColor: themeData.dialogBackgroundColor,
         centerTitle: true,
         title: Text(
-          'Function plot',
+          AppLocalizations.of(context)!.function_plot,
+          style: TextStyle(
+            fontWeight: FontWeight.bold
+          ),
         )
       ),
       body: Center(
