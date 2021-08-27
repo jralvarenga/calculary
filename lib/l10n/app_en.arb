@@ -3,12 +3,36 @@
   "@history": {
     "description": "History laguage"
   },
+
   "avg": "AVG",
   "@avg": {
     "description": "average min"
   },
+
   "clear": "Clear",
   "@clear": {
     "description": "clear"
+  },
+  
+
+  "calculator": "Calculator",
+  "@calculator": {
+    "description": "calculator"
+  },
+  
+  "counter": "Counter",
+  "@counter": {
+    "description": "counter"
+  },
+
+  "n_methods": "N. methods",
+  "@n_methods": {
+    "description": "n_methods"
+  },
+
+  "settings": "Settings",
+  "@settings": {
+    "description": "settings"
   }
+  
 }

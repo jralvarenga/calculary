@@ -1,5 +1,10 @@
 {
   "history": "Historial",
   "avg": "PROM",
-  "clear": "Limpiar"
+  "clear": "Limpiar",
+
+  "calculator": "Calculadora",  
+  "counter": "Contador",
+  "n_methods": "M. numericos",  
+  "settings": "Config.",
 }
