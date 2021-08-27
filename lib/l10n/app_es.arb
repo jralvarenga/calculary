@@ -33,5 +33,21 @@
   "light_theme": "Tema claro",
   "dark_theme": "Tema oscuro",
   "system_theme": "Tema del sistema",
-  "tip_value": "Valor de tip"
+  "tip_value": "Valor de tip",
+
+
+
+
+
+
+
+
+  "only_plus_minus_op": "Solo los operadores + & - estan permitidos en promedio",
+  "only_one_percentage": "Solo puede introducirse un porcentage a la vez",
+  "close_all_parenthesis": "Cierra todos los parentesis",
+  "try_plot_function": "Intenta graficar la función o da un valor de x",
+  "dx_order_cant_be": "Orden de dx no puede ser nada o 0",
+  "limits_need_value": "Limites deben tener un valor",
+  "error_with_function": "Ha ocurrido un problema con la función ingresada",
+  "retry_mathapi_server": "Reintentando disponibilidad de MathAPI"
 }

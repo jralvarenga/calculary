@@ -161,5 +161,50 @@
   "tip_value": "Tip value",
   "@tip_value": {
     "description": "tip_value"
+  },
+
+
+
+
+
+
+  "only_plus_minus_op": "Only + & - operators allowed in average mode",
+  "@only_plus_minus_op": {
+    "description": "only_plus_minus_op"
+  },
+
+  "only_one_percentage": "Only can introduce 1 percentage at a time",
+  "@only_one_percentage": {
+    "description": "only_one_percentage"
+  },
+
+  "close_all_parenthesis": "Close all parenthesis",
+  "@close_all_parenthesis": {
+    "description": "close_all_parenthesis"
+  },
+
+  "try_plot_function": "Try plotting this function or give it an x value",
+  "@try_plot_function": {
+    "description": "try_plot_function"
+  },
+
+  "dx_order_cant_be": "Order of dx can't be null or 0",
+  "@dx_order_cant_be": {
+    "description": "dx_order_cant_be"
+  },
+
+  "limits_need_value": "Limits need to have a value",
+  "@limits_need_value": {
+    "description": "limits_need_value"
+  },
+
+  "error_with_function": "There's been an error with the function entered",
+  "@limits_need_value": {
+    "description": "limits_need_value"
+  },
+
+  "retry_mathapi_server": "Retrying MathAPI availability",
+  "@retry_mathapi_server": {
+    "description": "retry_mathapi_server"
   }
 }

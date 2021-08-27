@@ -304,7 +304,9 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
     switch (_mode) {
       case 'function':
         if (_xValue == '?') {
-          sendSnackbar('Try plotting this function or give it an x value');
+          sendSnackbar(
+            AppLocalizations.of(context)!.try_plot_function
+          );
           setState(() => _loadingResult = false);
           return;
         }
@@ -314,7 +316,9 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       case 'derivative':
         bool evaluateDx = true;
         if (_dxOrder == '?' || _dxOrder == '' || _dxOrder == '0') {
-          sendSnackbar("Order of dx can't be null or 0");
+          sendSnackbar(
+            AppLocalizations.of(context)!.dx_order_cant_be
+          );
           setState(() => _loadingResult = false);
           return;
         }
@@ -340,7 +344,9 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       break;
       case 'plot':
         if ((_from == '?' || _from == '') || (_to == '?' || _to == '')) {
-          sendSnackbar("Limits need to have a value");
+          sendSnackbar(
+            AppLocalizations.of(context)!.limits_need_value
+          );
           setState(() => _loadingResult = false);
           return;
         }
@@ -348,7 +354,9 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
         var solver = new SolveFunctionCalculator(from: _from, to: _to, fx: _expression, mode: _mode);
         String values = await solver.solveFunction();
         if (values == 'Error') {
-          sendSnackbar("There's been an error with the function entered");
+          sendSnackbar(
+            AppLocalizations.of(context)!.error_with_function
+          );
         } else {
           List<dynamic> xValues = jsonDecode(values.split(';')[0]);
           List<dynamic> yValues = jsonDecode(values.split(';')[1]);
@@ -366,7 +374,9 @@ class _FunctionCalculatorState extends State<FunctionCalculator> with TickerProv
       break;
       default:
         if (_xValue == '?') {
-          sendSnackbar('Try plotting this function or give it an x value');
+          sendSnackbar(
+            AppLocalizations.of(context)!.try_plot_function
+          );
           setState(() => _loadingResult = false);
           return;
         }

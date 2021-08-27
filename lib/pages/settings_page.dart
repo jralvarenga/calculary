@@ -115,7 +115,9 @@ class _SettingsPageState extends State<SettingsPage> {
 
     void retryMathAPIServer() {
       final snackBar = SnackBar(
-        content: Text('Retrying MathAPI availability')
+        content: Text(
+          AppLocalizations.of(context)!.retry_mathapi_server
+        )
       );
       
       widget.retryMathAPIServer();

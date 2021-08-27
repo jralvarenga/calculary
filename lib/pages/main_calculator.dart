@@ -247,9 +247,13 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       }
       // Verifies AVG mode
       if (_globalFunction == 'AVG' && (operator == 'x' || operator == '/')) {
-        sendSnackbar('Only + & - operators allowed in average mode');
+        sendSnackbar(
+          AppLocalizations.of(context)!.only_plus_minus_op
+        );
       } else if (_globalFunction == 'PEG') {
-        sendSnackbar('Only can introduce 1 percentage at a time');
+        sendSnackbar(
+          AppLocalizations.of(context)!.only_one_percentage
+        );
       } else {
         _expressionDisplayer.add(operator);
         _expression.add(value);
@@ -384,7 +388,9 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       if (_openedParenthesis) {
-        sendSnackbar('Close all parenthesis');
+        sendSnackbar(
+          AppLocalizations.of(context)!.close_all_parenthesis
+        );
       } else {
         var solver = new SolveMainCalculator(_expression, _globalFunction);
 
