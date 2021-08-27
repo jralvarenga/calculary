@@ -7,4 +7,26 @@
   "counter": "Contador",
   "n_methods": "M. numericos",  
   "settings": "Config.",
+
+  "counter_options": "Opciones",
+  "add": "Agregar",
+  "reset_counter": "Reiniciar Contador",
+  "added_amount": "Cantidad agregada",
+
+  "modes": "Modos",
+  "derivative": "Derivada",
+  "plot": "Gráfica",
+  "integral": "Integral",
+  "order": "orden",
+  "from": "de",
+  "to": "a",
+  "function_plot": "Gráfica de función",
+
+  "settings_title": "Configuración",
+  "mathapi_server_status": "Estado Servidor MathAPI",
+  "theme": "Tema",
+  "colors": "Colores",
+  "tip_percentage": "Porcentage de Tip",
+  "angular_units": "Unidades angulares",
+  "radians": "Radianes"
 }

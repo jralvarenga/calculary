@@ -33,6 +33,108 @@
   "settings": "Settings",
   "@settings": {
     "description": "settings"
-  }
+  },
   
+
+  "counter_options": "Counter options",
+  "@counter_options": {
+    "description": "counter_options"
+  },
+
+  "add": "Add",
+  "@add": {
+    "description": "add"
+  },
+
+  "reset_counter": "Reset Counter",
+  "@reset_counter": {
+    "description": "reset_counter"
+  },
+  
+  "added_amount": "Added amount",
+  "@reset_counter": {
+    "description": "reset_counter"
+  },
+
+
+  "modes": "Modes",
+  "@modes": {
+    "description": "modes"
+  },
+
+  "derivative": "Derivative",
+  "@derivative": {
+    "description": "derivative"
+  },
+
+  "plot": "Plot",
+  "@plot": {
+    "description": "plot"
+  },
+
+  "integral": "Integral",
+  "@integral": {
+    "description": "integral"
+  },
+
+  "order": "order",
+  "@order": {
+    "description": "order"
+  },
+
+  "modes": "Modes",
+  "@modes": {
+    "description": "modes"
+  },
+
+  "from": "from",
+  "@from": {
+    "description": "from"
+  },
+
+  "to": "to",
+  "@to": {
+    "description": "to"
+  },
+
+  "function_plot": "Function Plot",
+  "@function_plot": {
+    "description": "function_plot"
+  },
+
+  
+  "settings_title": "Settings",
+  "@settings_title": {
+    "description": "settings title"
+  },
+
+  "mathapi_server_status": "MathAPI Server Status",
+  "@mathapi_server_status": {
+    "description": "mathapi_server_status"
+  },
+  
+  "theme": "Theme",
+  "@theme": {
+    "description": "theme"
+  },
+  
+  "colors": "Colors",
+  "@colors": {
+    "description": "colors"
+  },
+  
+  "tip_percentage": "Tip percentage",
+  "@tip_percentage": {
+    "description": "tip_percentage"
+  },
+  
+  "angular_units": "Angular units",
+  "@angular_units": {
+    "description": "angular_units"
+  },
+  
+  "radians": "Radians",
+  "@radians": {
+    "description": "radians"
+  }
 }
