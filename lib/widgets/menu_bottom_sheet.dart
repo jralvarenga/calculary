@@ -99,6 +99,11 @@ class MenuBottomSheet extends StatelessWidget {
                         mathAPIAvaliable: mathAPIAvaliable,
                       ),
                       MenuBottomSheetItem(
+                        itemName: AppLocalizations.of(context)!.settings,
+                        itemFunction: () => goToPage('/settings'),
+                        icon: 'assets/settings.svg',
+                      ),
+                      /*MenuBottomSheetItem(
                         itemName: AppLocalizations.of(context)!.n_methods,
                         //itemFunction: () => goToPage('/numeric-methods-menu'),
                         itemFunction: () => showToastMessage("N. mehtods will be available soon"),
@@ -106,10 +111,10 @@ class MenuBottomSheet extends StatelessWidget {
                         requiresInternet: true,
                         //mathAPIAvaliable: mathAPIAvaliable,
                         mathAPIAvaliable: false,
-                      ),
+                      ),*/
                     ],
                   ),
-                  SizedBox(height: 15),
+                  /*SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -119,7 +124,7 @@ class MenuBottomSheet extends StatelessWidget {
                         icon: 'assets/settings.svg',
                       ),
                     ],
-                  ),
+                  ),*/
                   
                   SizedBox(height: 20)
                 ],
