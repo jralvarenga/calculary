@@ -173,7 +173,6 @@ class _MyAppState extends State<MyApp> {
           '/numeric-methods-menu': (context) => NumericMethodsMenu(),
         },*/
         onGenerateRoute: (route) {
-          print(route.name);
           switch (route.name) {
             case '/counter':
               return PageTransition(

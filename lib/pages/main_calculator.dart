@@ -63,6 +63,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
 
   // Solver conditions
   bool _openedParenthesis = false;
+  bool _doubleOpenedParenthesis = false;
   bool _hasOperator = false;
   bool _canSolve = true;
 
@@ -224,7 +225,9 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           _openedParenthesis = true;
           _canSolve = false;
           if (angularUnits == 'DEG') {
-            _expression += "#" + value + '(3.14159265359/180)*';
+            print('hi');
+            _doubleOpenedParenthesis = true;
+            _expression += "#" + value + '(3.14159265359/180)*(';
           } else {
             _expression += "#" + value;
           }
@@ -240,7 +243,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           _openedParenthesis = true;
           _canSolve = false;
           if (angularUnits == 'DEG') {
-            _expression += "#(180/3.14159265359)*" + value;
+            _doubleOpenedParenthesis = true;
+            _expression += "#(180/3.14159265359)*(" + value;
           } else {
             _expression += "#" + value;
           }
@@ -250,10 +254,17 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       break;
       case ')':
         setState(() {
-          _openedParenthesis = false;
-          _canSolve = true;
-          _expression += "#" + value;
-          _expressionDisplayer.add(expression);            
+          if (_doubleOpenedParenthesis) {
+            _doubleOpenedParenthesis = false;
+            _canSolve = true;
+            _expression += "#" + value + value;
+            _expressionDisplayer.add(expression);
+          } else {
+            _openedParenthesis = false;
+            _canSolve = true;
+            _expression += "#" + value;
+            _expressionDisplayer.add(expression);
+          }
         });
         
         List<String> splittedExpression = _expression.split('#');
@@ -272,8 +283,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       break;
     }
 
-    print(_expression);
-    if (_canSolve && !_openedParenthesis && _hasOperator) {
+    if (_canSolve && !_openedParenthesis && !_doubleOpenedParenthesis && _hasOperator) {
       _resultAnimationController.forward();
       List<String> splittedExpression = _expression.split('#');
       var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
