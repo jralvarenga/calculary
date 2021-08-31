@@ -30,6 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
   ThemeConfig _themeConfig = ThemeConfig.system;
   String _primaryColor = 'lila';
   String _accentColor = 'peach';
+  String _angularUnits = 'RAD';
   TextEditingController _tipInputControler = TextEditingController(text: '10');
 
   void setThemeConfig(String config) {
@@ -60,9 +61,11 @@ class _SettingsPageState extends State<SettingsPage> {
     String primaryColorConfig = (prefs.getString('primary_color') ?? 'lila');
     String accentColorConfig = (prefs.getString('accent_color') ?? 'peach');
     String tipValueConfig = (prefs.getString('tip_value') ?? '10');
+    String angularunits = (prefs.getString('angular_units') ?? 'RAD');
     setState(() {
       _primaryColor = primaryColorConfig;
       _accentColor = accentColorConfig;
+      _angularUnits = angularunits;
       _tipInputControler = TextEditingController(text: tipValueConfig);
     });
   }
@@ -143,6 +146,22 @@ class _SettingsPageState extends State<SettingsPage> {
         context: context,
         builder: (context) => buildTipDialog()
       );
+    }
+
+    void changeAngularUnits() async {
+      final prefs = await SharedPreferences.getInstance();
+      String units = (prefs.getString('angular_units') ?? 'RAD');
+      if (units == 'RAD') {
+        prefs.setString('angular_units', 'DEG');
+        setState(() {
+          _angularUnits = 'DEG';
+        });
+      } else {
+        prefs.setString('angular_units', 'RAD');
+        setState(() {
+          _angularUnits = 'RAD';
+        });
+      }
     }
 
     return Scaffold(
@@ -272,7 +291,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Material(
                 child: InkWell(
-                  onTap: () => print('object'),
+                  onTap: changeAngularUnits,
                   child: Container(
                     padding: EdgeInsets.all(20),
                     child: Row(
@@ -283,7 +302,14 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         SizedBox(width: 20),
                         Text(
-                          AppLocalizations.of(context)!.angular_units + ': ' + AppLocalizations.of(context)!.radians,
+                          AppLocalizations.of(context)!.angular_units + ': ',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        Text(
+                          _angularUnits == 'RAD' ? AppLocalizations.of(context)!.radians : AppLocalizations.of(context)!.dregrees,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold

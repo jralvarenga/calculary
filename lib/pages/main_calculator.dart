@@ -14,7 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HistoryItem {
-  List<String> expression;
+  String expression;
   List<String> expressionDisplayer;
   String result;
 
@@ -26,7 +26,7 @@ class HistoryItem {
 
   factory HistoryItem.fromJson(Map<String, dynamic> json) {
     return HistoryItem(
-      expression: List<String>.from(json["expression"].map((x) => x.toString())),
+      expression: json["expression"].toString(),
       expressionDisplayer: List<String>.from(json["expressionDisplayer"].map((x) => x.toString())),
       result: json['result'] as String,
     );
@@ -128,7 +128,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
 
   void setItemsFromHistory(HistoryItem item) {
     setState(() {
-      _expression = item.expression.join('#');
+      _expression = item.expression;
       _expressionDisplayer = item.expressionDisplayer;
       _result = item.result;
     });
@@ -158,91 +158,130 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     Navigator.of(context).pop();
   }
   
-  void addNumberExpression(String expression, String value) {
-    setState(() {
-      _inputAnimationController.forward();
-      if (_mode == 'Tip') {
-        _mode = 'Calculator';
+  void addNumberExpression(String expression, String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    _inputAnimationController.forward();
+    if (_mode == 'Tip') {
+      _mode = 'Calculator';
+    }
+    // Divition in zero handler
+    List<String> splittedExpression = _expression.split('#');
+    if (splittedExpression.length > 0) {
+      if (splittedExpression.last == '/' && value == '0') {
+        _canSolve = false;
       }
-      // Divition in zero handler
-      List<String> splittedExpression = _expression.split('#');
-      if (splittedExpression.length > 0) {
-        if (splittedExpression.last == '/' && value == '0') {
-          _canSolve = false;
-        }
-      }
+    }
 
-      switch (value) {
-        // Pi
-        case '3.14159265':
-        // Euler number
-        case '2.718281828':
+    switch (value) {
+      // Pi
+      case '3.14159265':
+      // Euler number
+      case '2.718281828':
+        setState(() {
           _expression += "#" + value;
           _expressionDisplayer.add(expression);
           _result = value;
+        });
 
-          _resultAnimationController.forward();
-        break;
-        case '!':
+        _resultAnimationController.forward();
+      break;
+      case '!':
+        setState(() {
           _expression += "#" + value;
-          _expressionDisplayer.add(value);
-          
-          List<String> splittedExpression = _expression.split('#');
-          var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
-          String result = solver.solveExpression();
+          _expressionDisplayer.add(value);            
+        });
+        
+        List<String> splittedExpression = _expression.split('#');
+        var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
+        String result = solver.solveExpression();
+        setState(() {
           _result = result;
-          _resultAnimationController.forward();
-        break;
-        case '(':
-        case '^(':
-        case 'sqrt(':
-        case 'sin(':
-        case 'cos(':
-        case 'tan(':
-        case 'arcsin(':
-        case 'arccos(':
-        case 'arctan(':
-        case 'log10(':
-        case 'ln(':
-        case 'e^(':
+        });
+        _resultAnimationController.forward();
+      break;
+      case '(':
+      case '^(':
+      case 'sqrt(':
+      case 'log10(':
+      case 'ln(':
+      case 'e^(':
+        setState(() {
           _openedParenthesis = true;
           _canSolve = false;
-          
           _expression += "#" + value;
           if (expression == '(') {
             _expressionDisplayer.add(expression); 
           } else {
             _expressionDisplayer.add(expression + '(');
           }
-        break;
-        case ')':
+        });
+      break;
+      case 'sin(':
+      case 'cos(':
+      case 'tan(':
+        String angularUnits = (prefs.getString('angular_units') ?? 'RAD');
+        setState(() {
+          _openedParenthesis = true;
+          _canSolve = false;
+          if (angularUnits == 'DEG') {
+            _expression += "#" + value + '(3.14159265359/180)*';
+          } else {
+            _expression += "#" + value;
+          }
+          
+          _expressionDisplayer.add(expression + '(');
+        });
+      break;
+      case 'arcsin(':
+      case 'arccos(':
+      case 'arctan(':
+        String angularUnits = (prefs.getString('angular_units') ?? 'RAD');
+        setState(() {
+          _openedParenthesis = true;
+          _canSolve = false;
+          if (angularUnits == 'DEG') {
+            _expression += "#(180/3.14159265359)*" + value;
+          } else {
+            _expression += "#" + value;
+          }
+          
+          _expressionDisplayer.add(expression + '(');
+        });
+      break;
+      case ')':
+        setState(() {
           _openedParenthesis = false;
           _canSolve = true;
-          
           _expression += "#" + value;
-          _expressionDisplayer.add(expression);
-          
-          List<String> splittedExpression = _expression.split('#');
-          var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
-          String result = solver.solveExpression();
-          _result = result;
-          _resultAnimationController.forward();
-        break;
-        default:
-          _expression += "#" + value;
-          _expressionDisplayer.add(expression);
-        break;
-      }
-
-      print(_expression);
-      if (_canSolve && !_openedParenthesis && _hasOperator) {
-        _resultAnimationController.forward();
+          _expressionDisplayer.add(expression);            
+        });
+        
         List<String> splittedExpression = _expression.split('#');
         var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
         String result = solver.solveExpression();
+        setState(() {
+          _result = result;
+          _resultAnimationController.forward();
+        });
+      break;
+      default:
+        setState(() {
+          _expression += "#" + value;
+          _expressionDisplayer.add(expression);
+        });
+      break;
+    }
+
+    print(_expression);
+    if (_canSolve && !_openedParenthesis && _hasOperator) {
+      _resultAnimationController.forward();
+      List<String> splittedExpression = _expression.split('#');
+      var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
+      String result = solver.solveExpression();
+      setState(() {
         _result = result;
-      }
-    });
+      });
+    }
   }
 
   void addOperator(String operator, String value) {
@@ -288,7 +327,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
           String result = solver.solveExpression();
           HistoryItem resultItem = HistoryItem(
-            expression: splittedExpression,
+            expression: _expression,
             expressionDisplayer: _expressionDisplayer,
             result: result
           );
@@ -297,7 +336,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           String tipExpression = result + '*' + tip.toString();
           String tipExpressionDisplayer = result + 'x' + tip.toString();
           HistoryItem tipItem = HistoryItem(
-            expression: tipExpression.split(''),
+            expression: tipExpression,
             expressionDisplayer: tipExpressionDisplayer.split(''),
             result: resultTip.toString()
           );
@@ -406,7 +445,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
 
         String result = solver.solveExpression();
         HistoryItem historyItem = HistoryItem(
-          expression: splittedExpression,
+          expression: _expression,
           expressionDisplayer: _expressionDisplayer,
           result: result
         );
