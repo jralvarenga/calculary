@@ -49,67 +49,15 @@ class SolveMainCalculator {
     return signs;
   }
 
-  String evaluateAllInstances() {
+  String evaluateAllInstances(String expression) {
     ContextModel cm = ContextModel();
-    String joinedExpression = this.expression.join();
 
-    if (joinedExpression.contains(')(')) {
-      joinedExpression = joinedExpression.replaceAll(')(', ')*(');
-    }
-    
-    List<String> splitted = joinedExpression.split(RegExp(r'[+-]'));
-    List<String> signs = getExpressionSigns(joinedExpression);
-    List<String> evaluatedExpression = [];
-
-    for (var i = 0; i < splitted.length; i++) {
-      String input = splitted[i];
-
-      if (input.contains('!')) {
-        input = input.replaceAll('!', '');
-        input = factorialSolver(input);
-        evaluatedExpression.add(input);
-      } else if (
-        input.contains('sin(') ||
-        input.contains('cos(') ||
-        input.contains('tan(') ||
-        input.contains('arcsin(') ||
-        input.contains('arccos(') ||
-        input.contains('arctan(') ||
-        input.contains('arcsin(') ||
-        input.contains('sqrt(') ||
-        input.contains('^(') ||
-        input.contains('log10(') ||
-        input.contains('ln(') ||
-        input.contains('e^(')
-      ) {
-        Expression exp = p.parse(input);
-        input = exp.evaluate(EvaluationType.REAL, cm).toString();
-        evaluatedExpression.add(input);
-      } else if (input.contains('%')) {
-        input = input.replaceAll('%', '');
-        double percentage = double.parse(input)/100;
-
-        this.percentages.add(percentage);
-      } else {
-        evaluatedExpression.add(input);
-      }
+    if (expression.contains(')(')) {
+      expression = expression.replaceAll(')(', ')*(');
     }
 
-    List<String> newExpression = [evaluatedExpression[0]];
-    for (var i = 0; i < signs.length; i++) {
-      newExpression.add(signs[i]);
-      newExpression.add(evaluatedExpression[i + 1]);
-    }
-    String joinedNewExpression = newExpression.join();
-    print(evaluatedExpression);
-    Expression exp = p.parse(joinedNewExpression);
+    Expression exp = p.parse(expression);
     String result = exp.evaluate(EvaluationType.REAL, cm).toString();
-
-    /*if (this.percentageOperation) {
-      for (var i = 0; i < this.percentages.length; i++) {
-        result = ( percentages[i]*double.parse(result) + double.parse(result) ).toString();
-      }
-    }*/
 
     return result;
   }
@@ -152,11 +100,15 @@ class SolveMainCalculator {
     List<String> newExpression = reversedExpression.reversed.toList();
     newExpression.removeLast();
     this.expression = newExpression;
-    var expressionResult = evaluateAllInstances();
+
+    String joinedExp = this.expression.join();
+    var expressionResult = evaluateAllInstances(joinedExp);
     double expressionWithPercentage = percentage * double.parse(expressionResult);
     List<String> expressionEvaluator = [expressionResult, percentageSign, expressionWithPercentage.toString()];
     this.expression = expressionEvaluator;
-    String result = evaluateAllInstances();
+
+    joinedExp = this.expression.join();
+    String result = evaluateAllInstances(joinedExp);
 
     return result;
   }
@@ -172,7 +124,8 @@ class SolveMainCalculator {
         evaluatedResult = solveWithPercentage();
       break;
       default:
-        evaluatedResult = evaluateAllInstances();
+        String joinedExp = this.expression.join();
+        evaluatedResult = evaluateAllInstances(joinedExp);
       break;
     }
     

@@ -55,7 +55,7 @@ class MainCalculator extends StatefulWidget {
 class _MainCalculatorState extends State<MainCalculator> with TickerProviderStateMixin {
   List _calculatorHistory = [];
   String _mode = 'Calculator';
-  List<String> _expression = [];
+  String _expression = '';
   List<String> _expressionDisplayer = [];
   String _globalFunction = '';
   String _functionEnd = '';
@@ -128,7 +128,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
 
   void setItemsFromHistory(HistoryItem item) {
     setState(() {
-      _expression = item.expression;
+      _expression = item.expression.join('#');
       _expressionDisplayer = item.expressionDisplayer;
       _result = item.result;
     });
@@ -151,7 +151,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     HapticFeedback.lightImpact();
     var lastHistoryItem = _calculatorHistory.last;
     setState(() {
-      _expression.add(lastHistoryItem.result);
+      _expression = lastHistoryItem.result;
       _expressionDisplayer.add(lastHistoryItem.result);
     });
     _inputAnimationController.forward();
@@ -165,8 +165,9 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         _mode = 'Calculator';
       }
       // Divition in zero handler
-      if (_expression.length > 0) {
-        if (_expression.last == '/' && value == '0') {
+      List<String> splittedExpression = _expression.split('#');
+      if (splittedExpression.length > 0) {
+        if (splittedExpression.last == '/' && value == '0') {
           _canSolve = false;
         }
       }
@@ -176,17 +177,18 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         case '3.14159265':
         // Euler number
         case '2.718281828':
-          _expression.add(value);
+          _expression += "#" + value;
           _expressionDisplayer.add(expression);
           _result = value;
 
           _resultAnimationController.forward();
         break;
         case '!':
-          _expression.add(value);
+          _expression += "#" + value;
           _expressionDisplayer.add(value);
           
-          var solver = new SolveMainCalculator(_expression, _globalFunction);
+          List<String> splittedExpression = _expression.split('#');
+          var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
           String result = solver.solveExpression();
           _result = result;
           _resultAnimationController.forward();
@@ -200,13 +202,13 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         case 'arcsin(':
         case 'arccos(':
         case 'arctan(':
-        case 'log(':
+        case 'log10(':
         case 'ln(':
         case 'e^(':
           _openedParenthesis = true;
           _canSolve = false;
           
-          _expression.add(value);
+          _expression += "#" + value;
           if (expression == '(') {
             _expressionDisplayer.add(expression); 
           } else {
@@ -217,23 +219,26 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           _openedParenthesis = false;
           _canSolve = true;
           
-          _expression.add(value);
+          _expression += "#" + value;
           _expressionDisplayer.add(expression);
-
-          var solver = new SolveMainCalculator(_expression, _globalFunction);
+          
+          List<String> splittedExpression = _expression.split('#');
+          var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
           String result = solver.solveExpression();
           _result = result;
           _resultAnimationController.forward();
         break;
         default:
-          _expression.add(value);
+          _expression += "#" + value;
           _expressionDisplayer.add(expression);
         break;
       }
 
+      print(_expression);
       if (_canSolve && !_openedParenthesis && _hasOperator) {
         _resultAnimationController.forward();
-        var solver = new SolveMainCalculator(_expression, _globalFunction);
+        List<String> splittedExpression = _expression.split('#');
+        var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
         String result = solver.solveExpression();
         _result = result;
       }
@@ -255,8 +260,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           AppLocalizations.of(context)!.only_one_percentage
         );
       } else {
+          _expression += "#" + value;
         _expressionDisplayer.add(operator);
-        _expression.add(value);
       }
 
       _hasOperator = true;
@@ -278,11 +283,12 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           _mode = value;
           String tipValue = (prefs.getString('tip_value') ?? '10');
           double tip = double.parse(tipValue) / 100;
-
-          var solver = new SolveMainCalculator(_expression, _globalFunction);
+          
+          List<String> splittedExpression = _expression.split('#');
+          var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
           String result = solver.solveExpression();
           HistoryItem resultItem = HistoryItem(
-            expression: _expression,
+            expression: splittedExpression,
             expressionDisplayer: _expressionDisplayer,
             result: result
           );
@@ -301,14 +307,15 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           _calculatorHistory.add(tipItem);
           prefs.setString('main_calculator_history', jsonEncode(_calculatorHistory));
 
-          _expression = resultTip.toString().split('');
+          _expression = resultTip.toString();
           _expressionDisplayer = resultTip.toString().split('');
           _result = '';
         break;
         case '%':
           _mode = 'Percentage';
           _globalFunction = 'PEG';
-          var solver = new SolveMainCalculator(_expression, _globalFunction);
+          List<String> splittedExpression = _expression.split('#');
+          var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
           String result = solver.solveExpression();
 
           _expressionDisplayer.add(function);
@@ -319,7 +326,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           var rng = new Random();
           String randomNumber = rng.nextInt(100).toString();
 
-          _expression.add(randomNumber);
+          _expression += "#" + randomNumber;
           _expressionDisplayer.add(randomNumber);
           _inputAnimationController.forward();
         break;
@@ -338,8 +345,9 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
     setState(() {
       _hasOperator = false;
       _canSolve = true;
-
-      if (_expression.last == ')' && _expressionDisplayer.last == ')') {
+      
+      List<String> splittedExpression = _expression.split('#');
+      if (splittedExpression.last == ')' && _expressionDisplayer.last == ')') {
         _openedParenthesis = true;
       } else {
         _openedParenthesis = false;
@@ -350,12 +358,13 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         _resultAnimationController.reverse();
 
         Timer(Duration(milliseconds: 200), () {
-          _expression = [];
+          _expression = "";
           _expressionDisplayer = [];
         });
       } else {
         _expressionDisplayer.removeLast();
-        _expression.removeLast();
+        splittedExpression.removeLast();
+        _expression = splittedExpression.join('#');
 
         _resultAnimationController.reverse();
       }
@@ -377,7 +386,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       _functionEnd = '';
 
       Timer(Duration(milliseconds: 200), () {
-        _expression = [];
+        _expression = '';
         _expressionDisplayer = [];
         _result = '';
       });
@@ -392,11 +401,12 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
           AppLocalizations.of(context)!.close_all_parenthesis
         );
       } else {
-        var solver = new SolveMainCalculator(_expression, _globalFunction);
+        List<String> splittedExpression = _expression.split('#');
+        var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
 
         String result = solver.solveExpression();
         HistoryItem historyItem = HistoryItem(
-          expression: _expression,
+          expression: splittedExpression,
           expressionDisplayer: _expressionDisplayer,
           result: result
         );
@@ -404,7 +414,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         prefs.setString('main_calculator_history', jsonEncode(_calculatorHistory));
 
         _resultAnimationController.reverse();
-        _expression = result.split('');
+        _expression = result;
         _expressionDisplayer = result.split('');
         _globalFunction = '';
         _mode = 'Calculator';
