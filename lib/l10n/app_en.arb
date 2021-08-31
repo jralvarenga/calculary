@@ -143,6 +143,11 @@
     "description": "radians"
   },
 
+  "dregrees": "Degrees",
+  "@dregrees": {
+    "description": "dregrees"
+  },
+
   "light_theme": "Light theme",
   "@light_theme": {
     "description": "light_theme"
