@@ -62,8 +62,8 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
   var _result = '';
 
   // Solver conditions
-  bool _openedParenthesis = false;
-  bool _doubleOpenedParenthesis = false;
+  int _openedParenthesis = 0;
+  bool _trigonometricDoubleParenthesis = false;
   bool _hasOperator = false;
   bool _canSolve = true;
 
@@ -207,8 +207,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       case 'ln(':
       case 'e^(':
         setState(() {
-          _openedParenthesis = true;
-          _canSolve = false;
+          _openedParenthesis = _openedParenthesis + 1;
           _expression += "#" + value;
           if (expression == '(') {
             _expressionDisplayer.add(expression); 
@@ -222,11 +221,10 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       case 'tan(':
         String angularUnits = (prefs.getString('angular_units') ?? 'RAD');
         setState(() {
-          _openedParenthesis = true;
-          _canSolve = false;
+          _openedParenthesis = _openedParenthesis + 1;
           if (angularUnits == 'DEG') {
-            print('hi');
-            _doubleOpenedParenthesis = true;
+            _openedParenthesis = _openedParenthesis + 1;
+            _trigonometricDoubleParenthesis = true;
             _expression += "#" + value + '(3.14159265359/180)*(';
           } else {
             _expression += "#" + value;
@@ -240,10 +238,10 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       case 'arctan(':
         String angularUnits = (prefs.getString('angular_units') ?? 'RAD');
         setState(() {
-          _openedParenthesis = true;
-          _canSolve = false;
+          _openedParenthesis = _openedParenthesis + 1;
           if (angularUnits == 'DEG') {
-            _doubleOpenedParenthesis = true;
+            _trigonometricDoubleParenthesis = true;            
+            _openedParenthesis = _openedParenthesis + 1;
             _expression += "#(180/3.14159265359)*(" + value;
           } else {
             _expression += "#" + value;
@@ -254,14 +252,13 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       break;
       case ')':
         setState(() {
-          if (_doubleOpenedParenthesis) {
-            _doubleOpenedParenthesis = false;
-            _canSolve = true;
+          if (_trigonometricDoubleParenthesis) {
+            _openedParenthesis = _openedParenthesis + 2;
             _expression += "#" + value + value;
+            _trigonometricDoubleParenthesis = false;
             _expressionDisplayer.add(expression);
           } else {
-            _openedParenthesis = false;
-            _canSolve = true;
+            _openedParenthesis = _openedParenthesis + 1;
             _expression += "#" + value;
             _expressionDisplayer.add(expression);
           }
@@ -282,12 +279,13 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
         });
       break;
     }
-
-    if (_canSolve && !_openedParenthesis && !_doubleOpenedParenthesis && _hasOperator) {
+    
+    if (_canSolve && _openedParenthesis%2 == 0 && _hasOperator) {
       _resultAnimationController.forward();
       List<String> splittedExpression = _expression.split('#');
       var solver = new SolveMainCalculator(splittedExpression, _globalFunction);
       String result = solver.solveExpression();
+      print(result);
       setState(() {
         _result = result;
       });
@@ -397,9 +395,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       
       List<String> splittedExpression = _expression.split('#');
       if (splittedExpression.last == ')' && _expressionDisplayer.last == ')') {
-        _openedParenthesis = true;
-      } else {
-        _openedParenthesis = false;
+        _openedParenthesis = _openedParenthesis - 1;
       }
 
       if (_expressionDisplayer.length == 1) {
@@ -429,7 +425,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
       _inputAnimationController.reverse();
       _resultAnimationController.reverse();
 
-      _openedParenthesis = false;
+      _openedParenthesis = 0;
       _hasOperator = false;
       _canSolve = true;
       _functionEnd = '';
@@ -445,7 +441,7 @@ class _MainCalculatorState extends State<MainCalculator> with TickerProviderStat
   void enterExpression() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      if (_openedParenthesis) {
+      if (_openedParenthesis%2 != 0) {
         sendSnackbar(
           AppLocalizations.of(context)!.close_all_parenthesis
         );
